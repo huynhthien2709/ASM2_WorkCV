@@ -99,10 +99,7 @@ public class UserController {
 	public String profile(HttpSession session, Model model, CompanyDTO companyDTO) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
-
 		Company company = userService.getCompanyInfo(companyDTO, userId);
-		System.out.println("//////" + companyDTO.getId());
-		System.out.println("//////" + companyDTO.getNameCompany());
 		return "public/profile";
 	}
 
@@ -123,14 +120,13 @@ public class UserController {
 	}
 
 	@PostMapping("/upload-company")
-	public @ResponseBody String uploadMultipleFileHandler(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest request) {
+	public @ResponseBody String uploadMultipleFileHandler(@RequestParam("file") CommonsMultipartFile file,
+			HttpServletRequest request) {
 
 		byte[] data = file.getBytes();
 
-		String filePath = request.getServletContext().getRealPath("/")
-          + "resources" + File.separator 
-          + "images" + File.separator
-          + file.getOriginalFilename();
+		String filePath = request.getServletContext().getRealPath("/") + "resources" + File.separator + "images"
+				+ File.separator + file.getOriginalFilename();
 
 		try {
 
@@ -139,6 +135,7 @@ public class UserController {
 
 			fileout.close();
 			return request.getContextPath() + "/resources/images/" + file.getOriginalFilename();
+			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\images
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";

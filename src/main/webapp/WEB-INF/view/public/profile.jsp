@@ -300,10 +300,11 @@
                                     <textarea  name="description" text="${companyDTO.description}"  class="form-control" id="editorN" placeholder="Mô tả">${companyDTO.description}</textarea>
                                 </div>
 
-
-                                <div style="margin-left: 0px" id="divImag1" th:if="${companyDTO.logo != null}">
-                                    <img id="avatar" height="100" width="100" style="border-radius: 50px;margin-bottom: 15px" th:src="${companyDTO.logo}">
+								<c:if test="${companyDTO.logo != null}">
+                                <div style="margin-left: 0px" id="divImag1">
+                                    <img id="avatar" height="100" width="100" style="border-radius: 50px;margin-bottom: 15px" src="${companyDTO.logo}">
                                 </div>
+                                </c:if>
                                 <div class="row form-group" >
                                     <div class="col-md-12">
                                         <input type="submit" value="Lưu thông tin" class="btn px-4 btn-primary text-white">
