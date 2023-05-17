@@ -66,12 +66,11 @@
                 <h1 class="mb-3 bread">Hồ sơ </h1>               
                 <div class="form-group">
                     <label class="btn btn-primary btn-md btn-file">
-                        Chọn ảnh<input type="file" name="file" id="fileUpload" hidden>
+                        Chọn ảnh<input type="file" name="file" id="fileUpload" hidden />                         
                     </label>
-                </div>
-                
+                </div>                
                 <div style="margin-left: 0px" id="divImage" >
-                    <img id="avatar" height="100" width="100" style="border-radius: 50px" th:src="${userInformation.image != null ? userInformation.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
+                    <img id="avatar" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
                 </div>
             </div>
         </div>
@@ -134,7 +133,7 @@
             </div>
         </form>
 
-        <form action=<c:url value = "/user/updateProfile"/> name="user" method="post" >
+        <form action="${pageContext.request.contextPath}/user/updateProfile" name="user" method="post" >
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
                     <div class="d-flex align-items-center">
@@ -155,11 +154,13 @@
             <div class="row mb-5">
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
+                    	<input type="text" name="image" id="fileUpload2UserPath" hidden />
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">
 						<input type="hidden" name="role" value="${userDTO.role}">
 						<input type="hidden" name="password" value="${userDTO.password}">
+						
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" value="${userDTO.email}" required placeholder="you@yourdomain.com">
@@ -219,14 +220,15 @@
         <div class="row">
             <div class="col-lg-6 mb-5">
                 <h2 class="mb-4">Thông tin cá nhân</h2>
-                <form action=<c:url value = "/user/updateProfile"/> name="user" method="post" >
+                <form action="${pageContext.request.contextPath}/user/updateProfile" name="user" method="post" >
                     <div class="row mb-5">
                         <div class="col-lg-12">
                             <div class="p-4 p-md-5 border rounded " method="post">
+                               <input type="text" name="image" id="fileUpload2UserPath" hidden />
                             	<input type="hidden" name="id" value="${userDTO.id}">
 								<input type="hidden" name="status" value="${userDTO.status}">
 								<input type="hidden" name="role" value="${userDTO.role}">
-								<input type="hidden" name="password" value="${userDTO.password}">
+								<input type="hidden" name="password" value="${userDTO.password}">  
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" name="email" value="${userDTO.email}" required placeholder="you@yourdomain.com">
@@ -246,13 +248,14 @@
                               
 		                        <div class="form-group">
                                     <label for="job-location">Mô tả bản thân</label>
-                                    <textarea  name="description" text="${userDTO.description}"  class="form-control" id="editorT" placeholder="Mô tả">${userDTO.description}</textarea>
+                                    <textarea  name="description"  class="form-control" id="editorT" placeholder="Mô tả">${userDTO.description}</textarea>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <input type="submit" value="Lưu thông tin" class="btn px-4 btn-primary text-white">
                                     </div>
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -260,13 +263,13 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-6">
-           
+              
+            <div class="col-lg-6">           
                 <h2 class="mb-4">Thông tin công ty</h2>                             
                 <div class="form-group">
                     <label for="company-website-tw d-block1">Cập nhật Logo</label> <br>
                     <label class="btn btn-primary btn-md btn-file">
-                        Chọn logo<input type="file" name="file" id="fileUpload2" required hidden>
+                        Chọn logo<input type="file" name="file" id="fileUpload2" required hidden />
                     </label>
                     <div id="divLogo">
                         <img id="avatar1" src="${companyDTO.logo}" height="100" width="100" style="border-radius: 50px" >
@@ -276,7 +279,8 @@
                     <div class="row mb-5">
                         <div class="col-lg-12">
                             <div class="p-4 p-md-5 border rounded">
-                            	<input type="text" name="logo" id="fileUpload2Path" required hidden>
+                            	<input type="text" name="logo" id="fileUpload2Path"  hidden />
+                            	
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" class="form-control"  id="email1" name="email" value="${companyDTO.email}" required placeholder="you@yourdomain.com" />
@@ -297,7 +301,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Mô tả công ty</label>
-                                    <textarea  name="description" text="${companyDTO.description}"  class="form-control" id="editorN" placeholder="Mô tả">${companyDTO.description}</textarea>
+                                    <textarea  name="description"  class="form-control" id="editorN" placeholder="Mô tả">${companyDTO.description}</textarea>
                                 </div>
 
 								<c:if test="${companyDTO.logo != null}">
@@ -355,8 +359,8 @@
                 } else {
                     $.ajax(
                         {
-                            type: 'POST',
-                            url: '/user/upload/',
+                            type: 'POST',                           
+                            url: '${pageContext.request.contextPath}/user/upload-user/',
                             contentType: false,
                             processData: false,
                             data: formData,
@@ -375,6 +379,7 @@
                                     $("#divImage").css("display","block")
                                 }else{
                                     $('#avatar').attr('src', urlImage)
+                                    $('#fileUpload2UserPath').val(urlImage);
                                     swal({
                                         title: 'Cập nhật ảnh đại diện thành công!',
                                         /* text: 'Redirecting...', */
@@ -410,13 +415,11 @@
                 var formData = new FormData();
                 formData.append('file', files[0]);
                 //formData.append('email', email);
-                if(files[0] == null){
-                	console.log('File chua duoc upload');
+                if(files[0] == null){                	
                     // document.getElementById("change").style.backgroundColor = 'red';
                     // $('#text').val(" ❌ Cập nhật ảnh thất bại");
                     $(".toast").toast("show");
-                } else {
-                	console.log('File dang upload');
+                } else {                	
                     $.ajax(
                         {
                             type: 'POST',
@@ -481,7 +484,7 @@
                             type: 'POST',
                             url: '/user/uploadCv',
                             contentType: false,
-                            processData: false,
+                            processData: false,  
                             data: formData,
                             success: function (urlImage) {
                                 console.log(urlImage)

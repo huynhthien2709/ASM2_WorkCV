@@ -84,8 +84,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User updateUser(UserDTO userDTO) {
+		User user = this.getUserById(userDTO.getId());
+		
 		Session currentSession = sessionFactory.getCurrentSession();
-		User user = new User();
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
 		user.setEmail(userDTO.getEmail());
@@ -93,13 +94,13 @@ public class UserDAOImpl implements UserDAO {
 		user.setAddress(userDTO.getAddress());
 		user.setPhoneNumber(userDTO.getPhoneNumber());
 		user.setId(userDTO.getId());
-//		user.setStatus(userDTO.getStatus());
 		user.setRole(role);
-		user.setPassword(userDTO.getPassword());
 		user.setDescription(userDTO.getDescription());
+		user.setImage(userDTO.getImage());
 		currentSession.saveOrUpdate(user);
 		return user;
 	}
+	
 
 	@Override
 	public Company updateCompanyInfo(CompanyDTO companyDTO, int userId) {
@@ -138,6 +139,14 @@ public class UserDAOImpl implements UserDAO {
 			return null;
 		}
 		
+	}
+
+	@Override
+	public User getUserById(int userId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<User> query = currentSession.createQuery("from User where id =: userId", User.class);
+		query.setParameter("userId", userId);
+		return query.uniqueResult();
 	}
 
 }

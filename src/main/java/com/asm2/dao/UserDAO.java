@@ -21,4 +21,6 @@ public interface UserDAO {
 	public Company updateCompanyInfo(CompanyDTO companyDTO,int userId);
 	
 	public Company getCompany(CompanyDTO companyDTO, int userId);
+	
+	public User getUserById(int userId);
 }

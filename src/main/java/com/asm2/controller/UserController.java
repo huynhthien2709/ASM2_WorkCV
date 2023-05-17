@@ -57,6 +57,7 @@ public class UserController {
 		boolean check = userService.checkUserLogin(userDTO);
 //		request.getSession(true).setAttribute("userDTO", userDTO);
 		session = request.getSession(true);
+		userDTO.setPassword(null);
 		session.setAttribute("userDTO", userDTO);
 
 		if (check) {
@@ -99,14 +100,16 @@ public class UserController {
 	public String profile(HttpSession session, Model model, CompanyDTO companyDTO) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
+	
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
 
 	@PostMapping("/updateProfile")
-	public String updateProfile(UserDTO userDTO) {
-
+	public String updateProfile(UserDTO userDTO, CompanyDTO companyDTO) {
+		int userId = userDTO.getId();
 		User user = userService.updateUser(userDTO);
+		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
 
@@ -136,6 +139,31 @@ public class UserController {
 			fileout.close();
 			return request.getContextPath() + "/resources/images/" + file.getOriginalFilename();
 			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\images
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error";
+		}
+	}
+	@PostMapping("/upload-user")
+	public @ResponseBody String uploadUserImage(@RequestParam("file") CommonsMultipartFile file,
+			HttpServletRequest request) {
+
+		byte[] data = file.getBytes();
+
+		String folderPath = request.getServletContext().getRealPath("/") + "resources" + File.separator + "UserImages";
+		String filePath = folderPath + File.separator + file.getOriginalFilename();
+
+		try {
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			FileOutputStream fileout = new FileOutputStream(filePath);
+			fileout.write(data);
+
+			fileout.close();
+			return request.getContextPath() + "/resources/UserImages/" + file.getOriginalFilename();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";
