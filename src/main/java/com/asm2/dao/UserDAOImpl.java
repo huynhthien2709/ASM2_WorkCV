@@ -122,7 +122,6 @@ public class UserDAOImpl implements UserDAO {
 	public Company getCompany(CompanyDTO companyDTO, int userId) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Company company = new Company();
-//		Giả sử thêm comment này ở đây. sau đó thì bạn phải commit code, commit xong thì bạn push nó lên thì trên github n mới cập nhật
 		Query query = currentSession.createQuery("from Company where userId =: userId", Company.class);
 		query.setParameter("userId", userId);
 		company = (Company) query.uniqueResult();
