@@ -163,7 +163,7 @@ public class UserController {
 
 			fileout.close();
 			return request.getContextPath() + "/resources/UserImages/" + file.getOriginalFilename();
-			
+			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\UserImages
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";
