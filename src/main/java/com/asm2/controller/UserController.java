@@ -169,5 +169,9 @@ public class UserController {
 			return "Error";
 		}
 	}
+	@GetMapping("post-list")
+	public String postListPage() {
+		return "public/post-list";
+	}
 
 }

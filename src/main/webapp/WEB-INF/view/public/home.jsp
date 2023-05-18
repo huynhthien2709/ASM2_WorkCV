@@ -61,7 +61,7 @@
 								</p>
 								<c:if test="${userDTO.role == 2}">
 									<p>
-										<a href="/user/list-post">Danh sách bài đăng</a>
+										<a href="<c:url value = "/user/post-list"/>">Danh sách bài đăng</a>
 									</p>
 								</c:if>
 								<c:if test="${userDTO.role == 1}">
