@@ -77,6 +77,7 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setAddress(user.getAddress());
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
+			userDTO.setImage(user.getImage());
 			return userDTO;
 		}
 

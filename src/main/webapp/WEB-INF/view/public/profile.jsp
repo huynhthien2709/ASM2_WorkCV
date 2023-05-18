@@ -6,7 +6,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head">
+<head>
     <title>Work CV</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,7 @@
 <body>
 <nav class="header_menu" class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container-fluid px-md-4	">
-        <a class="navbar-brand" href="/">Work CV</a>
+        <a class="navbar-brand" href="<c:url value = "/"/>">Work CV</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
@@ -132,8 +132,8 @@
                 </div>
             </div>
         </form>
-
-        <form action="${pageContext.request.contextPath}/user/updateProfile" name="user" method="post" >
+		<c:if test="${userDTO.role == 1 }">
+        <form action="" name="user" method="post" >
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
                     <div class="d-flex align-items-center">
@@ -154,7 +154,7 @@
             <div class="row mb-5">
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
-                    	<input type="text" name="image" id="fileUpload2UserPath" hidden />
+                    	<input type="text" name="image"hidden />
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">
@@ -188,6 +188,7 @@
 
             </div>
         </form>
+        </c:if>
     </div>
 </section>
 <!-- Modal -->
@@ -328,13 +329,7 @@
     })
         .catch(error => {
             console.error(error);
-        });
-    ClassicEditor.create(document.querySelector('#editorN')).then(eidt => {
-        console.log("da" + eidt);
-    })
-        .catch(error => {
-            console.error(error);
-        });
+        });   
     ClassicEditor.create(document.querySelector('#editorT')).then(eidt => {
         console.log("da" + eidt);
     })
@@ -379,7 +374,7 @@
                                     $("#divImage").css("display","block")
                                 }else{
                                     $('#avatar').attr('src', urlImage)
-                                    $('#fileUpload2UserPath').val(urlImage);
+                                    $('#fileUpload2UserPath').val(urlImage);                                   
                                     swal({
                                         title: 'Cập nhật ảnh đại diện thành công!',
                                         /* text: 'Redirecting...', */
