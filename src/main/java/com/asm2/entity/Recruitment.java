@@ -2,12 +2,14 @@ package com.asm2.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "recruitment")
@@ -16,50 +18,52 @@ public class Recruitment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
 
 	@Column(name = "address")
 	private String address;
-	
 
 	@Column(name = "created_at")
 	private String createdAt;
-	
+
 	@Column(name = "description")
 	private String description;
-	
+
 	@Column(name = "experience")
 	private String experience;
-	
+
 	@Column(name = "quantity")
 	private int quantity;
-	
+
 	@Column(name = "rank")
 	private String rank;
-	
+
 	@Column(name = "salary")
 	private String salary;
-	
+
 	@Column(name = "status")
 	private int status;
-	
+
 	@Column(name = "title")
 	private String title;
-	
+
 	@Column(name = "type")
 	private String type;
-	
+
 	@Column(name = "view")
 	private int view;
-	
+
+	@NotNull(message = "is required")
+	@Column(name = "company_id")
+	private int companyId;
+
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
-	
-	@ManyToOne
-	@JoinColumn(name = "company_id")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_id", insertable = false, updatable = false)
 	private Company company;
-	
+
 	@Column(name = "deadline")
 	private String deadline;
 
@@ -201,8 +205,14 @@ public class Recruitment {
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
-	
-	
+
+	public int getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
 	
 
 }

@@ -50,7 +50,6 @@ public class UserController {
 		List<Role> roles = userService.getRoles();
 		model.addAttribute("roles", roles);
 		boolean check = userService.checkUserLogin(userDTO);
-//		request.getSession(true).setAttribute("userDTO", userDTO);
 		session = request.getSession(true);
 		userDTO.setPassword(null);
 		session.setAttribute("userDTO", userDTO);
@@ -95,7 +94,6 @@ public class UserController {
 	public String profile(HttpSession session, Model model, CompanyDTO companyDTO) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
-		System.out.println(userDTO.getImage());
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
@@ -103,7 +101,6 @@ public class UserController {
 	@PostMapping("/updateProfile")
 	public String updateProfile(UserDTO userDTO, CompanyDTO companyDTO) {
 		int userId = userDTO.getId();
-		System.out.println(userDTO.getImage());
 		User user = userService.updateUser(userDTO);
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
@@ -113,7 +110,6 @@ public class UserController {
 	public String updateCompanyInfo(CompanyDTO companyDTO, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
-		System.out.println(userDTO.getImage());
 		Company company = userService.updateCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}

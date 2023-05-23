@@ -1,10 +1,13 @@
 package com.asm2.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +24,9 @@ public class Category {
 	
 	@Column(name = "number_choose")
 	private String numberChoose;
+	
+	@OneToMany(mappedBy = "category")
+	private List<Recruitment> recruitments;
 
 	public Category(String name, String numberChoose) {
 		this.name = name;
@@ -52,6 +58,14 @@ public class Category {
 
 	public void setNumberChoose(String numberChoose) {
 		this.numberChoose = numberChoose;
+	}
+
+	public List<Recruitment> getRecruitments() {
+		return recruitments;
+	}
+
+	public void setRecruitments(List<Recruitment> recruitments) {
+		this.recruitments = recruitments;
 	}
 	
 	
