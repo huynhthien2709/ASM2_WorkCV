@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import com.asm2.DTO.RecruitmentDTO;
 import com.asm2.entity.Category;
 import com.asm2.entity.Recruitment;
@@ -37,7 +38,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Recruitment recruitment = new Recruitment();
 		Category category = new Category();
-		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));
+		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));		
 //		recruitment.setId(recruitmentDTO.getId());
 		recruitment.setTitle(recruitmentDTO.getTitle());
 		recruitment.setDescription(recruitmentDTO.getDescription());
@@ -47,10 +48,23 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitment.setSalary(recruitmentDTO.getSalary());
 		recruitment.setType(recruitmentDTO.getType());
 		recruitment.setCategory(category);
-		recruitment.setCompanyId(recruitmentDTO.getCompanyId());
-		///test
+		recruitment.setCompanyId(recruitmentDTO.getCompanyId());		
 		currentSession.saveOrUpdate(recruitment);
 		return null;
+	}
+
+	@Override
+	public Category getCategorybyId(int categoryId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Category> query = currentSession.createQuery("from Category where id =: categoryId", Category.class);
+		query.setParameter("categoryId", categoryId);
+		Category category = (Category) query.uniqueResult();
+		if (category != null) {
+			Category cate = (Category) currentSession.get(Category.class, categoryId);
+			int numcho = cate.getNumberChoose();
+			cate.setNumberChoose(numcho + 1);
+		}
+		return category;
 	}
 
 }

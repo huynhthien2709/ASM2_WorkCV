@@ -23,12 +23,12 @@ public class Category {
 	private String name;
 	
 	@Column(name = "number_choose")
-	private String numberChoose;
+	private int numberChoose;
 	
 	@OneToMany(mappedBy = "category")
 	private List<Recruitment> recruitments;
 
-	public Category(String name, String numberChoose) {
+	public Category(String name, int numberChoose) {
 		this.name = name;
 		this.numberChoose = numberChoose;
 	}
@@ -52,11 +52,11 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getNumberChoose() {
+	public int getNumberChoose() {
 		return numberChoose;
 	}
 
-	public void setNumberChoose(String numberChoose) {
+	public void setNumberChoose(int numberChoose) {
 		this.numberChoose = numberChoose;
 	}
 

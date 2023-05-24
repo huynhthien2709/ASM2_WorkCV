@@ -11,4 +11,7 @@ public interface RecruitmentService {
 	public List<Category> getCategories();
 
 	public Recruitment addPostJob(RecruitmentDTO recruitmentDTO);
+	
+	public Category getCategorybyId(int categoryId);
 }
+

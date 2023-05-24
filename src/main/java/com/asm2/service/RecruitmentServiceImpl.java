@@ -31,4 +31,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		return recruitment;
 	}
 
+	@Override
+	public Category getCategorybyId(int categoryId) {
+		Category category = recruitmentDAO.getCategorybyId(categoryId);
+		return category;
+	}
+
 }
