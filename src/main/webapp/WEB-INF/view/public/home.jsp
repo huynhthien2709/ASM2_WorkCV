@@ -61,7 +61,7 @@
 								</p>
 								<c:if test="${userDTO.role == 2}">
 									<p>
-										<a href="/user/list-post">Danh sách bài đăng</a>
+										<a href="<c:url value = "/user/post-list"/>">Danh sách bài đăng</a>
 									</p>
 								</c:if>
 								<c:if test="${userDTO.role == 1}">
@@ -88,7 +88,7 @@
 
 					<li></li>
 					<c:if test="${userDTO.role == 2}">
-						<li class="nav-item cta mr-md-1"><a href="/recruitment/post"
+						<li class="nav-item cta mr-md-1"><a href="<c:url value = "/recruitment/post" />"
 							class="nav-link">Đăng tuyển</a></li>
 					</c:if>
 					<c:if test="${sessionScope.userDTO == null}">

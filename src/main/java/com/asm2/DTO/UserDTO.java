@@ -2,48 +2,33 @@ package com.asm2.DTO;
 
 import java.util.List;
 
-
-
 import com.asm2.entity.Cv;
-
 
 public class UserDTO {
 
-	
 	private int id;
 
-	
 	private String address;
 
-	
 	private String description;
 
-	
 	private String email;
 
-	
 	private String fullName;
 
-	
 	private String image;
 
-	
 	private String password;
-	
+
 	private String rePassword;
 
-	
 	private String phoneNumber;
 
-	
 	private int status;
 
-	
 	private String role;
 
 	private List<Cv> cv;
-
-	
 
 	public UserDTO() {
 	}
@@ -103,8 +88,6 @@ public class UserDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
 
 	public String getRePassword() {
 		return rePassword;
@@ -145,7 +128,5 @@ public class UserDTO {
 	public void setCv(List<Cv> cv) {
 		this.cv = cv;
 	}
-
-
 
 }

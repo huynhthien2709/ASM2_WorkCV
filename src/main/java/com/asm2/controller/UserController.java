@@ -1,6 +1,6 @@
 package com.asm2.controller;
 
-import java.io.BufferedOutputStream;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -15,15 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.asm2.entity.Company;
@@ -55,8 +50,8 @@ public class UserController {
 		List<Role> roles = userService.getRoles();
 		model.addAttribute("roles", roles);
 		boolean check = userService.checkUserLogin(userDTO);
-//		request.getSession(true).setAttribute("userDTO", userDTO);
 		session = request.getSession(true);
+		userDTO.setPassword(null);
 		session.setAttribute("userDTO", userDTO);
 
 		if (check) {
@@ -99,17 +94,15 @@ public class UserController {
 	public String profile(HttpSession session, Model model, CompanyDTO companyDTO) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
-
 		Company company = userService.getCompanyInfo(companyDTO, userId);
-		System.out.println("//////" + companyDTO.getId());
-		System.out.println("//////" + companyDTO.getNameCompany());
 		return "public/profile";
 	}
 
 	@PostMapping("/updateProfile")
-	public String updateProfile(UserDTO userDTO) {
-
+	public String updateProfile(UserDTO userDTO, CompanyDTO companyDTO) {
+		int userId = userDTO.getId();
 		User user = userService.updateUser(userDTO);
+		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
 
@@ -117,32 +110,64 @@ public class UserController {
 	public String updateCompanyInfo(CompanyDTO companyDTO, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
-
 		Company company = userService.updateCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
 
 	@PostMapping("/upload-company")
-	public @ResponseBody String uploadMultipleFileHandler(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest request) {
+	public @ResponseBody String uploadMultipleFileHandler(@RequestParam("file") CommonsMultipartFile file,
+			HttpServletRequest request) {
 
 		byte[] data = file.getBytes();
 
-		String filePath = request.getServletContext().getRealPath("/")
-          + "resources" + File.separator 
-          + "images" + File.separator
-          + file.getOriginalFilename();
+		String folderPath = request.getServletContext().getRealPath("/") + "resources" + File.separator + "images";
+		String filePath = folderPath + File.separator + file.getOriginalFilename();
 
 		try {
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
 
 			FileOutputStream fileout = new FileOutputStream(filePath);
 			fileout.write(data);
 
 			fileout.close();
 			return request.getContextPath() + "/resources/images/" + file.getOriginalFilename();
+			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\images
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";
 		}
+	}
+	@PostMapping("/upload-user")
+	public @ResponseBody String uploadUserImage(@RequestParam("file") CommonsMultipartFile file,
+			HttpServletRequest request) {
+
+		byte[] data = file.getBytes();
+
+		String folderPath = request.getServletContext().getRealPath("/") + "resources" + File.separator + "UserImages";
+		String filePath = folderPath + File.separator + file.getOriginalFilename();
+
+		try {
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			FileOutputStream fileout = new FileOutputStream(filePath);
+			fileout.write(data);
+
+			fileout.close();
+			return request.getContextPath() + "/resources/UserImages/" + file.getOriginalFilename();
+			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\UserImages
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error";
+		}
+	}
+	@GetMapping("post-list")
+	public String postListPage() {
+		return "public/post-list";
 	}
 
 }

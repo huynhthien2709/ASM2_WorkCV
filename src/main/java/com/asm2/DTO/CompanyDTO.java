@@ -1,9 +1,6 @@
 package com.asm2.DTO;
 
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.asm2.entity.User;
 
 public class CompanyDTO {
 
