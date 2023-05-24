@@ -48,7 +48,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitment.setType(recruitmentDTO.getType());
 		recruitment.setCategory(category);
 		recruitment.setCompanyId(recruitmentDTO.getCompanyId());
-		
+		///test
 		currentSession.saveOrUpdate(recruitment);
 		return null;
 	}
