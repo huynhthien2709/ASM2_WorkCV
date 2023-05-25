@@ -50,7 +50,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitment.setCategory(category);
 		recruitment.setCompanyId(recruitmentDTO.getCompanyId());		
 		currentSession.saveOrUpdate(recruitment);
-		return null;
+		return recruitment;
 	}
 
 	@Override
