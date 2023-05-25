@@ -14,4 +14,6 @@ public interface RecruitmentDAO {
 	public Recruitment addPostJob(RecruitmentDTO recruitmentDTO);
 	
 	public Category getCategorybyId(int categoryId);
+	
+	public Recruitment getRecruitment(int id);
 }

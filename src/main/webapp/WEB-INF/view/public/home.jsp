@@ -385,26 +385,26 @@
 						</div>
 					</div>
 					<div class="row">
-						<th:block th:each="recruitment : ${recruitments}">
+						<c:forEach items="${recruitments}" var="recruitments"> 
 							<div class="col-md-12 ">
 								<div
 									class="job-post-item p-4 d-block d-lg-flex align-items-center">
 									<div class="one-third mb-4 mb-md-0">
 										<div class="job-post-item-header align-items-center">
-											<span class="subadge" th:text="${recruitment.type}"></span>
+											<span class="subadge"><c:out value="${recruitments.type}"></c:out></span>
 											<h2 class="mr-3 text-black">
-												<a th:text="${recruitment.title}"
-													th:href="${'/recruitment/detail/'} +${recruitment.id}"></a>
+												<a
+													th:href="${'/recruitment/detail/'} +${recruitment.id}"><c:out value="${recruitments.title}"/></a>
 											</h2>
 										</div>
 										<div class="job-post-item-body d-block d-md-flex">
 											<div class="mr-3">
 												<span class="icon-layers"></span> <a href="#"
-													th:text="${recruitment.Company.nameCompany}"></a>
+													><c:out value="${recruitments.company.nameCompany}"/></a>
 											</div>
 											<div>
 												<span class="icon-my_location"></span> <span
-													th:text="${recruitment.address}"></span>
+													><c:out value="${recruitments.address}"/></span>
 											</div>
 										</div>
 									</div>
@@ -510,7 +510,7 @@
 									</div>
 								</div>
 							</div>
-						</th:block>
+						</c:forEach>
 
 					</div>
 				</div>

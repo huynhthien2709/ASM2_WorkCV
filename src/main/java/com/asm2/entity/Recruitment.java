@@ -60,7 +60,7 @@ public class Recruitment {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", insertable = false, updatable = false)
 	private Company company;
 

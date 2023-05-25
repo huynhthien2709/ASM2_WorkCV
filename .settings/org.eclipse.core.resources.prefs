@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/view/public/detail-post.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/public/index.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/public/post-job.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/public/post-list.jsp=UTF-8

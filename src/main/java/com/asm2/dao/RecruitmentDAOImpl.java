@@ -67,4 +67,16 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		return category;
 	}
 
+	@Override
+	public Recruitment getRecruitment(int id) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Recruitment recruitment = currentSession.get(Recruitment.class, id);
+		
+		RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
+		recruitmentDTO.setAddress(recruitment.getAddress());
+		recruitmentDTO
+		return null;
+	}
+
 }
