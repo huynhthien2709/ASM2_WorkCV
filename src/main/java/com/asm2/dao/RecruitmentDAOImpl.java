@@ -75,7 +75,6 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		
 		RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
 		recruitmentDTO.setAddress(recruitment.getAddress());
-		recruitmentDTO
 		return null;
 	}
 
