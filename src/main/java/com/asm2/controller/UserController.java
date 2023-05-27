@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.asm2.entity.Company;
+import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
+import com.asm2.service.HomeService;
 import com.asm2.service.UserService;
 
 @Controller
@@ -34,6 +36,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired HomeService homeService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -49,6 +53,8 @@ public class UserController {
 			HttpSession session) {
 		List<Role> roles = userService.getRoles();
 		model.addAttribute("roles", roles);
+		List<Recruitment> recruitments = homeService.getRecruitments();
+		model.addAttribute("recruitments", recruitments);
 		boolean check = userService.checkUserLogin(userDTO);
 		session = request.getSession(true);
 		userDTO.setPassword(null);

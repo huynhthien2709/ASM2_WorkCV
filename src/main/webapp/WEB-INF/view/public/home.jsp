@@ -32,7 +32,10 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap"
 	rel="stylesheet">
+
+
 <%@include file="resource.jsp"%>
+
 
 </head>
 <body>
@@ -410,18 +413,21 @@
 									</div>
 									<input type="hidden" th:id="${'idRe'}+${recruitment.id}"
 										th:value="${recruitment.id}">
-									<div th:if="${session.user}"
+									<c:if test="${sessionScope.userDTO.id ==1 }">	
+									<div 
 										class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+										
 										<div th:if="${session.user.role.id == 1}">
-											<a th:onclick="'save(' +${recruitment.id}+ ')'"
+											<a onclick="'save(' +${recruitment.id}+ ')'"
 												class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
 												<span class="icon-heart"></span>
 											</a>
 										</div>
-										<a th:if="${session.user.role.id == 1}" data-toggle="modal"
-											th:data-target="${'#exampleModal'}+${recruitment.id}"
+										<a data-toggle="modal"
+										   data-target="#exampleModal_${recruitments.id}" 
 											class="btn btn-primary py-2">Apply Job</a>
 									</div>
+									</c:if>
 									<div th:unless="${session.user}"
 										class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
 										<div>
@@ -430,23 +436,23 @@
 												<span class="icon-heart"></span>
 											</a>
 										</div>
-										<a data-toggle="modal"
+										<!--  <a data-toggle="modal"
 											th:data-target="${'#exampleModal'}+${recruitment.id}"
-											class="btn btn-primary py-2">Apply Job</a>
+											class="btn btn-primary py-2">Apply Job</a>--> 
 									</div>
 								</div>
 							</div>
 							<!-- end -->
 							<!-- Modal -->
 							<div class="modal fade"
-								th:id="${'exampleModal'}+${recruitment.id}" tabindex="-1"
+								id="exampleModal_${recruitments.id}" tabindex="-1"
 								role="dialog" aria-labelledby="exampleModalLabel"
 								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">
-												Ứng tuyển: <span th:text="${recruitment.title}"></span>
+												Ứng tuyển: <span><c:out value="${recruitments.title}"/></span>
 											</h5>
 											<button type="button" class="close" data-dismiss="modal"
 												aria-label="Close">
@@ -457,8 +463,8 @@
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-12">
-														<select th:id="${'choose'}+${recruitment.id}"
-															th:onchange="'choosed(' +${recruitment.id}+ ')'"
+														<select th:id="${'choose'}+${recruitments.id}"
+															th:onchange="'choosed(' +${recruitments.id}+ ')'"
 															class="form-control" aria-label="Default select example">
 															<option selected>Chọn phương thức nộp</option>
 															<option value="1">Dùng cv đã cập nhật</option>
