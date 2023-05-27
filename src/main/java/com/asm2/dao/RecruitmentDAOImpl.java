@@ -1,5 +1,7 @@
 package com.asm2.dao;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -38,6 +40,9 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Recruitment recruitment = new Recruitment();
 		Category category = new Category();
+		LocalDateTime myDateObj = LocalDateTime.now();
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formattedDate = myDateObj.format(myFormatObj);
 		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));		
 //		recruitment.setId(recruitmentDTO.getId());
 		recruitment.setTitle(recruitmentDTO.getTitle());
@@ -48,7 +53,8 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitment.setSalary(recruitmentDTO.getSalary());
 		recruitment.setType(recruitmentDTO.getType());
 		recruitment.setCategory(category);
-		recruitment.setCompanyId(recruitmentDTO.getCompanyId());		
+		recruitment.setCompanyId(recruitmentDTO.getCompanyId());
+		recruitment.setCreatedAt(formattedDate);
 		currentSession.saveOrUpdate(recruitment);
 		return recruitment;
 	}
