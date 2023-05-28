@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
 import com.asm2.service.HomeService;
 
@@ -20,7 +21,8 @@ public class HomeController {
 	public String homePage(Model model) {
 		List<Recruitment> recruitments = homeService.getRecruitments();
 		model.addAttribute("recruitments", recruitments);
-		
+		List<Company> companies = homeService.getCompanies();
+		model.addAttribute("companies", companies);
 		return "public/home";
 	}
 }

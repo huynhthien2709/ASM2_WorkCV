@@ -413,7 +413,7 @@
 									</div>
 									<input type="hidden" th:id="${'idRe'}+${recruitment.id}"
 										th:value="${recruitment.id}">
-									<c:if test="${sessionScope.userDTO.id ==1 }">	
+										
 									<div 
 										class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
 										
@@ -427,7 +427,7 @@
 										   data-target="#exampleModal_${recruitments.id}" 
 											class="btn btn-primary py-2">Apply Job</a>
 									</div>
-									</c:if>
+									
 									<div th:unless="${session.user}"
 										class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
 										<div>
@@ -526,26 +526,27 @@
 							<h2 class="mb-4">Công ty nổi bật</h2>
 						</div>
 					</div>
-					<th:block th:each="companies : ${companies}">
+					<c:forEach items="${companies}" var="companies">
 						<div class="sidebar-box">
 							<div class="">
-								<a th:href="${'/user/detail-company/'}+${companies[0]}"
-									class="company-wrap"><img th:src="${companies[2]}"
+							<!--  th:href="${'/user/detail-company/'}+${companies[0]}"-->
+								<a 
+									class="company-wrap"><img src="${companies.logo}"
 									class="img-fluid" alt="Colorlib Free Template"></a>
 								<div class="text p-3">
 									<h3>
-										<a th:href="${'/user/detail-company/'}+${companies[0]}"
-											th:text="${companies[1]}"></a>
+										<!--  <a th:href="${'/user/detail-company/'}+${companies[0]}"
+											th:text="${companies[1]}"></a>-->
 									</h3>
 									<p>
-										<span class="number" style="color: black"
+										<!--  <span class="number" style="color: black"
 											th:text="${companies[3]}"></span> <span>Vị trí ứng
-											tuyển</span>
+											tuyển</span>-->
 									</p>
 								</div>
 							</div>
 						</div>
-					</th:block>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
