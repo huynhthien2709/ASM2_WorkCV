@@ -28,7 +28,7 @@ public class UserDTO {
 
 	private String role;
 
-	private List<Cv> cv;
+	private String cv;
 
 	public UserDTO() {
 	}
@@ -121,12 +121,13 @@ public class UserDTO {
 		this.role = role;
 	}
 
-	public List<Cv> getCv() {
+	public String getCv() {
 		return cv;
 	}
 
-	public void setCv(List<Cv> cv) {
+	public void setCv(String cv) {
 		this.cv = cv;
 	}
+
 
 }

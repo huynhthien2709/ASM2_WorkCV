@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,8 +20,7 @@ public class Cv {
 	@Column(name = "file_name")
 	private String fileName;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@OneToOne(mappedBy = "cv")
 	private User user;
 
 	public Cv(String fileName) {

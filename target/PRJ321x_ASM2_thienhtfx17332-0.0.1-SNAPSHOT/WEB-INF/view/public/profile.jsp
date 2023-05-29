@@ -3,10 +3,10 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<%@ page session="false" %>
+
 <!DOCTYPE html>
 <html lang="en">
-<head">
+<head>
     <title>Work CV</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,7 +19,7 @@
 <body>
 <nav class="header_menu" class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container-fluid px-md-4	">
-        <a class="navbar-brand" href="/">Work CV</a>
+        <a class="navbar-brand" href="<c:url value = "/"/>">Work CV</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
@@ -66,18 +66,17 @@
                 <h1 class="mb-3 bread">Hồ sơ </h1>               
                 <div class="form-group">
                     <label class="btn btn-primary btn-md btn-file">
-                        Chọn ảnh<input type="file" name="file" id="fileUpload" hidden>
+                        Chọn ảnh<input type="file" name="file" id="fileUpload" hidden />                         
                     </label>
-                </div>
-                
+                </div>                
                 <div style="margin-left: 0px" id="divImage" >
-                    <img id="avatar" height="100" width="100" style="border-radius: 50px" th:src="${userInformation.image != null ? userInformation.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
+                    <img id="avatar" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- HOME -->
+<!-- HOME 
 <div th:if="${userInformation.status == 0}" class="container-fluid" style="text-align: center">
     <p style="font-size: 20px;font-weight: bold;color: #aaa;margin-top: 10px">Xác thực email đăng nhập</p>
     <div style="width: 600px;height: 400px;border-radius: 5px;
@@ -103,7 +102,7 @@
         - Điện thoại:<span style="color:#5f80ec">(024) 6680 5588</span><br>
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
-</div>
+</div>-->
 <section th:if="${userInformation.status == 1 && userInformation.role.id == 1}" class="site-section" style="margin-top: 10px">
     <div class="container">
         <form enctype="multipart/form-data">
@@ -133,8 +132,8 @@
                 </div>
             </div>
         </form>
-
-        <form action=<c:url value = "/user/updateProfile"/> name="user" method="post" >
+		<c:if test="${userDTO.role == 1 }">
+        <form action="${pageContext.request.contextPath}/user/updateUserCandidate" name="user" method="post" >
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
                     <div class="d-flex align-items-center">
@@ -155,11 +154,13 @@
             <div class="row mb-5">
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
+                    	<input type="text" name="image" id="#fileUploadCandidate" hidden />
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">
 						<input type="hidden" name="role" value="${userDTO.role}">
 						<input type="hidden" name="password" value="${userDTO.password}">
+						
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" value="${userDTO.email}" required placeholder="you@yourdomain.com">
@@ -187,6 +188,7 @@
 
             </div>
         </form>
+        </c:if>
     </div>
 </section>
 <!-- Modal -->
@@ -214,19 +216,21 @@
         </div>
     </div>
 </div>
+<c:if test="${userDTO.role == 2 }">
 <section class="site-section" style="margin-top: 10px">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-5">
                 <h2 class="mb-4">Thông tin cá nhân</h2>
-                <form action=<c:url value = "/user/updateProfile"/> name="user" method="post" >
+                <form action="${pageContext.request.contextPath}/user/updateProfile" name="user" method="post" >
                     <div class="row mb-5">
                         <div class="col-lg-12">
                             <div class="p-4 p-md-5 border rounded " method="post">
+                               <input type="text" name="image" id="fileUpload2UserPath" hidden />
                             	<input type="hidden" name="id" value="${userDTO.id}">
 								<input type="hidden" name="status" value="${userDTO.status}">
 								<input type="hidden" name="role" value="${userDTO.role}">
-								<input type="hidden" name="password" value="${userDTO.password}">
+								<input type="hidden" name="password" value="${userDTO.password}">  
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="email" class="form-control" name="email" value="${userDTO.email}" required placeholder="you@yourdomain.com">
@@ -246,13 +250,14 @@
                               
 		                        <div class="form-group">
                                     <label for="job-location">Mô tả bản thân</label>
-                                    <textarea  name="description" text="${userDTO.description}"  class="form-control" id="editorT" placeholder="Mô tả">${userDTO.description}</textarea>
+                                    <textarea  name="description"  class="form-control" id="editorT" placeholder="Mô tả">${userDTO.description}</textarea>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
                                         <input type="submit" value="Lưu thông tin" class="btn px-4 btn-primary text-white">
                                     </div>
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -260,26 +265,27 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-6">
-           
+              
+            <div class="col-lg-6">           
                 <h2 class="mb-4">Thông tin công ty</h2>                             
                 <div class="form-group">
                     <label for="company-website-tw d-block1">Cập nhật Logo</label> <br>
                     <label class="btn btn-primary btn-md btn-file">
-                        Chọn logo<input type="file" name="logo" value="${companyDTO.logo}"   required hidden>
+                        Chọn logo<input type="file" name="file" id="fileUpload2" required hidden />
                     </label>
                     <div id="divLogo">
-                        <img id="avatar1" height="100" width="100" style="border-radius: 50px" >
+                        <img id="avatar1" src="${companyDTO.logo}" height="100" width="100" style="border-radius: 50px" >
                     </div>
                 </div>             
-                <form action="${pageContext.request.contextPath}/user/updateCompanyInfo" name="companyDTO" method="post" enctype="multipart/form-data"> 
+                <form action="${pageContext.request.contextPath}/user/updateCompanyInfo" name="companyDTO" method="post"> 
                     <div class="row mb-5">
                         <div class="col-lg-12">
                             <div class="p-4 p-md-5 border rounded">
+                            	<input type="text" name="logo" id="fileUpload2Path"  hidden />
+                            	
                                 <div class="form-group">
                                     <label for="email">Email</label>
-
-                                    <input type="text" class="form-control" required id="email1" path="email" value="${companyDTO.email}" placeholder="you@yourdomain.com" />
+                                    <input type="text" class="form-control"  id="email1" name="email" value="${companyDTO.email}" required placeholder="you@yourdomain.com" />
                                 </div>
                                 <div class="form-group">
                                     <label for="job-title">Tên công ty</label>
@@ -297,13 +303,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Mô tả công ty</label>
-                                    <textarea  name="description" text="${companyDTO.description}"  class="form-control" id="editorN" placeholder="Mô tả">${companyDTO.description}</textarea>
+                                    <textarea  name="description"  class="form-control" id="editorN" placeholder="Mô tả">${companyDTO.description}</textarea>
                                 </div>
 
-
-                                <div style="margin-left: 0px" id="divImag1" th:if="${companyDTO.logo != null}">
-                                    <img id="avatar" height="100" width="100" style="border-radius: 50px;margin-bottom: 15px" th:src="${companyDTO.logo}">
+								<c:if test="${companyDTO.logo != null}">
+                                <div style="margin-left: 0px" id="divImag1">
+                                    <img id="avatar" height="100" width="100" style="border-radius: 50px;margin-bottom: 15px" src="${companyDTO.logo}">
                                 </div>
+                                </c:if>
                                 <div class="row form-group" >
                                     <div class="col-md-12">
                                         <input type="submit" value="Lưu thông tin" class="btn px-4 btn-primary text-white">
@@ -317,19 +324,14 @@
         </div>
     </div>
 </section>
+</c:if>
 <script>
     ClassicEditor.create(document.querySelector('#editor')).then(eidt => {
         console.log("da" + eidt);
     })
         .catch(error => {
             console.error(error);
-        });
-    ClassicEditor.create(document.querySelector('#editorN')).then(eidt => {
-        console.log("da" + eidt);
-    })
-        .catch(error => {
-            console.error(error);
-        });
+        });   
     ClassicEditor.create(document.querySelector('#editorT')).then(eidt => {
         console.log("da" + eidt);
     })
@@ -354,8 +356,8 @@
                 } else {
                     $.ajax(
                         {
-                            type: 'POST',
-                            url: '/user/upload/',
+                            type: 'POST',                           
+                            url: '${pageContext.request.contextPath}/user/upload-user/',
                             contentType: false,
                             processData: false,
                             data: formData,
@@ -374,6 +376,7 @@
                                     $("#divImage").css("display","block")
                                 }else{
                                     $('#avatar').attr('src', urlImage)
+                                    $('#fileUpload2UserPath').val(urlImage);                                   
                                     swal({
                                         title: 'Cập nhật ảnh đại diện thành công!',
                                         /* text: 'Redirecting...', */
@@ -395,11 +398,13 @@
             }
         })
     })
+ 
 </script>
 
 <script>
     $(function () {
         $('#fileUpload2').change(function () {
+        	console.log('File changed');
             if (window.FormData !== undefined) {
                 var fileUpload = $('#fileUpload2').get(0);
                 var files = fileUpload.files;
@@ -407,15 +412,15 @@
                 var formData = new FormData();
                 formData.append('file', files[0]);
                 //formData.append('email', email);
-                if(files[0] == null){
+                if(files[0] == null){                	
                     // document.getElementById("change").style.backgroundColor = 'red';
                     // $('#text').val(" ❌ Cập nhật ảnh thất bại");
                     $(".toast").toast("show");
-                } else {
+                } else {                	
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/user/upload-company/',
+                            url: '${pageContext.request.contextPath}/user/upload-company/',
                             contentType: false,
                             processData: false,
                             data: formData,
@@ -433,7 +438,8 @@
                                     })
                                     $("#divLogo").css("display","block")
                                 }else{
-                                    $('#avatar1').attr('src', urlImage)
+                                    $('#avatar1').attr('src', urlImage);
+                                    $('#fileUpload2Path').val(urlImage);
                                     swal({
                                         title: 'Cập nhật logo thành công!',
                                         /* text: 'Redirecting...', */
@@ -473,9 +479,9 @@
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/user/uploadCv',
+                            url: '${pageContext.request.contextPath}/user/upload-Candidate/',
                             contentType: false,
-                            processData: false,
+                            processData: false,  
                             data: formData,
                             success: function (urlImage) {
                                 console.log(urlImage)
@@ -493,6 +499,7 @@
                                     // $("#divImage").css("display","block")
                                 }else{
                                     // $('#avatar').attr('src', urlImage)
+                                     $('#fileUploadCandidate').val(urlImage);
                                     document.getElementById('nameCv').innerHTML = 'Xem cv';
                                     document.getElementById('nameCv').href = "http://localhost:8080/resources/uploads/"+urlImage ; //or grab it by tagname etc
                                     document.getElementById('xoa').innerHTML = 'Xóa cv';

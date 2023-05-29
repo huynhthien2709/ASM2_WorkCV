@@ -12,6 +12,7 @@ import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.dao.UserDAO;
 import com.asm2.entity.Company;
+import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
 
@@ -67,6 +68,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public Company getCompanyInfo(CompanyDTO companyDTO, int userId) {
 		Company company = userDAO.getCompany(companyDTO, userId);
 		if (company == null) {
@@ -76,9 +78,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User getUserById(int userId) {
 		User user = userDAO.getUserById(userId);
 		return user;
+	}
+
+	@Override
+	@Transactional
+	public Cv updadateCvForCandidate(String pathCv) {
+		Cv cv = userDAO.updadateCvForCandidate(pathCv);
+		return cv;
 	}
 
 }

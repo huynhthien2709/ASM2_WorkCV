@@ -2,6 +2,7 @@ package com.asm2.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,12 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "user")
@@ -55,16 +57,19 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cv_id")
+	private Cv cv;
+	
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Company> listCompanies;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	private List<Cv> cvs;
+	
 
 	public List<Company> getListCompanies() {
 		return listCompanies;
-	}
+	} 
 
 	public void setListCompanies(List<Company> listCompanies) {
 		this.listCompanies = listCompanies;
@@ -165,6 +170,14 @@ public class User {
 		this.role = role;
 	}
 
+	public Cv getCv() {
+		return cv;
+	}
 
+	public void setCv(Cv cv) {
+		this.cv = cv;
+	}
+
+	
 
 }

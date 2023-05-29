@@ -32,7 +32,10 @@
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap"
 	rel="stylesheet">
+
+
 <%@include file="resource.jsp"%>
+
 
 </head>
 <body>
@@ -50,18 +53,17 @@
 
 					<li class="nav-item"><div class="nav-link dropdown1">${userDTO.fullName}
 							<div class="dropdown-content">
-
-								<c:if test="${userDTO.role == 2}">
+							
 									<p>
 										<a href="<c:url value = "/user/profile"/>">Hồ Sơ</a>
 									</p>
-								</c:if>
+							
 								<p>
 									<a href="/save-job/get-list">Công việc đã lưu</a>
 								</p>
 								<c:if test="${userDTO.role == 2}">
 									<p>
-										<a href="/user/list-post">Danh sách bài đăng</a>
+										<a href="<c:url value = "/user/post-list"/>">Danh sách bài đăng</a>
 									</p>
 								</c:if>
 								<c:if test="${userDTO.role == 1}">
@@ -88,7 +90,7 @@
 
 					<li></li>
 					<c:if test="${userDTO.role == 2}">
-						<li class="nav-item cta mr-md-1"><a href="/recruitment/post"
+						<li class="nav-item cta mr-md-1"><a href="<c:url value = "/recruitment/post" />"
 							class="nav-link">Đăng tuyển</a></li>
 					</c:if>
 					<c:if test="${sessionScope.userDTO == null}">
@@ -385,43 +387,51 @@
 						</div>
 					</div>
 					<div class="row">
-						<th:block th:each="recruitment : ${recruitments}">
+						<c:forEach items="${recruitments}" var="recruitments"> 
 							<div class="col-md-12 ">
 								<div
 									class="job-post-item p-4 d-block d-lg-flex align-items-center">
 									<div class="one-third mb-4 mb-md-0">
 										<div class="job-post-item-header align-items-center">
-											<span class="subadge" th:text="${recruitment.type}"></span>
+											<span class="subadge"><c:out value="${recruitments.type}"></c:out></span>
 											<h2 class="mr-3 text-black">
-												<a th:text="${recruitment.title}"
-													th:href="${'/recruitment/detail/'} +${recruitment.id}"></a>
+												<a
+													th:href="${'/recruitment/detail/'} +${recruitment.id}"><c:out value="${recruitments.title}"/></a>
 											</h2>
 										</div>
 										<div class="job-post-item-body d-block d-md-flex">
 											<div class="mr-3">
 												<span class="icon-layers"></span> <a href="#"
-													th:text="${recruitment.Company.nameCompany}"></a>
+													><c:out value="${recruitments.company.nameCompany}"/></a>
 											</div>
 											<div>
 												<span class="icon-my_location"></span> <span
-													th:text="${recruitment.address}"></span>
+													><c:out value="${recruitments.address}"/></span>
 											</div>
 										</div>
 									</div>
 									<input type="hidden" th:id="${'idRe'}+${recruitment.id}"
 										th:value="${recruitment.id}">
-									<div th:if="${session.user}"
+										
+									<div 
 										class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+										
 										<div th:if="${session.user.role.id == 1}">
-											<a th:onclick="'save(' +${recruitment.id}+ ')'"
+											<a onclick="'save(' +${recruitment.id}+ ')'"
 												class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
 												<span class="icon-heart"></span>
 											</a>
 										</div>
-										<a th:if="${session.user.role.id == 1}" data-toggle="modal"
-											th:data-target="${'#exampleModal'}+${recruitment.id}"
-											class="btn btn-primary py-2">Apply Job</a>
+										<c:if test="${sessionScope.userDTO == null }">
+										<a class="btn btn-primary py-2" href="<c:url value = "/user/login"/>">Đăng nhập</a>
+										</c:if>
+										<c:if test="${sessionScope.userDTO != null }">
+										<a data-toggle="modal"
+										   data-target="#exampleModal_${recruitments.id}" 
+											class="btn btn-primary py-2" >Apply Job</a>
+										</c:if>
 									</div>
+									
 									<div th:unless="${session.user}"
 										class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
 										<div>
@@ -430,23 +440,23 @@
 												<span class="icon-heart"></span>
 											</a>
 										</div>
-										<a data-toggle="modal"
+										<!--  <a data-toggle="modal"
 											th:data-target="${'#exampleModal'}+${recruitment.id}"
-											class="btn btn-primary py-2">Apply Job</a>
+											class="btn btn-primary py-2">Apply Job</a>--> 
 									</div>
 								</div>
 							</div>
 							<!-- end -->
 							<!-- Modal -->
 							<div class="modal fade"
-								th:id="${'exampleModal'}+${recruitment.id}" tabindex="-1"
+								id="exampleModal_${recruitments.id}" tabindex="-1"
 								role="dialog" aria-labelledby="exampleModalLabel"
 								aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">
-												Ứng tuyển: <span th:text="${recruitment.title}"></span>
+												Ứng tuyển: <span><c:out value="${recruitments.title}"/></span>
 											</h5>
 											<button type="button" class="close" data-dismiss="modal"
 												aria-label="Close">
@@ -457,33 +467,32 @@
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-12">
-														<select th:id="${'choose'}+${recruitment.id}"
-															th:onchange="'choosed(' +${recruitment.id}+ ')'"
+														<select id="${'choose'}_${recruitments.id}"
+															onchange="choosed(${recruitments.id})"
 															class="form-control" aria-label="Default select example">
 															<option selected>Chọn phương thức nộp</option>
 															<option value="1">Dùng cv đã cập nhật</option>
 															<option value="2">Nộp cv mới</option>
 														</select>
 													</div>
-													<div th:id="${'loai1'}+${recruitment.id}"
+													<div id="loai1_${recruitments.id}"
 														style="display: none" class="col-12">
 														<label for="fileUpload" class="col-form-label">Giới
 															thiệu:</label>
-														<textarea rows="10" cols="3" class="form-control"
-															th:id="${'text'}+${recruitment.id}">
-
-                                                    </textarea>
+														<textarea rows="10" cols="3" class="form-control" id="text_${recruitments.id}">
+														
+                                                   		</textarea>
 													</div>
-													<div th:id="${'loai2'}+${recruitment.id}"
+													<div id="loai2_${recruitments.id}"
 														style="display: none" class="col-12">
 
 														<label for="fileUpload" class="col-form-label">Chọn
 															cv:</label> <input type="file" class="form-control"
-															th:id="${'fileUpload'}+${recruitment.id}" name="file"
+															id="${'fileUpload'}_${recruitments.id}" name="file"
 															required> <label for="fileUpload"
 															class="col-form-label">Giới thiệu:</label>
 														<textarea rows="10" cols="3" class="form-control"
-															th:id="${'text'}+${recruitment.id}">
+															id="text_${recruitment.id}">
 
                                                     </textarea>
 													</div>
@@ -493,14 +502,14 @@
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">Đóng</button>
 													<button type="button"
-														th:id="${'button1'}+${recruitment.id}"
+														id="button1_${recruitments.id}"
 														style="display: none"
-														th:onclick="'apply1(' +${recruitment.id}+ ')'"
+														onclick="apply1_${recruitments.id}"
 														class="btn btn-primary">Nộp</button>
 													<button type="button"
-														th:id="${'button2'}+${recruitment.id}"
+														id="button2_${recruitments.id}"
 														style="display: none"
-														th:onclick="'apply(' +${recruitment.id}+ ')'"
+														onclick="apply_${recruitments.id}"
 														class="btn btn-primary">Nộp</button>
 												</div>
 											</div>
@@ -510,7 +519,7 @@
 									</div>
 								</div>
 							</div>
-						</th:block>
+						</c:forEach>
 
 					</div>
 				</div>
@@ -520,26 +529,27 @@
 							<h2 class="mb-4">Công ty nổi bật</h2>
 						</div>
 					</div>
-					<th:block th:each="companies : ${companies}">
+					<c:forEach items="" var="companies">
 						<div class="sidebar-box">
 							<div class="">
-								<a th:href="${'/user/detail-company/'}+${companies[0]}"
-									class="company-wrap"><img th:src="${companies[2]}"
+							<!--  th:href="${'/user/detail-company/'}+${companies[0]}"-->
+								<a 
+									class="company-wrap"><img src=""
 									class="img-fluid" alt="Colorlib Free Template"></a>
 								<div class="text p-3">
 									<h3>
-										<a th:href="${'/user/detail-company/'}+${companies[0]}"
-											th:text="${companies[1]}"></a>
+										<!--  <a th:href="${'/user/detail-company/'}+${companies[0]}"
+											th:text="${companies[1]}"></a>-->
 									</h3>
 									<p>
-										<span class="number" style="color: black"
+										<!--  <span class="number" style="color: black"
 											th:text="${companies[3]}"></span> <span>Vị trí ứng
-											tuyển</span>
+											tuyển</span>-->
 									</p>
 								</div>
 							</div>
 						</div>
-					</th:block>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -594,12 +604,13 @@
 		}
 
 		function choosed(id) {
-			var name = '#choose' + id;
-			var name1 = 'loai1' + id;
-			var name2 = 'loai2' + id;
-			var button1 = 'button1' + id;
-			var button2 = 'button2' + id;
+			var name = '#choose_' + id;
+			var name1 = 'loai1_' + id;
+			var name2 = 'loai2_' + id;
+			var button1 = 'button1_' + id;
+			var button2 = 'button2_' + id;
 			var giaitri = $(name).val();
+			console.log(giaitri);
 			if (giaitri == 1) {
 				document.getElementById(name1).style.display = 'block'
 				document.getElementById(name2).style.display = 'none'
@@ -614,10 +625,10 @@
 		}
 
 		function apply(id) {
-			var name = "#idRe" + id;
-			var nameModal = "#exampleModal" + id;
+			var name = "#apply_" + id;
+			var nameModal = "#exampleModal_" + id;
 			var nameFile = "#fileUpload" + id;
-			var nameText = "#text" + id;
+			var nameText = "#text_" + id;
 			var idRe = $(name).val();
 			var textvalue = $(nameText).val();
 			var fileUpload = $(nameFile).get(0);
@@ -625,7 +636,7 @@
 			var formData = new FormData();
 			formData.append('file', files[0]);
 			formData.append('idRe', idRe);
-			formData.append('text', textvalue);
+			formData.append('text_', textvalue);
 			if (files[0] == null) {
 				swal({
 					title : 'Bạn cần phải chọn cv!',
@@ -647,7 +658,7 @@
 							swal({
 								title : 'Bạn cần phải đăng nhập!',
 								/* text: 'Redirecting...', */
-								icon : 'error',
+								icon : 'error', 
 								timer : 3000,
 								buttons : true,
 								type : 'error'
@@ -684,7 +695,7 @@
 
 		}
 		function apply1(id) {
-			var name = "#idRe" + id;
+			var name = "#apply1_" + id;
 			var nameModal = "#exampleModal" + id;
 			var nameFile = "#fileUpload" + id;
 			var nameText = "#text" + id;

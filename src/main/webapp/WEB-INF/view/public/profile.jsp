@@ -76,7 +76,7 @@
         </div>
     </div>
 </div>
-<!-- HOME -->
+<!-- HOME 
 <div th:if="${userInformation.status == 0}" class="container-fluid" style="text-align: center">
     <p style="font-size: 20px;font-weight: bold;color: #aaa;margin-top: 10px">Xác thực email đăng nhập</p>
     <div style="width: 600px;height: 400px;border-radius: 5px;
@@ -102,7 +102,7 @@
         - Điện thoại:<span style="color:#5f80ec">(024) 6680 5588</span><br>
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
-</div>
+</div>-->
 <section th:if="${userInformation.status == 1 && userInformation.role.id == 1}" class="site-section" style="margin-top: 10px">
     <div class="container">
         <form enctype="multipart/form-data">
@@ -133,7 +133,7 @@
             </div>
         </form>
 		<c:if test="${userDTO.role == 1 }">
-        <form action="" name="user" method="post" >
+        <form action="${pageContext.request.contextPath}/user/updateUserCandidate" name="user" method="post" >
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
                     <div class="d-flex align-items-center">
@@ -154,12 +154,13 @@
             <div class="row mb-5">
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
-                    	<input type="text" name="image"hidden />
+                    	<input type="text" name="fileName" id="#fileUploadCandidate" hidden />
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">
 						<input type="hidden" name="role" value="${userDTO.role}">
 						<input type="hidden" name="password" value="${userDTO.password}">
+						<input type="hidden" name="cv" value="${userDTO.cv}">
 						
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -216,6 +217,7 @@
         </div>
     </div>
 </div>
+<c:if test="${userDTO.role == 2 }">
 <section class="site-section" style="margin-top: 10px">
     <div class="container">
         <div class="row">
@@ -323,6 +325,7 @@
         </div>
     </div>
 </section>
+</c:if>
 <script>
     ClassicEditor.create(document.querySelector('#editor')).then(eidt => {
         console.log("da" + eidt);
@@ -477,7 +480,7 @@
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/user/uploadCv',
+                            url: '${pageContext.request.contextPath}/user/upload-Candidate/',
                             contentType: false,
                             processData: false,  
                             data: formData,
@@ -497,6 +500,7 @@
                                     // $("#divImage").css("display","block")
                                 }else{
                                     // $('#avatar').attr('src', urlImage)
+                                     $('#fileUploadCandidate').val(urlImage);
                                     document.getElementById('nameCv').innerHTML = 'Xem cv';
                                     document.getElementById('nameCv').href = "http://localhost:8080/resources/uploads/"+urlImage ; //or grab it by tagname etc
                                     document.getElementById('xoa').innerHTML = 'Xóa cv';

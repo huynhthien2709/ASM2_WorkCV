@@ -5,6 +5,7 @@ import java.util.List;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.entity.Company;
+import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
 
@@ -23,5 +24,7 @@ public interface UserService {
 	public Company getCompanyInfo(CompanyDTO companyDTO, int userId);
 
 	public User getUserById(int userId);
+	
+	public Cv updadateCvForCandidate(String pathCv);
 
 }

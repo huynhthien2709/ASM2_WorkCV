@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.asm2.entity.Company;
+import com.asm2.entity.Cv;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
@@ -103,12 +104,18 @@ public class UserController {
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
-
+	
 	@PostMapping("/updateProfile")
 	public String updateProfile(UserDTO userDTO, CompanyDTO companyDTO) {
 		int userId = userDTO.getId();
 		User user = userService.updateUser(userDTO);
 		Company company = userService.getCompanyInfo(companyDTO, userId);
+		return "public/profile";
+	}
+	@PostMapping("/updateUserCandidate")
+	public String updateUserCandidate(UserDTO userDTO) {		
+		User user = userService.updateUser(userDTO);
+		
 		return "public/profile";
 	}
 
@@ -164,8 +171,35 @@ public class UserController {
 			fileout.write(data);
 
 			fileout.close();
+			
 			return request.getContextPath() + "/resources/UserImages/" + file.getOriginalFilename();
 			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\UserImages
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error";
+		}
+	}
+	@PostMapping("/upload-Candidate")
+	public @ResponseBody String uploadUserCandidateImage(@RequestParam("file") CommonsMultipartFile file,
+			HttpServletRequest request) {
+
+		byte[] data = file.getBytes();
+
+		String folderPath = request.getServletContext().getRealPath("/") + "resources" + File.separator + "CandidateImage";
+		String filePath = folderPath + File.separator + file.getOriginalFilename();
+
+		try {
+			File folder = new File(folderPath);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			FileOutputStream fileout = new FileOutputStream(filePath);
+			fileout.write(data);
+
+			fileout.close();
+//			String path = request.getContextPath() + "/resources/CandidateImage/" + file.getOriginalFilename();
+//			Cv cv = userService.updadateCvForCandidate(path);
+			return request.getContextPath() + "/resources/CandidateImage/" + file.getOriginalFilename();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";

@@ -53,12 +53,11 @@
 
 					<li class="nav-item"><div class="nav-link dropdown1">${userDTO.fullName}
 							<div class="dropdown-content">
-
-								<c:if test="${userDTO.role == 2}">
+							
 									<p>
 										<a href="<c:url value = "/user/profile"/>">Hồ Sơ</a>
 									</p>
-								</c:if>
+							
 								<p>
 									<a href="/save-job/get-list">Công việc đã lưu</a>
 								</p>
@@ -423,9 +422,14 @@
 												<span class="icon-heart"></span>
 											</a>
 										</div>
+										<c:if test="${sessionScope.userDTO == null }">
+										<a class="btn btn-primary py-2" href="<c:url value = "/user/login"/>">Đăng nhập</a>
+										</c:if>
+										<c:if test="${sessionScope.userDTO != null }">
 										<a data-toggle="modal"
 										   data-target="#exampleModal_${recruitments.id}" 
-											class="btn btn-primary py-2">Apply Job</a>
+											class="btn btn-primary py-2" >Apply Job</a>
+										</c:if>
 									</div>
 									
 									<div th:unless="${session.user}"
@@ -463,33 +467,32 @@
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-12">
-														<select th:id="${'choose'}+${recruitments.id}"
-															th:onchange="'choosed(' +${recruitments.id}+ ')'"
+														<select id="${'choose'}_${recruitments.id}"
+															onchange="choosed(${recruitments.id})"
 															class="form-control" aria-label="Default select example">
 															<option selected>Chọn phương thức nộp</option>
 															<option value="1">Dùng cv đã cập nhật</option>
 															<option value="2">Nộp cv mới</option>
 														</select>
 													</div>
-													<div th:id="${'loai1'}+${recruitment.id}"
+													<div id="loai1_${recruitments.id}"
 														style="display: none" class="col-12">
 														<label for="fileUpload" class="col-form-label">Giới
 															thiệu:</label>
-														<textarea rows="10" cols="3" class="form-control"
-															th:id="${'text'}+${recruitment.id}">
-
-                                                    </textarea>
+														<textarea rows="10" cols="3" class="form-control" id="text_${recruitments.id}">
+														
+                                                   		</textarea>
 													</div>
-													<div th:id="${'loai2'}+${recruitment.id}"
+													<div id="loai2_${recruitments.id}"
 														style="display: none" class="col-12">
 
 														<label for="fileUpload" class="col-form-label">Chọn
 															cv:</label> <input type="file" class="form-control"
-															th:id="${'fileUpload'}+${recruitment.id}" name="file"
+															id="${'fileUpload'}_${recruitments.id}" name="file"
 															required> <label for="fileUpload"
 															class="col-form-label">Giới thiệu:</label>
 														<textarea rows="10" cols="3" class="form-control"
-															th:id="${'text'}+${recruitment.id}">
+															id="text_${recruitment.id}">
 
                                                     </textarea>
 													</div>
@@ -499,14 +502,14 @@
 													<button type="button" class="btn btn-secondary"
 														data-dismiss="modal">Đóng</button>
 													<button type="button"
-														th:id="${'button1'}+${recruitment.id}"
+														id="button1_${recruitments.id}"
 														style="display: none"
-														th:onclick="'apply1(' +${recruitment.id}+ ')'"
+														onclick="apply1_${recruitments.id}"
 														class="btn btn-primary">Nộp</button>
 													<button type="button"
-														th:id="${'button2'}+${recruitment.id}"
+														id="button2_${recruitments.id}"
 														style="display: none"
-														th:onclick="'apply(' +${recruitment.id}+ ')'"
+														onclick="apply_${recruitments.id}"
 														class="btn btn-primary">Nộp</button>
 												</div>
 											</div>
@@ -526,12 +529,12 @@
 							<h2 class="mb-4">Công ty nổi bật</h2>
 						</div>
 					</div>
-					<c:forEach items="${companies}" var="companies">
+					<c:forEach items="" var="companies">
 						<div class="sidebar-box">
 							<div class="">
 							<!--  th:href="${'/user/detail-company/'}+${companies[0]}"-->
 								<a 
-									class="company-wrap"><img src="${companies.logo}"
+									class="company-wrap"><img src=""
 									class="img-fluid" alt="Colorlib Free Template"></a>
 								<div class="text p-3">
 									<h3>
@@ -601,12 +604,13 @@
 		}
 
 		function choosed(id) {
-			var name = '#choose' + id;
-			var name1 = 'loai1' + id;
-			var name2 = 'loai2' + id;
-			var button1 = 'button1' + id;
-			var button2 = 'button2' + id;
+			var name = '#choose_' + id;
+			var name1 = 'loai1_' + id;
+			var name2 = 'loai2_' + id;
+			var button1 = 'button1_' + id;
+			var button2 = 'button2_' + id;
 			var giaitri = $(name).val();
+			console.log(giaitri);
 			if (giaitri == 1) {
 				document.getElementById(name1).style.display = 'block'
 				document.getElementById(name2).style.display = 'none'
@@ -621,10 +625,10 @@
 		}
 
 		function apply(id) {
-			var name = "#idRe" + id;
-			var nameModal = "#exampleModal" + id;
+			var name = "#apply_" + id;
+			var nameModal = "#exampleModal_" + id;
 			var nameFile = "#fileUpload" + id;
-			var nameText = "#text" + id;
+			var nameText = "#text_" + id;
 			var idRe = $(name).val();
 			var textvalue = $(nameText).val();
 			var fileUpload = $(nameFile).get(0);
@@ -632,7 +636,7 @@
 			var formData = new FormData();
 			formData.append('file', files[0]);
 			formData.append('idRe', idRe);
-			formData.append('text', textvalue);
+			formData.append('text_', textvalue);
 			if (files[0] == null) {
 				swal({
 					title : 'Bạn cần phải chọn cv!',
@@ -654,7 +658,7 @@
 							swal({
 								title : 'Bạn cần phải đăng nhập!',
 								/* text: 'Redirecting...', */
-								icon : 'error',
+								icon : 'error', 
 								timer : 3000,
 								buttons : true,
 								type : 'error'
@@ -691,7 +695,7 @@
 
 		}
 		function apply1(id) {
-			var name = "#idRe" + id;
+			var name = "#apply1_" + id;
 			var nameModal = "#exampleModal" + id;
 			var nameFile = "#fileUpload" + id;
 			var nameText = "#text" + id;

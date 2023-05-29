@@ -38,9 +38,15 @@
   <script src="<%= request.getContextPath() %>/resources/assets/js/aos.js"></script>
   <script src="<%= request.getContextPath() %>/resources/assets/js/jquery.animateNumber.min.js"></script>
   <script src="<%= request.getContextPath() %>/resources/assets/js/scrollax.min.js"></script>
+  <script src="<%= request.getContextPath() %>/resources/assets/js/getId.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="<%= request.getContextPath() %>/resources/assets/js/google-map.js"></script>
   <script src="<%= request.getContextPath() %>/resources/assets/js/main.js"></script>
   <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+  <!-- Bootstrap call modal
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+  
 </html>

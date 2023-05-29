@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.entity.Company;
+import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
 
@@ -69,6 +70,7 @@ public class UserDAOImpl implements UserDAO {
 		if (user == null) {
 			return null;
 		} else {
+			Cv cv = new Cv();
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPassword(user.getPassword());
 			userDTO.setFullName(user.getFullName());
@@ -78,6 +80,8 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
+			userDTO.setCv(Integer.toString(cv.getId()));
+			System.out.println(cv.getId());
 			return userDTO;
 		}
 
@@ -90,6 +94,8 @@ public class UserDAOImpl implements UserDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
+		Cv cv = new Cv();
+		cv.setId(Integer.parseInt(userDTO.getCv()));
 		user.setEmail(userDTO.getEmail());
 		user.setFullName(userDTO.getFullName());
 		user.setAddress(userDTO.getAddress());
@@ -98,6 +104,7 @@ public class UserDAOImpl implements UserDAO {
 		user.setRole(role);
 		user.setDescription(userDTO.getDescription());
 		user.setImage(userDTO.getImage());
+		user.setCv(cv);
 		currentSession.saveOrUpdate(user);
 		return user;
 	}
@@ -149,5 +156,25 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("userId", userId);
 		return query.uniqueResult();
 	}
+
+	@Override
+	public Cv updadateCvForCandidate(String pathCv) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Cv cv = new Cv();
+		cv.setFileName(pathCv);
+		currentSession.saveOrUpdate(cv);
+		return cv;
+	}
+
+	@Override
+	public User updateCvId(int cvId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		User user = new User();
+		Cv cv = new Cv();
+
+		
+		return null;
+	}
+	
 
 }
