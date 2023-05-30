@@ -102,6 +102,9 @@ public class UserController {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
 		Company company = userService.getCompanyInfo(companyDTO, userId);
+		int cvid = Integer.parseInt(userDTO.getCv());
+		Cv cv = userService.getCvById(cvid);
+		System.out.println(cv.getFileName());
 		return "public/profile";
 	}
 	

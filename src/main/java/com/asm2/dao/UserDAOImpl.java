@@ -80,8 +80,8 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
-			userDTO.setCv(Integer.toString(cv.getId()));
-			System.out.println(cv.getId());
+			userDTO.setCv(Integer.toString(user.getCv().getId()));
+			System.out.println(user.getCv().getId());
 			return userDTO;
 		}
 
@@ -94,8 +94,10 @@ public class UserDAOImpl implements UserDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
-		Cv cv = new Cv();
-		cv.setId(Integer.parseInt(userDTO.getCv()));
+//		Cv cv =  this.getCvById(Integer.parseInt(userDTO.getCv()));
+//		cv.setId(Integer.parseInt(userDTO.getCv()));
+		Cv cv = updadateCvForCandidate(userDTO.getCv());
+		
 		user.setEmail(userDTO.getEmail());
 		user.setFullName(userDTO.getFullName());
 		user.setAddress(userDTO.getAddress());
@@ -156,6 +158,7 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("userId", userId);
 		return query.uniqueResult();
 	}
+	
 
 	@Override
 	public Cv updadateCvForCandidate(String pathCv) {
@@ -167,14 +170,17 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User updateCvId(int cvId) {
+	public Cv getCvById(int cvid) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		User user = new User();
-		Cv cv = new Cv();
-
-		
-		return null;
+		Query<Cv> query = currentSession.createQuery("from Cv where id =: cvid", Cv.class);
+		query.setParameter("cvid", cvid);
+		return query.uniqueResult();
 	}
+
+
+
+	
+	
 	
 
 }

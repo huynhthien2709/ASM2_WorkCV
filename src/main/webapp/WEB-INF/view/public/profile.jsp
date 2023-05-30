@@ -117,7 +117,7 @@
                     </div>
                     <p id="cvName" th:if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
                     <p id="cvName" th:if="${Cv == null}"></p>
-                    <a id="nameCv" th:if="${Cv !=null}" th:href="${'http://localhost:8080/resources/uploads/'} +${Cv.fileName}" >Xem cv</a>
+                    <a id="nameCv" href="${'http://localhost:8080/resources/CandidateImage/'} + ${cv.fileName}" >Xem cv</a>
                     <a id="nameCv"  th:href="${'http://localhost:8080/resources/uploads/'}" ></a>
                     <a style="color: red;margin-left: 20px" th:if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>
                     <a style="color: red;margin-left: 20px" th:if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
@@ -154,13 +154,13 @@
             <div class="row mb-5">
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
-                    	<input type="text" name="fileName" id="#fileUploadCandidate" hidden />
+                    	<input type="text" name="cv" id="fileUploadCandidate" hidden /> <!-- cái CV này là CV path -->
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">
 						<input type="hidden" name="role" value="${userDTO.role}">
 						<input type="hidden" name="password" value="${userDTO.password}">
-						<input type="hidden" name="cv" value="${userDTO.cv}">
+						<%-- <input type="hidden" name="cv" value="${userDTO.cv}"> --%>
 						
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -486,7 +486,7 @@
                             data: formData,
                             success: function (urlImage) {
                                 console.log(urlImage)
-                                if(urlImage == "false"){
+                                if(urlImage == "Error"){
                                     // document.getElementById("change").style.backgroundColor = 'red';
 
                                     swal({

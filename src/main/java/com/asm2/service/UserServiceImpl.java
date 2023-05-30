@@ -91,4 +91,13 @@ public class UserServiceImpl implements UserService {
 		return cv;
 	}
 
+	@Override
+	@Transactional
+	public Cv getCvById(int cvid) {
+		Cv cv = userDAO.getCvById(cvid);
+		return cv;
+	}
+
+	
+
 }

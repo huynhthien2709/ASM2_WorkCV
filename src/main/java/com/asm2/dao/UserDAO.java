@@ -27,5 +27,8 @@ public interface UserDAO {
 	
 	public Cv updadateCvForCandidate(String pathCv);
 	
-	public User updateCvId(int cvId);
+	public Cv getCvById(int cvid);
+	
+
+
 }

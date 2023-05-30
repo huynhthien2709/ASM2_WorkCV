@@ -26,5 +26,7 @@ public interface UserService {
 	public User getUserById(int userId);
 	
 	public Cv updadateCvForCandidate(String pathCv);
+	
+	public Cv getCvById(int cvid);
 
 }
