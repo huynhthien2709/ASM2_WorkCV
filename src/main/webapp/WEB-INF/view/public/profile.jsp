@@ -154,7 +154,7 @@
             <div class="row mb-5">
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
-                    	<input type="text" name="cv" id="fileUploadCandidate" hidden /> <!-- cái CV này là CV path -->
+                    	<input type="text" name="cv" id="fileUploadCandidate" hidden /> 
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">

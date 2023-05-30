@@ -118,8 +118,7 @@ public class UserController {
 	}
 	@PostMapping("/updateUserCandidate")
 	public String updateUserCandidate(UserDTO userDTO) {		
-		User user = userService.updateUser(userDTO);
-		
+		User user = userService.updateUser(userDTO);		
 		return "public/profile";
 	}
 

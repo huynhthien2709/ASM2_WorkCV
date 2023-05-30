@@ -1,8 +1,6 @@
 package com.asm2.DTO;
 
-import java.util.List;
 
-import com.asm2.entity.Cv;
 
 public class UserDTO {
 
