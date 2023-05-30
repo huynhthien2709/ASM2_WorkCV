@@ -104,6 +104,7 @@ public class UserController {
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		int cvid = Integer.parseInt(userDTO.getCv());
 		Cv cv = userService.getCvById(cvid);
+		model.addAttribute("cv", cv);
 		System.out.println(cv.getFileName());
 		return "public/profile";
 	}

@@ -115,12 +115,12 @@
                             </label>
                         </div>
                     </div>
-                    <p id="cvName" th:if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
-                    <p id="cvName" th:if="${Cv == null}"></p>
-                    <a id="nameCv" href="${'http://localhost:8080/resources/CandidateImage/'} + ${cv.fileName}" >Xem cv</a>
-                    <a id="nameCv"  th:href="${'http://localhost:8080/resources/uploads/'}" ></a>
-                    <a style="color: red;margin-left: 20px" th:if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>
-                    <a style="color: red;margin-left: 20px" th:if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
+                    <p id="cvName" if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
+                    <p id="cvName" if="${Cv == null}"></p>
+                    <a id="nameCv" href="${cv.fileName}">Xem cv: ${cv.fileName} </a>
+                    <a id="nameCv"  href="${'http://localhost:8080/resources/uploads/'}" ></a>
+                    <a style="color: red;margin-left: 20px" if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>
+                    <a style="color: red;margin-left: 20px" if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
                 </div>
 
                 <div class="col-lg-4">
@@ -502,7 +502,7 @@
                                     // $('#avatar').attr('src', urlImage)
                                      $('#fileUploadCandidate').val(urlImage);
                                     document.getElementById('nameCv').innerHTML = 'Xem cv';
-                                    document.getElementById('nameCv').href = "http://localhost:8080/resources/uploads/"+urlImage ; //or grab it by tagname etc
+                                    document.getElementById('nameCv').href = "http://localhost:8080/resources/CandidateImage/"+urlImage ; //or grab it by tagname etc
                                     document.getElementById('xoa').innerHTML = 'Xóa cv';
                                     document.getElementById("cvName").innerHTML = urlImage;
                                     document.getElementById("cvXoa").innerHTML = urlImage;
