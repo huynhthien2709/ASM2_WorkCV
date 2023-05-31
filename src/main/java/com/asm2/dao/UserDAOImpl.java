@@ -173,13 +173,13 @@ public class UserDAOImpl implements UserDAO {
 		return query.uniqueResult();
 	}
 
-    @Override
+	@Override
 	public void deleteCv(int cvId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		Query<Cv> query = currentSession.createQuery("delete Cv where id =: cvId", Cv.class);
+		Query query = currentSession.createQuery("delete Cv where id =: cvId");
 		query.setParameter("cvId", cvId);
 		query.executeUpdate();
-
+//		currentSession.delete(currentSession);
 	}
 
 	@Override

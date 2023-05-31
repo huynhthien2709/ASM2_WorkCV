@@ -218,8 +218,8 @@ public class UserController {
 	@PostMapping("/deleteCv")
 	public String deleteCv(HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		User user = userService.getUserById(userDTO.getId());
-		userService.deleteCv(user.getCv().getId());
+		User user = userService.getUserById(userDTO.getId());	
+		userService.deleteCv(user);
 		return "public/profile";
 	}
 	

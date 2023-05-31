@@ -99,8 +99,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
-	public void deleteCv(int cvId) {
+	public void deleteCv(User user) {
+		int cvId = user.getCv().getId();
+		user.setCv(null);
+		userDAO.updateUser(user);
 		userDAO.deleteCv(cvId);
 		
 	}

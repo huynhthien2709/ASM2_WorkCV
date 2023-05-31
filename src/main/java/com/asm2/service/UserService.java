@@ -29,6 +29,6 @@ public interface UserService {
 	
 	public Cv getCvById(int cvid);
 	
-	public void deleteCv(int cvId);
+	public void deleteCv(User user);
 
 }
