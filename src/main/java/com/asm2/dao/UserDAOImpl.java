@@ -70,7 +70,6 @@ public class UserDAOImpl implements UserDAO {
 		if (user == null) {
 			return null;
 		} else {
-			Cv cv = new Cv();
 			userDTO.setEmail(user.getEmail());
 			userDTO.setPassword(user.getPassword());
 			userDTO.setFullName(user.getFullName());
@@ -80,7 +79,12 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
-			userDTO.setCv(Integer.toString(user.getCv().getId()));
+			if (user.getCv() == null) {
+				userDTO.setCv(Integer.toString(0));
+			}else {
+				userDTO.setCv(Integer.toString(user.getCv().getId()));
+			}
+			
 			return userDTO;
 		}
 

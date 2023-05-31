@@ -188,7 +188,7 @@ public class UserController {
 	}
 	@PostMapping("/upload-Candidate")
 	public @ResponseBody String uploadUserCandidateImage(@RequestParam("file") CommonsMultipartFile file,
-			HttpServletRequest request) {
+			HttpServletRequest request, Model model) {
 
 		byte[] data = file.getBytes();
 
@@ -204,7 +204,9 @@ public class UserController {
 			fileout.write(data);
 
 			fileout.close();
-
+//			String path = file.getOriginalFilename();
+//			System.out.println(file.getOriginalFilename());
+//			model.addAttribute("path", path);
 			return request.getContextPath() + "/resources/CandidateImage/" + file.getOriginalFilename();
 		} catch (Exception e) {
 			e.printStackTrace();

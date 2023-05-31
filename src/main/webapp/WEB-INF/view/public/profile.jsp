@@ -123,6 +123,9 @@
                     <a style="color: red;margin-left: 20px" if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>                    
                     <a style="color: red;margin-left: 20px" if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
                     </c:if>
+                    <c:if test="${cv == null }">
+                    <a>${path}</a>   
+                    </c:if>
                 </div>
 
                 <div class="col-lg-4">
