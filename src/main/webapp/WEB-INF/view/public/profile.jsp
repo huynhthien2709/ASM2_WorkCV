@@ -117,10 +117,12 @@
                     </div>
                     <p id="cvName" if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
                     <p id="cvName" if="${Cv == null}"></p>
-                    <a id="nameCv" href="${cv.fileName}">Xem cv: ${cv.fileName} </a>
+                    <c:if test="${cv != null }">
+                    <a id="nameCv" href="${cv.fileName}" target="_blank">Xem cv: ${cv.cvShortName} </a>                    
                     <a id="nameCv"  href="${'http://localhost:8080/resources/uploads/'}" ></a>
-                    <a style="color: red;margin-left: 20px" if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>
+                    <a style="color: red;margin-left: 20px" if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>                    
                     <a style="color: red;margin-left: 20px" if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
+                    </c:if>
                 </div>
 
                 <div class="col-lg-4">
@@ -203,11 +205,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                Cv : <span id="cvXoa" ></span>
-                <span th:if="${Cv != null}" th:text="${Cv.fileName}"></span>
-                <form action="/user/deleteCv" method="post">
+                Cv : <span id="cvXoa" >${cv.cvShortName}</span>
+                <!--  <span  text="${cv.fileName}"></span>-->
+                <form action="${pageContext.request.contextPath}/user/deleteCv" name="user" method="post">
                     <div class="modal-footer mt-1">
                         <input type="hidden"  name="idCv">
+                        <input type="text" name="cv" value="${cv.id}" hidden /> 
                         <button type="submit" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                         <button type="submit" class="btn btn-danger">Xóa</button>
                     </div>

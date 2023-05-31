@@ -98,6 +98,14 @@ public class UserServiceImpl implements UserService {
 		return cv;
 	}
 
+	@Override
+	@Transactional
+	public void deleteCv(int cvId) {
+		userDAO.deleteCv(cvId);
+		
+	}
+
+	
 	
 
 }

@@ -53,5 +53,14 @@ public class Cv {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	/**
+	 * use to get just file name, not path fileName from data
+	 * @return
+	 */
+	public String getCvShortName() {
+		String[] arr = this.fileName.split("/");
+		return arr[arr.length - 1];
+	}
 
 }

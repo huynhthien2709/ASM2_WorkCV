@@ -81,7 +81,6 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
 			userDTO.setCv(Integer.toString(user.getCv().getId()));
-			System.out.println(user.getCv().getId());
 			return userDTO;
 		}
 
@@ -94,10 +93,7 @@ public class UserDAOImpl implements UserDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
-//		Cv cv =  this.getCvById(Integer.parseInt(userDTO.getCv()));
-//		cv.setId(Integer.parseInt(userDTO.getCv()));
-		Cv cv = updadateCvForCandidate(userDTO.getCv());
-		
+		Cv cv = updadateCvForCandidate(userDTO.getCv());		
 		user.setEmail(userDTO.getEmail());
 		user.setFullName(userDTO.getFullName());
 		user.setAddress(userDTO.getAddress());
@@ -175,6 +171,22 @@ public class UserDAOImpl implements UserDAO {
 		Query<Cv> query = currentSession.createQuery("from Cv where id =: cvid", Cv.class);
 		query.setParameter("cvid", cvid);
 		return query.uniqueResult();
+	}
+
+    @Override
+	public void deleteCv(int cvId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Cv> query = currentSession.createQuery("delete Cv where id =: cvId", Cv.class);
+		query.setParameter("cvId", cvId);
+		query.executeUpdate();
+
+	}
+
+	@Override
+	public void updateUser(User user) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.saveOrUpdate(user);
+		
 	}
 
 

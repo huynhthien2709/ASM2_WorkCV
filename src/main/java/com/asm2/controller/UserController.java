@@ -102,7 +102,8 @@ public class UserController {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
 		Company company = userService.getCompanyInfo(companyDTO, userId);
-		int cvid = Integer.parseInt(userDTO.getCv());
+		User user = userService.getUserById(userId);
+		int cvid = user.getCv().getId();
 		Cv cv = userService.getCvById(cvid);
 		model.addAttribute("cv", cv);
 		return "public/profile";
@@ -116,8 +117,12 @@ public class UserController {
 		return "public/profile";
 	}
 	@PostMapping("/updateUserCandidate")
-	public String updateUserCandidate(UserDTO userDTO) {		
-		User user = userService.updateUser(userDTO);		
+	public String updateUserCandidate(UserDTO userDTO,  Model model) {		
+		User user = userService.updateUser(userDTO);
+//		System.out.println(user.getCv().getId());
+		int cvid = user.getCv().getId();
+		Cv cv = userService.getCvById(cvid);
+		model.addAttribute("cv", cv);
 		return "public/profile";
 	}
 
@@ -199,8 +204,7 @@ public class UserController {
 			fileout.write(data);
 
 			fileout.close();
-//			String path = request.getContextPath() + "/resources/CandidateImage/" + file.getOriginalFilename();
-//			Cv cv = userService.updadateCvForCandidate(path);
+
 			return request.getContextPath() + "/resources/CandidateImage/" + file.getOriginalFilename();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -211,5 +215,13 @@ public class UserController {
 	public String postListPage() {
 		return "public/post-list";
 	}
+	@PostMapping("/deleteCv")
+	public String deleteCv(HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		User user = userService.getUserById(userDTO.getId());
+		userService.deleteCv(user.getCv().getId());
+		return "public/profile";
+	}
+	
 
 }

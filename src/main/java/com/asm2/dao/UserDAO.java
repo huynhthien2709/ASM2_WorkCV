@@ -29,6 +29,10 @@ public interface UserDAO {
 	
 	public Cv getCvById(int cvid);
 	
+	public void deleteCv(int cvId);
+	
+	public void updateUser(User user);
+	
 
 
 }

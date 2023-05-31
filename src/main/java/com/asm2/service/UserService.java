@@ -28,5 +28,7 @@ public interface UserService {
 	public Cv updadateCvForCandidate(String pathCv);
 	
 	public Cv getCvById(int cvid);
+	
+	public void deleteCv(int cvId);
 
 }
