@@ -103,9 +103,16 @@ public class UserController {
 		int userId = userDTO.getId();
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		User user = userService.getUserById(userId);
-		int cvid = user.getCv().getId();
-		Cv cv = userService.getCvById(cvid);
-		model.addAttribute("cv", cv);
+		System.out.println(user.getCv());
+		if (user.getCv() == null) {
+			model.addAttribute("msg", "Bạn chưa có CV");
+			
+		}else {
+			int cvid = user.getCv().getId();
+			Cv cv = userService.getCvById(cvid);
+			model.addAttribute("cv", cv);
+		}
+		
 		return "public/profile";
 	}
 	
@@ -218,10 +225,15 @@ public class UserController {
 		return "public/post-list";
 	}
 	@PostMapping("/deleteCv")
-	public String deleteCv(HttpSession session) {
+	public String deleteCv(HttpSession session, Model model) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		User user = userService.getUserById(userDTO.getId());	
-		userService.deleteCv(user);
+		User user = userService.getUserById(userDTO.getId());
+		if (user.getCv() != null) {
+			userService.deleteCv(user);
+		}
+		model.addAttribute("msg", "Bạn chưa có CV"); 
+	
+		
 		return "public/profile";
 	}
 	

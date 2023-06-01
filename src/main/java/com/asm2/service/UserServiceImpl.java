@@ -100,6 +100,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteCv(User user) {
+		
 		int cvId = user.getCv().getId();
 		user.setCv(null);
 		userDAO.updateUser(user);

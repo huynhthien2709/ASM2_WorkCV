@@ -123,9 +123,9 @@
                     <a style="color: red;margin-left: 20px" if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>                    
                     <a style="color: red;margin-left: 20px" if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
                     </c:if>
-                    <c:if test="${cv == null }">
-                    <a>${path}</a>   
-                    </c:if>
+                    <%-- <c:if test="${cv == null }"> --%>
+                    	<span id="cvErrorMsg">${msg}</span>  
+                    <%-- </c:if> --%>
                 </div>
 
                 <div class="col-lg-4">
@@ -507,12 +507,15 @@
                                 }else{
                                     // $('#avatar').attr('src', urlImage)
                                      $('#fileUploadCandidate').val(urlImage);
+                                    const fileName = urlImage.substr(urlImage.lastIndexOf('/') + 1);
+                                    document.getElementById('cvErrorMsg').innerHTML = fileName;
                                     document.getElementById('nameCv').innerHTML = 'Xem cv';
                                     document.getElementById('nameCv').href = "http://localhost:8080/resources/CandidateImage/"+urlImage ; //or grab it by tagname etc
                                     document.getElementById('xoa').innerHTML = 'Xóa cv';
                                     document.getElementById("cvName").innerHTML = urlImage;
                                     document.getElementById("cvXoa").innerHTML = urlImage;
-
+                                    
+										
                                     swal({
                                         title: 'Cập nhật CV thành công!',
                                         /* text: 'Redirecting...', */
