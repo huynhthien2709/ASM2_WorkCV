@@ -79,12 +79,8 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
-			if (user.getCv() == null) {
-				userDTO.setCv(Integer.toString(0));
-			}else {
-				userDTO.setCv(Integer.toString(user.getCv().getId()));
-			}
-			
+			userDTO.setCv(Integer.toString(user.getCv().getId()));
+						
 			return userDTO;
 		}
 
@@ -93,6 +89,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User updateUser(UserDTO userDTO) {
 		User user = this.getUserById(userDTO.getId());
+		
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		Role role = new Role();
@@ -105,8 +102,19 @@ public class UserDAOImpl implements UserDAO {
 		user.setId(userDTO.getId());
 		user.setRole(role);
 		user.setDescription(userDTO.getDescription());
-		user.setImage(userDTO.getImage());
-		user.setCv(cv);
+		System.out.println("cvDTO " + userDTO.getCv());
+		System.out.println("imageDTO " + userDTO.getImage());
+		if (userDTO.getCv() != null) {
+			user.setCv(cv);
+			
+		}else if (userDTO.getImage() != null) {
+			user.setImage(userDTO.getImage());
+			
+		}else {
+			user.setCv(user.getCv());
+			user.setImage(user.getImage());
+		}		
+		
 		currentSession.saveOrUpdate(user);
 		return user;
 	}

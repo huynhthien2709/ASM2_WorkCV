@@ -65,13 +65,27 @@
             <div class="col-md-12 text-center mb-5">
                 <h1 class="mb-3 bread">Hồ sơ </h1>               
                 <div class="form-group">
+                <c:if test="${userDTO.role == 2 }">
                     <label class="btn btn-primary btn-md btn-file">
                         Chọn ảnh<input type="file" name="file" id="fileUpload" hidden />                         
-                    </label>
-                </div>                
+                    </label>                    
+                    </c:if>
+                    <c:if test="${userDTO.role == 1 }">
+                    <label class="btn btn-primary btn-md btn-file">
+                        Chọn ảnh<input type="file" name="file" id="fileUploadUserCan" hidden />                         
+                    </label>                    
+                    </c:if>
+                </div>  
+                <c:if test="${userDTO.role == 2 }">       
                 <div style="margin-left: 0px" id="divImage" >
-                    <img id="avatar" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
+                    <img id="avatar3" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
                 </div>
+                </c:if> 
+                <c:if test="${userDTO.role == 1 }">          
+                <div style="margin-left: 0px" id="divImage" >
+                    <img id="avatar2" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
+                </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -115,13 +129,13 @@
                             </label>
                         </div>
                     </div>
-                    <p id="cvName" if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
-                    <p id="cvName" if="${Cv == null}"></p>
+                 <%--    <p id="cvName" if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
+                    <p id="cvName" if="${Cv == null}"></p> --%>
                     <c:if test="${cv != null }">
                     <a id="nameCv" href="${cv.fileName}" target="_blank">Xem cv: ${cv.cvShortName} </a>                    
                     <a id="nameCv"  href="${'http://localhost:8080/resources/uploads/'}" ></a>
-                    <a style="color: red;margin-left: 20px" if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>                    
-                    <a style="color: red;margin-left: 20px" if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
+                    <a style="color: red;margin-left: 20px" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>                    
+                   <%--  <a style="color: red;margin-left: 20px" if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a> --%>
                     </c:if>
                     <%-- <c:if test="${cv == null }"> --%>
                     	<span id="cvErrorMsg">${msg}</span>  
@@ -160,12 +174,14 @@
                 <div class="col-lg-12">
                     <div class="p-4 p-md-5 border rounded" method="post">
                     	<input type="text" name="cv" id="fileUploadCandidate" hidden /> 
+                    	<input type="text" name="image" id="fileUploadUserCandidate" hidden />
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <input type="hidden" name="id" value="${userDTO.id}">
 						<input type="hidden" name="status" value="${userDTO.status}">
 						<input type="hidden" name="role" value="${userDTO.role}">
 						<input type="hidden" name="password" value="${userDTO.password}">
-						<%-- <input type="hidden" name="cv" value="${userDTO.cv}"> --%>
+						<%-- <input type="hidden" name="image" value="${userDTO.image}"> --%>
+					    <%-- <input type="hidden" name="cv" value="${userDTO.cv}">  --%>
 						
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -382,7 +398,7 @@
                                     })
                                     $("#divImage").css("display","block")
                                 }else{
-                                    $('#avatar').attr('src', urlImage)
+                                    $('#avatar3').attr('src', urlImage)
                                     $('#fileUpload2UserPath').val(urlImage);                                   
                                     swal({
                                         title: 'Cập nhật ảnh đại diện thành công!',
@@ -407,6 +423,68 @@
     })
  
 </script>
+<script>
+    $(function () {
+        $('#fileUploadUserCan').change(function () {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUploadUserCan').get(0);
+                var files = fileUpload.files;
+                //var email = $("#email").val();
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                //formData.append('email', email);
+                if(files[0] == null){
+                    // document.getElementById("change").style.backgroundColor = 'red';
+                    // $('#text').val(" ❌ Cập nhật ảnh thất bại");
+                    $(".toast").toast("show");
+                } else {
+                    $.ajax(
+                        {
+                            type: 'POST',                           
+                            url: '${pageContext.request.contextPath}/user/upload-Candidate/',
+                            contentType: false,
+                            processData: false,
+                            data: formData,
+                            success: function (urlImage) {
+                                console.log(urlImage)
+                                if(urlImage == "Error"){
+                                    document.getElementById("change").style.backgroundColor = 'red';
+                                    swal({
+                                        title: 'Cập nhật ảnh đại diện thất bại!',
+                                        /* text: 'Redirecting...', */
+                                        icon: 'error',
+                                        timer: 3000,
+                                        buttons: true,
+                                        type: 'error'
+                                    })
+                                    $("#divImage").css("display","block")
+                                }else{
+                                    $('#avatar2').attr('src', urlImage)
+                                    $('#fileUploadUserCandidate').val(urlImage);                                   
+                                    swal({
+                                        title: 'Cập nhật ảnh đại diện thành công!',
+                                        /* text: 'Redirecting...', */
+                                        icon: 'success',
+                                        timer: 3000,
+                                        buttons: true,
+                                        type: 'success'
+                                    })
+                                }
+
+                            },
+                            error: function (err) {
+                                alert(err);
+                            }
+                        }
+                    )
+                }
+
+            }
+        })
+    })
+ 
+</script>
+
 
 <script>
     $(function () {

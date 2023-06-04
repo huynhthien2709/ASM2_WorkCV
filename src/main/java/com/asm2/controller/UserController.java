@@ -125,11 +125,11 @@ public class UserController {
 	}
 	@PostMapping("/updateUserCandidate")
 	public String updateUserCandidate(UserDTO userDTO,  Model model) {		
-		User user = userService.updateUser(userDTO);
-//		System.out.println(user.getCv().getId());
+		User user = userService.updateUser(userDTO);		
 		int cvid = user.getCv().getId();
 		Cv cv = userService.getCvById(cvid);
 		model.addAttribute("cv", cv);
+		
 		return "public/profile";
 	}
 
