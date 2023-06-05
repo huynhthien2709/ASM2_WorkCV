@@ -1,5 +1,7 @@
 package com.asm2.dao;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -11,10 +13,13 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
+import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
 
@@ -79,7 +84,12 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
-			userDTO.setCv(Integer.toString(user.getCv().getId()));
+			if (user.getCv() == null) {
+				userDTO.setCv("0");
+			}else {
+				userDTO.setCv(Integer.toString(user.getCv().getId()));
+			}
+			
 
 			return userDTO;
 		}
@@ -94,8 +104,7 @@ public class UserDAOImpl implements UserDAO {
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
 
-		if (userDTO.getCv() != null && !userDTO.getCv().equals("")) {
-			System.out.println("DTO " + userDTO.getCv());
+		if (userDTO.getCv() != null && !userDTO.getCv().equals("")) {			
 			Cv cv = updadateCvForCandidate(userDTO.getCv());
 			user.setCv(cv);
 		} else {
@@ -110,6 +119,33 @@ public class UserDAOImpl implements UserDAO {
 		user.setId(userDTO.getId());
 		user.setRole(role);
 		user.setDescription(userDTO.getDescription());
+		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("") ) {
+			user.setImage(userDTO.getImage());
+		} else {
+			user.setImage(user.getImage());
+		}
+
+		currentSession.saveOrUpdate(user);
+		return user;
+	}
+	
+	
+
+	@Override
+	public User updateUserHR(UserDTO userDTO) {
+		User user = this.getUserById(userDTO.getId());
+
+		Session currentSession = sessionFactory.getCurrentSession();
+		Role role = new Role();
+		role.setId(Integer.parseInt(userDTO.getRole()));
+		user.setEmail(userDTO.getEmail());
+		user.setFullName(userDTO.getFullName());
+		user.setAddress(userDTO.getAddress());
+		user.setPhoneNumber(userDTO.getPhoneNumber());
+		user.setId(userDTO.getId());
+		user.setRole(role);
+		user.setDescription(userDTO.getDescription());
+		user.setCv(null);
 		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("") ) {
 			user.setImage(userDTO.getImage());
 		} else {
@@ -198,6 +234,33 @@ public class UserDAOImpl implements UserDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(user);
 
+	}
+
+	@Override
+	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		ApplyPost applyPost = new ApplyPost();
+		LocalDateTime myDateObj = LocalDateTime.now();
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formattedDate = myDateObj.format(myFormatObj);
+		applyPost.setCreatedAt(formattedDate);
+		int recruitmentId = applyPostDTO.getRecruitmentId();
+		Recruitment recruitment = getRecruitmentById(recruitmentId);
+		applyPost.setRecruitment(recruitment);
+		int userId = applyPostDTO.getUserId();
+		User user = getUserById(userId);
+		applyPost.setUser(user);
+		applyPost.setNameCv(applyPostDTO.getNameCv());
+		currentSession.saveOrUpdate(applyPost);
+		return null;
+	}
+
+	@Override
+	public Recruitment getRecruitmentById(int recruitmentId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: recruitmentId", Recruitment.class);
+		query.setParameter("recruitmentId", recruitmentId);		
+		return query.uniqueResult();
 	}
 
 }

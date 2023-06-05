@@ -8,9 +8,11 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.dao.UserDAO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
@@ -56,8 +58,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User updateUser(UserDTO userDTO) {
-		User user = userDAO.updateUser(userDTO);
-		return user;
+		if (userDTO.getRole().equals("1")) {
+			User user = userDAO.updateUser(userDTO);
+			return user;
+		} else {
+			User user = userDAO.updateUserHR(userDTO);
+			return user;
+		}
 	}
 
 	@Override
@@ -99,6 +106,13 @@ public class UserServiceImpl implements UserService {
 		userDAO.updateUser(user);
 		userDAO.deleteCv(cvId);
 
+	}
+
+	@Override
+	@Transactional
+	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO) {
+		ApplyPost applyPost = userDAO.applyJobNoUploadCv(applyPostDTO);
+		return applyPost;
 	}
 
 }

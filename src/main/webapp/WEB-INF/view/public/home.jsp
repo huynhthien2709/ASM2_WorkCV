@@ -463,7 +463,7 @@
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
-										<form method="post" action="/user/apply-job">
+										<form method="post" action="${pageContext.request.contextPath}/user/applyJobNoUploadCv" name="user">
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-12">
@@ -477,6 +477,9 @@
 													</div>
 													<div id="loai1_${recruitments.id}"
 														style="display: none" class="col-12">
+														<input type="hidden" name="user" value="${user.id}">
+														<input type="hidden" name="recruitments" value="${recruitments.id}">
+														<input type="hidden" name="cv" value="${cv.fileName}">
 														<label for="fileUpload" class="col-form-label">Giới
 															thiệu:</label>
 														<textarea rows="10" cols="3" class="form-control" id="text_${recruitments.id}">
@@ -509,7 +512,7 @@
 													<button type="button"
 														id="button2_${recruitments.id}"
 														style="display: none"
-														onclick="apply_${recruitments.id}"
+														onclick="apply(${recruitments.id})"
 														class="btn btn-primary">Nộp</button>
 												</div>
 											</div>
@@ -706,7 +709,7 @@
 			formData.append('text', textvalue);
 			$.ajax({
 				type : 'POST',
-				url : '/user/apply-job1/',
+				url : '${pageContext.request.contextPath}/user/apply-job-noUploadCv/',
 				contentType : false,
 				processData : false,
 				data : formData,

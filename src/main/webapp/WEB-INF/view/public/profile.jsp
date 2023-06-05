@@ -367,6 +367,12 @@
         .catch(error => {
             console.error(error);
         });
+    ClassicEditor.create(document.querySelector('#editorN')).then(eidt => {
+        console.log("da" + eidt);
+    })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
 <script>
     $(function () {

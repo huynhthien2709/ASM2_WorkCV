@@ -2,10 +2,13 @@ package com.asm2.dao;
 
 import java.util.List;
 
+import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
+import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
 
@@ -18,6 +21,8 @@ public interface UserDAO {
 	public UserDTO getUserLogin(UserDTO userDTO);
 	
 	public User updateUser(UserDTO userDTO);
+	
+	public User updateUserHR(UserDTO userDTO);
 	
 	public Company updateCompanyInfo(CompanyDTO companyDTO,int userId);
 	
@@ -33,6 +38,9 @@ public interface UserDAO {
 	
 	public void updateUser(User user);
 	
+	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO);
+	
+	public Recruitment getRecruitmentById(int recruitmentId);
 
 
 }

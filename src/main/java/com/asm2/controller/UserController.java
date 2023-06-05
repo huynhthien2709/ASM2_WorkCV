@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.User;
+import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.service.HomeService;
@@ -60,7 +62,18 @@ public class UserController {
 		session = request.getSession(true);
 		userDTO.setPassword(null);
 		session.setAttribute("userDTO", userDTO);
-
+		int userId = userDTO.getId();
+		User user = userService.getUserById(userId);
+		if (user.getCv() != null) {
+			int cvid = user.getCv().getId();
+			Cv cv = userService.getCvById(cvid);
+			model.addAttribute("cv", cv);
+		}else {
+			model.addAttribute("msg", "no CV");
+		}
+		
+		model.addAttribute("user", user);
+		
 		if (check) {
 			model.addAttribute("status", "Đăng nhập thành công");
 			return "public/home";
@@ -239,6 +252,11 @@ public class UserController {
 	
 		
 		return "public/profile";
+	}
+	@PostMapping("/apply-job-noUploadCv")
+	public String applyJobNoUploadCv(ApplyPostDTO applyPostDTO) {
+		ApplyPost applyPost = userService.applyJobNoUploadCv(applyPostDTO);
+		return "public/home";
 	}
 	
 

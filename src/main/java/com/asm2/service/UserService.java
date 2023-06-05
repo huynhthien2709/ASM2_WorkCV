@@ -2,8 +2,10 @@ package com.asm2.service;
 
 import java.util.List;
 
+import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
@@ -28,5 +30,6 @@ public interface UserService {
 	public Cv getCvById(int cvid);
 
 	public void deleteCv(User user);
-
+	
+	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO);
 }
