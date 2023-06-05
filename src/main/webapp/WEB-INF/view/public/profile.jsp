@@ -81,9 +81,14 @@
                     <img id="avatar3" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
                 </div>
                 </c:if> 
-                <c:if test="${userDTO.role == 1 }">          
+                <c:if test="${userDTO.role == 1 && not empty userDTO.image}">          
                 <div style="margin-left: 0px" id="divImage" >
                     <img id="avatar2" height="100" width="100" style="border-radius: 50px" src="${userDTO.image}">
+                </div>
+                </c:if>
+                <c:if test="${userDTO.role == 1 && empty userDTO.image}">          
+                <div style="margin-left: 0px" id="divImage" >
+                    <img id="avatar2" height="100" width="100" style="border-radius: 50px" src="${user1.image}">
                 </div>
                 </c:if>
             </div>
@@ -181,6 +186,7 @@
 						<input type="hidden" name="role" value="${userDTO.role}">
 						<input type="hidden" name="password" value="${userDTO.password}">
 						<%-- <input type="hidden" name="image" value="${userDTO.image}"> --%>
+						
 					    <%-- <input type="hidden" name="cv" value="${userDTO.cv}">  --%>
 						
                         <div class="form-group">

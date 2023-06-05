@@ -18,7 +18,7 @@ import com.asm2.entity.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserDAO userDAO;
 
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User registerUser(UserDTO userDTO) {
-		User user = userDAO.registerUser(userDTO); 
+		User user = userDAO.registerUser(userDTO);
 		if (user == null) {
 			return null;
 		}
@@ -40,13 +40,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public boolean checkUserLogin(UserDTO userDTO) {	
-		String pass = userDTO.getPassword();	
+	public boolean checkUserLogin(UserDTO userDTO) {
+		String pass = userDTO.getPassword();
 		userDTO = userDAO.getUserLogin(userDTO);
 		if (userDTO != null) {
 			if (BCrypt.checkpw(pass, userDTO.getPassword())) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 		}
@@ -86,13 +86,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Cv updadateCvForCandidate(String pathCv) {
-		Cv cv = userDAO.updadateCvForCandidate(pathCv);
-		return cv;
-	}
-
-	@Override
-	@Transactional
 	public Cv getCvById(int cvid) {
 		Cv cv = userDAO.getCvById(cvid);
 		return cv;
@@ -100,15 +93,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteCv(User user) {
-		
+
 		int cvId = user.getCv().getId();
 		user.setCv(null);
 		userDAO.updateUser(user);
 		userDAO.deleteCv(cvId);
-		
-	}
 
-	
-	
+	}
 
 }

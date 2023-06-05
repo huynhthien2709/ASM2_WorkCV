@@ -80,7 +80,7 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
 			userDTO.setCv(Integer.toString(user.getCv().getId()));
-						
+
 			return userDTO;
 		}
 
@@ -89,12 +89,20 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User updateUser(UserDTO userDTO) {
 		User user = this.getUserById(userDTO.getId());
-		
-		
+
 		Session currentSession = sessionFactory.getCurrentSession();
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
-		Cv cv = updadateCvForCandidate(userDTO.getCv());		
+
+		if (userDTO.getCv() != null && !userDTO.getCv().equals("")) {
+			System.out.println("DTO " + userDTO.getCv());
+			Cv cv = updadateCvForCandidate(userDTO.getCv());
+			user.setCv(cv);
+		} else {
+			System.out.println("user " + user.getCv().getFileName());
+			Cv cv = updadateCvForCandidate(user.getCv().getFileName());
+			user.setCv(cv);
+		}
 		user.setEmail(userDTO.getEmail());
 		user.setFullName(userDTO.getFullName());
 		user.setAddress(userDTO.getAddress());
@@ -102,23 +110,15 @@ public class UserDAOImpl implements UserDAO {
 		user.setId(userDTO.getId());
 		user.setRole(role);
 		user.setDescription(userDTO.getDescription());
-		System.out.println("cvDTO " + userDTO.getCv());
-		System.out.println("imageDTO " + userDTO.getImage());
-		if (userDTO.getCv() != null) {
-			user.setCv(cv);
-			
-		}else if (userDTO.getImage() != null) {
+		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("") ) {
 			user.setImage(userDTO.getImage());
-			
-		}else {
-			user.setCv(user.getCv());
+		} else {
 			user.setImage(user.getImage());
-		}		
-		
+		}
+
 		currentSession.saveOrUpdate(user);
 		return user;
 	}
-	
 
 	@Override
 	public Company updateCompanyInfo(CompanyDTO companyDTO, int userId) {
@@ -153,10 +153,10 @@ public class UserDAOImpl implements UserDAO {
 			companyDTO.setDescription(company.getDescription());
 			companyDTO.setLogo(company.getLogo());
 			return company;
-		}else {
+		} else {
 			return null;
 		}
-		
+
 	}
 
 	@Override
@@ -166,7 +166,6 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("userId", userId);
 		return query.uniqueResult();
 	}
-	
 
 	@Override
 	public Cv updadateCvForCandidate(String pathCv) {
@@ -198,13 +197,7 @@ public class UserDAOImpl implements UserDAO {
 	public void updateUser(User user) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(user);
-		
+
 	}
-
-
-
-	
-	
-	
 
 }

@@ -129,6 +129,10 @@ public class UserController {
 		int cvid = user.getCv().getId();
 		Cv cv = userService.getCvById(cvid);
 		model.addAttribute("cv", cv);
+		int userId = userDTO.getId();
+		User user1 = userService.getUserById(userId);
+		model.addAttribute("user1", user1);
+		System.out.println("user1 " + user1.getImage());
 		
 		return "public/profile";
 	}

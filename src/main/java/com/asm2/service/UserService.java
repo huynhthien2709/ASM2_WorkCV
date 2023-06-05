@@ -24,11 +24,9 @@ public interface UserService {
 	public Company getCompanyInfo(CompanyDTO companyDTO, int userId);
 
 	public User getUserById(int userId);
-	
-	public Cv updadateCvForCandidate(String pathCv);
-	
+
 	public Cv getCvById(int cvid);
-	
+
 	public void deleteCv(User user);
 
 }
