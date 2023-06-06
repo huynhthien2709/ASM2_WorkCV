@@ -477,27 +477,28 @@
 													</div>
 													<div id="loai1_${recruitments.id}"
 														style="display: none" class="col-12">
-														<input type="hidden" name="user" value="${user.id}">
-														<input type="hidden" name="recruitments" value="${recruitments.id}">
-														<input type="hidden" name="cv" value="${cv.fileName}">
+														<input type="hidden" id="userId_${recruitments.id}" name="user" value="${user.id}">
+														<input type="hidden" id="recruitments_${recruitments.id}" name="recruitments" value="${recruitments.id}">
+														<input type="hidden" id="cv_${recruitments.id}" name="cv" value="${cv.fileName}">
 														<label for="fileUpload" class="col-form-label">Giới
 															thiệu:</label>
-														<textarea rows="10" cols="3" class="form-control" id="text_${recruitments.id}">
+														<textarea rows="10" cols="3" class="form-control" name="text" id="text_${recruitments.id}">
 														
                                                    		</textarea>
 													</div>
 													<div id="loai2_${recruitments.id}"
 														style="display: none" class="col-12">
-
-														<label for="fileUpload" class="col-form-label">Chọn
-															cv:</label> <input type="file" class="form-control"
-															id="${'fileUpload'}_${recruitments.id}" name="file"
-															required> <label for="fileUpload"
-															class="col-form-label">Giới thiệu:</label>
-														<textarea rows="10" cols="3" class="form-control"
-															id="text_${recruitment.id}">
-
-                                                    </textarea>
+														<input type="hidden" id="userId_${recruitments.id}" name="user" value="${user.id}">
+														<input type="hidden" id="recruitments_${recruitments.id}" name="recruitments" value="${recruitments.id}">
+														<input type="hidden" id="cv_${recruitments.id}" name="cv" value="${cv.fileName}">
+														<label for="fileUpload1" class="col-form-label">
+															Chọn cv:</label> 
+															<input type="file" class="form-control"	 id="${'fileUpload1'}_${recruitments.id}" name="file"
+															  onchange="fileUploadChange(${recruitments.id})" required /> 
+															<label for="fileUpload1" class="col-form-label">Giới
+																thiệu:</label>
+															<textarea rows="10" cols="3" class="form-control" name="text" id="text_${recruitments.id}">														
+                                                   		    </textarea>
 													</div>
 
 												</div>
@@ -507,7 +508,7 @@
 													<button type="button"
 														id="button1_${recruitments.id}"
 														style="display: none"
-														onclick="apply1_${recruitments.id}"
+														onclick="apply1(${recruitments.id})"
 														class="btn btn-primary">Nộp</button>
 													<button type="button"
 														id="button2_${recruitments.id}"
@@ -634,13 +635,24 @@
 			var nameText = "#text_" + id;
 			var idRe = $(name).val();
 			var textvalue = $(nameText).val();
-			var fileUpload = $(nameFile).get(0);
-			var files = fileUpload.files;
+/* 			var fileUpload = $(nameFile).get(0);
+			var files = fileUpload.files; */
+			
+			var userId = $("#userId_" + id).val();
+			var recruitmentId = $("#recruitments_" + id).val();
+			var cvPath = $("#cv_" + id).val();
+			var text = $("#text_" + id).val();
 			var formData = new FormData();
-			formData.append('file', files[0]);
-			formData.append('idRe', idRe);
-			formData.append('text_', textvalue);
-			if (files[0] == null) {
+			formData.append('userId', userId);
+			formData.append('recruitmentId', recruitmentId);
+			formData.append('nameCv', cvPath);
+			formData.append('text', text);
+			console.log('userId', userId);
+			console.log('recruitmentId', recruitmentId);
+			console.log('cvPath', cvPath);
+			console.log('text', text);
+			
+			if (cvPath == '') {
 				swal({
 					title : 'Bạn cần phải chọn cv!',
 					/* text: 'Redirecting...', */
@@ -652,7 +664,7 @@
 			} else {
 				$.ajax({
 					type : 'POST',
-					url : '/user/apply-job/',
+					url : '${pageContext.request.contextPath}/user/apply-job/',
 					contentType : false,
 					processData : false,
 					data : formData,
@@ -704,12 +716,21 @@
 			var nameText = "#text" + id;
 			var idRe = $(name).val();
 			var textvalue = $(nameText).val();
+			
+
+			var userId = $("#userId_" + id).val();
+			var recruitmentId = $("#recruitments_" + id).val();
+			var cvPath = $("#cv_" + id).val();
+			var text = $("#text_" + id).val();
+			
 			var formData = new FormData();
-			formData.append('idRe', idRe);
-			formData.append('text', textvalue);
+			formData.append('userId', userId);
+			formData.append('recruitmentId', recruitmentId);
+			formData.append('nameCv', cvPath);
+			formData.append('text', text);
 			$.ajax({
 				type : 'POST',
-				url : '${pageContext.request.contextPath}/user/apply-job-noUploadCv/',
+				url : '${pageContext.request.contextPath}/user/apply-job/',
 				contentType : false,
 				processData : false,
 				data : formData,
@@ -754,6 +775,73 @@
 
 		}
 	</script>
+	<script>
+    /* $(function () { */
+    	/* $('#fileUpload1').change(function () { */
+        function fileUploadChange(inputId) {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUpload1_' + inputId).get(0);
+                var files = fileUpload.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                if(files[0] == null){
+                    // document.getElementById("change").style.backgroundColor = 'red';
+                    // $('#text').val(" ❌ Cập nhật ảnh thất bại");
+                    $(".toast").toast("show");
+                } else {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '${pageContext.request.contextPath}/user/upload-Candidate/',
+                            contentType: false,
+                            processData: false,  
+                            data: formData,
+                            success: function (urlImage) {
+                                console.log(urlImage)
+                                if(urlImage == "Error"){
+                                    // document.getElementById("change").style.backgroundColor = 'red';
+
+                                    swal({
+                                        title: 'Cần chọn đúng loại file (PDF)!',
+                                        /* text: 'Redirecting...', */
+                                        icon: 'error',
+                                        timer: 3000,
+                                        buttons: true,
+                                        type: 'error'
+                                    })
+                                    // $("#divImage").css("display","block")
+                                }else{
+                                    // $('#avatar').attr('src', urlImage)
+                                     /* $('#fileUploadCVJob').val(urlImage);
+                                    const fileName = urlImage.substr(urlImage.lastIndexOf('/') + 1);
+                                    document.getElementById('cvErrorMsg').innerHTML = fileName;
+                                    document.getElementById('nameCv').innerHTML = 'Xem cv';
+                                    document.getElementById('nameCv').href = "http://localhost:8080/resources/CandidateImage/"+urlImage ; //or grab it by tagname etc */
+                                    document.getElementById('cv_' + inputId).value = urlImage;
+                                    
+										
+                                    swal({
+                                        title: 'Cập nhật CV thành công!',
+                                        /* text: 'Redirecting...', */
+                                        icon: 'success',
+                                        timer: 3000,
+                                        buttons: true,
+                                        type: 'success'
+                                    })
+                                }
+
+                            },
+                            error: function (err) {
+                                alert(err);
+                            }
+                        }
+                    )
+                }
+
+            }
+        }
+    /* }) */
+</script>
 
 
 	<footer th:replace="public/fragments :: footer"

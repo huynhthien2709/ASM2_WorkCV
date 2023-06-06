@@ -31,5 +31,5 @@ public interface UserService {
 
 	public void deleteCv(User user);
 	
-	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO);
+	public ApplyPost applyJob(ApplyPostDTO applyPostDTO);
 }

@@ -110,8 +110,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO) {
-		ApplyPost applyPost = userDAO.applyJobNoUploadCv(applyPostDTO);
+	public ApplyPost applyJob(ApplyPostDTO applyPostDTO) {
+		ApplyPost applyPost = userDAO.applyJob(applyPostDTO);
 		return applyPost;
 	}
 

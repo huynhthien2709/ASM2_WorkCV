@@ -253,9 +253,14 @@ public class UserController {
 		
 		return "public/profile";
 	}
-	@PostMapping("/apply-job-noUploadCv")
-	public String applyJobNoUploadCv(ApplyPostDTO applyPostDTO) {
-		ApplyPost applyPost = userService.applyJobNoUploadCv(applyPostDTO);
+	@PostMapping("/apply-job")
+	public String applyJob(ApplyPostDTO applyPostDTO, Model model) {
+		if (applyPostDTO.getNameCv().trim().equals("")) {
+			model.addAttribute("msg", "Bạn chưa có CV");
+		}else {
+			ApplyPost applyPost = userService.applyJob(applyPostDTO);
+		}
+		
 		return "public/home";
 	}
 	

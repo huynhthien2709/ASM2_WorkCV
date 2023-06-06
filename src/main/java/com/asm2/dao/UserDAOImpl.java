@@ -237,22 +237,27 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public ApplyPost applyJobNoUploadCv(ApplyPostDTO applyPostDTO) {
+	public ApplyPost applyJob(ApplyPostDTO applyPostDTO) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		ApplyPost applyPost = new ApplyPost();
 		LocalDateTime myDateObj = LocalDateTime.now();
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = myDateObj.format(myFormatObj);
 		applyPost.setCreatedAt(formattedDate);
+		
 		int recruitmentId = applyPostDTO.getRecruitmentId();
 		Recruitment recruitment = getRecruitmentById(recruitmentId);
 		applyPost.setRecruitment(recruitment);
+
 		int userId = applyPostDTO.getUserId();
 		User user = getUserById(userId);
 		applyPost.setUser(user);
 		applyPost.setNameCv(applyPostDTO.getNameCv());
+		applyPost.setText(applyPostDTO.getText());
+		
+		Cv cv = updateCvApplyJobCv(applyPostDTO.getNameCv(), applyPostDTO.getUserId());
 		currentSession.saveOrUpdate(applyPost);
-		return null;
+		return applyPost;
 	}
 
 	@Override
@@ -262,5 +267,15 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("recruitmentId", recruitmentId);		
 		return query.uniqueResult();
 	}
+
+	@Override
+	public Cv updateCvApplyJobCv(String path, int userId) {
+		User user = this.getUserById(userId);
+		Cv cv = new Cv();
+		cv.setFileName(path);
+		user.setCv(cv);
+		return null;
+	}
+	
 
 }

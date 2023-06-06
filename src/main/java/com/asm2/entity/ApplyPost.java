@@ -23,13 +23,13 @@ public class ApplyPost {
 	private String createdAt;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "recruitment_id")
 	private Recruitment recruitment;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", insertable = false, updatable = false)
+	@JoinColumn(name = "user_id")
 	private User user;
-	
+
 	@Column(name = "name_cv")
 	private String nameCv;
 	
