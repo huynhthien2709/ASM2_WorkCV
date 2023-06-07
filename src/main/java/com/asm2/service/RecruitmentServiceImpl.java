@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.asm2.DTO.RecruitmentDTO;
 import com.asm2.dao.RecruitmentDAO;
 import com.asm2.entity.Category;
+import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
 
 @Service
@@ -32,9 +33,18 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
+	@Transactional
 	public Category getCategorybyId(int categoryId) {
 		Category category = recruitmentDAO.getCategorybyId(categoryId);
 		return category;
 	}
 
+	@Override
+	@Transactional
+	public Company getCompanyById(int compId) {
+		Company company = recruitmentDAO.getCompanyById(compId);
+		return company;
+	}
+
+	
 }

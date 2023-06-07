@@ -43,5 +43,6 @@ public interface UserDAO {
 	public Recruitment getRecruitmentById(int recruitmentId);
 
 	public Cv updateCvApplyJobCv (String path, int userId);
+	
 
 }

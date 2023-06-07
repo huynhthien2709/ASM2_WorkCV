@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.asm2.DTO.RecruitmentDTO;
 import com.asm2.entity.Category;
+import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
 
 @Repository
@@ -43,8 +44,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		LocalDateTime myDateObj = LocalDateTime.now();
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = myDateObj.format(myFormatObj);
-		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));		
-//		recruitment.setId(recruitmentDTO.getId());
+		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));
 		recruitment.setTitle(recruitmentDTO.getTitle());
 		recruitment.setDescription(recruitmentDTO.getDescription());
 		recruitment.setExperience(recruitmentDTO.getExperience());
@@ -83,5 +83,16 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitmentDTO.setAddress(recruitment.getAddress());
 		return null;
 	}
+
+	@Override
+	public Company getCompanyById(int compId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Company> query = currentSession.createQuery("from Company where id =: compId", Company.class);
+		query.setParameter("compId", compId);
+		Company	company = (Company) query.uniqueResult();
+		return company;
+	}
+	
+	
 
 }

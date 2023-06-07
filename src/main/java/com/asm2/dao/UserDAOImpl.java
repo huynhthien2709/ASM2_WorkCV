@@ -86,10 +86,9 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setImage(user.getImage());
 			if (user.getCv() == null) {
 				userDTO.setCv("0");
-			}else {
+			} else {
 				userDTO.setCv(Integer.toString(user.getCv().getId()));
 			}
-			
 
 			return userDTO;
 		}
@@ -104,7 +103,7 @@ public class UserDAOImpl implements UserDAO {
 		Role role = new Role();
 		role.setId(Integer.parseInt(userDTO.getRole()));
 
-		if (userDTO.getCv() != null && !userDTO.getCv().equals("")) {			
+		if (userDTO.getCv() != null && !userDTO.getCv().equals("")) {
 			Cv cv = updadateCvForCandidate(userDTO.getCv());
 			user.setCv(cv);
 		} else {
@@ -119,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
 		user.setId(userDTO.getId());
 		user.setRole(role);
 		user.setDescription(userDTO.getDescription());
-		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("") ) {
+		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("")) {
 			user.setImage(userDTO.getImage());
 		} else {
 			user.setImage(user.getImage());
@@ -128,8 +127,6 @@ public class UserDAOImpl implements UserDAO {
 		currentSession.saveOrUpdate(user);
 		return user;
 	}
-	
-	
 
 	@Override
 	public User updateUserHR(UserDTO userDTO) {
@@ -146,7 +143,7 @@ public class UserDAOImpl implements UserDAO {
 		user.setRole(role);
 		user.setDescription(userDTO.getDescription());
 		user.setCv(null);
-		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("") ) {
+		if (userDTO.getImage() != null && !userDTO.getImage().trim().equals("")) {
 			user.setImage(userDTO.getImage());
 		} else {
 			user.setImage(user.getImage());
@@ -226,7 +223,6 @@ public class UserDAOImpl implements UserDAO {
 		Query query = currentSession.createQuery("delete Cv where id =: cvId");
 		query.setParameter("cvId", cvId);
 		query.executeUpdate();
-//		currentSession.delete(currentSession);
 	}
 
 	@Override
@@ -244,7 +240,7 @@ public class UserDAOImpl implements UserDAO {
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = myDateObj.format(myFormatObj);
 		applyPost.setCreatedAt(formattedDate);
-		
+
 		int recruitmentId = applyPostDTO.getRecruitmentId();
 		Recruitment recruitment = getRecruitmentById(recruitmentId);
 		applyPost.setRecruitment(recruitment);
@@ -254,7 +250,7 @@ public class UserDAOImpl implements UserDAO {
 		applyPost.setUser(user);
 		applyPost.setNameCv(applyPostDTO.getNameCv());
 		applyPost.setText(applyPostDTO.getText());
-		
+
 		Cv cv = updateCvApplyJobCv(applyPostDTO.getNameCv(), applyPostDTO.getUserId());
 		currentSession.saveOrUpdate(applyPost);
 		return applyPost;
@@ -263,8 +259,9 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public Recruitment getRecruitmentById(int recruitmentId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: recruitmentId", Recruitment.class);
-		query.setParameter("recruitmentId", recruitmentId);		
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: recruitmentId",
+				Recruitment.class);
+		query.setParameter("recruitmentId", recruitmentId);
 		return query.uniqueResult();
 	}
 
@@ -276,6 +273,5 @@ public class UserDAOImpl implements UserDAO {
 		user.setCv(cv);
 		return null;
 	}
-	
 
 }

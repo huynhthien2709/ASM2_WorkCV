@@ -44,9 +44,9 @@ public class RecruitmentController {
 	public String addPostJob(RecruitmentDTO recruitmentDTO, HttpSession session, Model model) {
 		List<Category> categories = recruitmentService.getCategories();
 		model.addAttribute("categories", categories);
-		Recruitment recruitment = recruitmentService.addPostJob(recruitmentDTO);		
-//		String cateId = recruitmentDTO.getCategoryId();
-//		int categoryId = Integer.parseInt(cateId);
+		Recruitment recruitment = recruitmentService.addPostJob(recruitmentDTO);
+		Company company = recruitmentService.getCompanyById(recruitmentDTO.getCompanyId());
+		model.addAttribute("company", company);
 		
 
 		return "public/post-job";

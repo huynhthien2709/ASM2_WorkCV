@@ -302,19 +302,19 @@
 				</div>
 			</div>
 			<div class="row">
-				<th:block th:each="categorie : ${categories}">
+				<c:forEach items="${categories}" var="categories">
 					<div class="col-md-3 ">
 						<ul class="category text-center">
 
 							<li><a style="text-decoration: none !important;"
-								th:href="${'/recruitment/category/'}+${categorie.id}">
-									<p th:text="${categorie.name}"></p> <span class="number"
-									th:text="${categorie.numberChoose}"></span> <span>Vị trí</span><i
-									class="ion-ios-arrow-forward"></i>
+								 href="${'/recruitment/category/'}+${categories.id}">
+									<p><c:out value="${categories.name}" /></p>
+									 <span class="number"><c:out value="${categories.numberChoose}" /></span> 
+									 <span>Vị trí</span><i class="ion-ios-arrow-forward"></i>
 							</a></li>
 						</ul>
 					</div>
-				</th:block>
+				</c:forEach>
 			</div>
 		</div>
 	</section>
