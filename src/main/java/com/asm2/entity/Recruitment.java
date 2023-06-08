@@ -59,8 +59,7 @@ public class Recruitment {
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private Category category;
-//Binh thường bạn save cái recrui này như nào? có phải là lôi thằng Company lên rồi set nó vô trong Recrui rồi save lại không?\
-//	
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "company_id", insertable = false, updatable = false)
 	private Company company;

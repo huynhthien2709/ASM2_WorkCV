@@ -533,13 +533,13 @@
 							<h2 class="mb-4">Công ty nổi bật</h2>
 						</div>
 					</div>
-					<c:forEach items="" var="companies">
+					<c:forEach items="${companies}" var="company">
 						<div class="sidebar-box">
 							<div class="">
 							<!--  th:href="${'/user/detail-company/'}+${companies[0]}"-->
 								<a 
-									class="company-wrap"><img src=""
-									class="img-fluid" alt="Colorlib Free Template"></a>
+									class="company-wrap"><img src='${company.logo}'
+									class="img-fluid" alt="Colorlib Free Template"/></a>
 								<div class="text p-3">
 									<h3>
 										<!--  <a th:href="${'/user/detail-company/'}+${companies[0]}"

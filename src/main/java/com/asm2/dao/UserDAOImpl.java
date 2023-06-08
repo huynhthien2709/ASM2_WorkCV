@@ -177,7 +177,7 @@ public class UserDAOImpl implements UserDAO {
 		Query query = currentSession.createQuery("from Company where userId =: userId", Company.class);
 		query.setParameter("userId", userId);
 		company = (Company) query.uniqueResult();
-		if (company != null) {
+		if (company != null) { 
 			companyDTO.setId(company.getId());
 			companyDTO.setEmail(company.getEmail());
 			companyDTO.setNameCompany(company.getNameCompany());
