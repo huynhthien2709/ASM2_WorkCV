@@ -545,10 +545,14 @@
 										<!--  <a th:href="${'/user/detail-company/'}+${companies[0]}"
 											th:text="${companies[1]}"></a>-->
 									</h3>
+									<h3>
+										 <span class="number" style="color: black">
+										 <c:out value="${company.nameCompany}"/></span>
+											
+									</h3>
 									<p>
-										<!--  <span class="number" style="color: black"
-											th:text="${companies[3]}"></span> <span>Vị trí ứng
-											tuyển</span>-->
+										 <span class="number" style="color: black"
+											><c:out value=""/></span> <span>Vị trí ứng tuyển</span>
 									</p>
 								</div>
 							</div>

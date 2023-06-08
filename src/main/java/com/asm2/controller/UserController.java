@@ -40,7 +40,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired HomeService homeService;
+	@Autowired 
+	private HomeService homeService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -58,6 +59,8 @@ public class UserController {
 		model.addAttribute("roles", roles);
 		List<Recruitment> recruitments = homeService.getRecruitments();
 		model.addAttribute("recruitments", recruitments);
+		List<Company> companies = homeService.getCompanies();
+		model.addAttribute("companies", companies);
 		boolean check = userService.checkUserLogin(userDTO);
 		session = request.getSession(true);
 		userDTO.setPassword(null);
