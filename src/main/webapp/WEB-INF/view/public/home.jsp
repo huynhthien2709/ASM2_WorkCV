@@ -552,7 +552,7 @@
 									</h3>
 									<p>
 										 <span class="number" style="color: black"
-											><c:out value=""/></span> <span>Vị trí ứng tuyển</span>
+											><c:out value="${company}"/></span> <span>Vị trí ứng tuyển</span>
 									</p>
 								</div>
 							</div>
