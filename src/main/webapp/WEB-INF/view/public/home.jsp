@@ -396,7 +396,7 @@
 											<span class="subadge"><c:out value="${recruitments.type}"></c:out></span>
 											<h2 class="mr-3 text-black">
 												<a
-													th:href="${'/recruitment/detail/'} +${recruitment.id}"><c:out value="${recruitments.title}"/></a>
+													href="${'/recruitment/detail/'}_${recruitments.id}"><c:out value="${recruitments.title}"/></a>
 											</h2>
 										</div>
 										<div class="job-post-item-body d-block d-md-flex">

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 
 import com.asm2.DTO.RecruitmentDTO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
@@ -75,13 +76,10 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 
 	@Override
 	public Recruitment getRecruitment(int id) {
-		Session currentSession = sessionFactory.getCurrentSession();
-		
-		Recruitment recruitment = currentSession.get(Recruitment.class, id);
-		
-		RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
-		recruitmentDTO.setAddress(recruitment.getAddress());
-		return null;
+		Session currentSession = sessionFactory.getCurrentSession();	
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: id", Recruitment.class);
+		query.setParameter("id", id);
+		return query.uniqueResult();
 	}
 
 	@Override
@@ -92,6 +90,32 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		Company	company = (Company) query.uniqueResult();
 		return company;
 	}
+
+	@Override
+	public void deleteRec(int id) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query theQuery = currentSession.createQuery("delete from Recruitment where id =:id");
+		theQuery.setParameter("id", id);		
+		theQuery.executeUpdate();
+		
+	}
+
+	@Override
+	public void updadetApplyPost(ApplyPost applyPost) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		currentSession.saveOrUpdate(applyPost);
+		
+	}
+
+	@Override
+	public void deleteApplyPost(int recId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query query = currentSession.createQuery("delete from ApplyPost where recruitment_id =: recId");
+		query.setParameter("recId", recId);
+		query.executeUpdate();
+	}
+	
+	
 	
 	
 

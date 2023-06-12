@@ -17,6 +17,7 @@ import com.asm2.DTO.UserDTO;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
+import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
 import com.asm2.service.UserService;
 
@@ -29,6 +30,9 @@ public class RecruitmentController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private HomeService homeService;
 
 	@GetMapping("/post")
 	public String recruitmentPage(Model model, CompanyDTO companyDTO, HttpSession session) {
@@ -50,5 +54,14 @@ public class RecruitmentController {
 		
 
 		return "public/post-job";
+	}
+	@PostMapping("/deleteRec")
+	public String deleteRec(RecruitmentDTO recruitmentDTO, Model model) {
+		Recruitment recruitment =  recruitmentService.getRecruitment(recruitmentDTO.getId());
+		System.out.println("id con" + recruitmentDTO.getId());
+		recruitmentService.deleteRec(recruitment);
+		List<Recruitment> recruitments = homeService.getRecruitments();
+		model.addAttribute("recruitments", recruitments);
+		return "public/post-list";
 	}
 }

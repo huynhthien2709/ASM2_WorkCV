@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.asm2.DTO.RecruitmentDTO;
 import com.asm2.dao.RecruitmentDAO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
@@ -44,6 +45,20 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	public Company getCompanyById(int compId) {
 		Company company = recruitmentDAO.getCompanyById(compId);
 		return company;
+	}
+
+	@Override
+	public void deleteRec(Recruitment recruitment) {
+		recruitmentDAO.deleteApplyPost(recruitment.getId());
+		System.out.println("id service" + recruitment.getId());
+		
+		recruitmentDAO.deleteRec(recruitment.getId());
+		
+	}
+
+	@Override
+	public Recruitment getRecruitment(int id) {
+		return recruitmentDAO.getRecruitment(id);
 	}
 
 	

@@ -1,6 +1,5 @@
 package com.asm2.controller;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.List;
@@ -39,8 +38,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
-	@Autowired 
+
+	@Autowired
 	private HomeService homeService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -71,12 +70,12 @@ public class UserController {
 			int cvid = user.getCv().getId();
 			Cv cv = userService.getCvById(cvid);
 			model.addAttribute("cv", cv);
-		}else {
+		} else {
 			model.addAttribute("msg", "no CV");
 		}
-		
+
 		model.addAttribute("user", user);
-		
+
 		if (check) {
 			model.addAttribute("status", "Đăng nhập thành công");
 			return "public/home";
@@ -122,16 +121,16 @@ public class UserController {
 		System.out.println(user.getCv());
 		if (user.getCv() == null) {
 			model.addAttribute("msg", "Bạn chưa có CV");
-			
-		}else {
+
+		} else {
 			int cvid = user.getCv().getId();
 			Cv cv = userService.getCvById(cvid);
 			model.addAttribute("cv", cv);
 		}
-		
+
 		return "public/profile";
 	}
-	
+
 	@PostMapping("/updateProfile")
 	public String updateProfile(UserDTO userDTO, CompanyDTO companyDTO) {
 		int userId = userDTO.getId();
@@ -139,9 +138,10 @@ public class UserController {
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		return "public/profile";
 	}
+
 	@PostMapping("/updateUserCandidate")
-	public String updateUserCandidate(UserDTO userDTO,  Model model) {		
-		User user = userService.updateUser(userDTO);		
+	public String updateUserCandidate(UserDTO userDTO, Model model) {
+		User user = userService.updateUser(userDTO);
 		int cvid = user.getCv().getId();
 		Cv cv = userService.getCvById(cvid);
 		model.addAttribute("cv", cv);
@@ -149,7 +149,7 @@ public class UserController {
 		User user1 = userService.getUserById(userId);
 		model.addAttribute("user1", user1);
 		System.out.println("user1 " + user1.getImage());
-		
+
 		return "public/profile";
 	}
 
@@ -181,12 +181,13 @@ public class UserController {
 
 			fileout.close();
 			return request.getContextPath() + "/resources/images/" + file.getOriginalFilename();
-			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\images
+			// C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\images
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";
 		}
 	}
+
 	@PostMapping("/upload-user")
 	public @ResponseBody String uploadUserImage(@RequestParam("file") CommonsMultipartFile file,
 			HttpServletRequest request) {
@@ -205,21 +206,23 @@ public class UserController {
 			fileout.write(data);
 
 			fileout.close();
-			
+
 			return request.getContextPath() + "/resources/UserImages/" + file.getOriginalFilename();
-			//C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\UserImages
+			// C:\Users\admin\eclipse-workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\PRJ321x_ASM2_thienhtfx17332\resources\UserImages
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Error";
 		}
 	}
+
 	@PostMapping("/upload-Candidate")
 	public @ResponseBody String uploadUserCandidateImage(@RequestParam("file") CommonsMultipartFile file,
 			HttpServletRequest request, Model model) {
 
 		byte[] data = file.getBytes();
 
-		String folderPath = request.getServletContext().getRealPath("/") + "resources" + File.separator + "CandidateImage";
+		String folderPath = request.getServletContext().getRealPath("/") + "resources" + File.separator
+				+ "CandidateImage";
 		String filePath = folderPath + File.separator + file.getOriginalFilename();
 
 		try {
@@ -240,10 +243,7 @@ public class UserController {
 			return "Error";
 		}
 	}
-	@GetMapping("post-list")
-	public String postListPage() {
-		return "public/post-list";
-	}
+
 	@PostMapping("/deleteCv")
 	public String deleteCv(HttpSession session, Model model) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -251,21 +251,28 @@ public class UserController {
 		if (user.getCv() != null) {
 			userService.deleteCv(user);
 		}
-		model.addAttribute("msg", "Bạn chưa có CV"); 
-	
-		
+		model.addAttribute("msg", "Bạn chưa có CV");
+
 		return "public/profile";
 	}
+
 	@PostMapping("/apply-job")
 	public String applyJob(ApplyPostDTO applyPostDTO, Model model) {
 		if (applyPostDTO.getNameCv().trim().equals("")) {
 			model.addAttribute("msg", "Bạn chưa có CV");
-		}else {
+		} else {
 			ApplyPost applyPost = userService.applyJob(applyPostDTO);
 		}
-		
+
 		return "public/home";
 	}
-	
+
+	@GetMapping("post-list")
+	public String postListPage(Model model) {
+		List<Recruitment> recruitments = homeService.getRecruitments();
+		model.addAttribute("recruitments", recruitments);
+		System.out.println("///" + recruitments.size());
+		return "public/post-list";
+	}
 
 }
