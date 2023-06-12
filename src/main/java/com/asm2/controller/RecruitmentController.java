@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,6 +21,8 @@ import com.asm2.entity.Recruitment;
 import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
 import com.asm2.service.UserService;
+
+import net.bytebuddy.asm.Advice.Return;
 
 @Controller
 @RequestMapping(value = "/recruitment")
@@ -64,4 +67,11 @@ public class RecruitmentController {
 		model.addAttribute("recruitments", recruitments);
 		return "public/post-list";
 	}
+	@GetMapping("/detail/{id}")
+	public String detailPost(@PathVariable("id") int id, Model model) {
+		Recruitment recruitment = recruitmentService.getRecruitment(id);
+		model.addAttribute("recruitment", recruitment);
+		return "public/detail-post";
+	}
+	
 }

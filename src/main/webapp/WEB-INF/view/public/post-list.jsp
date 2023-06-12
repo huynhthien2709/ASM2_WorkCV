@@ -142,7 +142,7 @@
 <!--                                            <span class="icon-heart"></span>-->
 <!--                                        </a>-->
 <!--                                    </div>-->
-                                    <a href="${'/recruitment/detail/'} +${recruitments.id}"  class="btn btn-primary py-2 ml-2">Xem chi tiết</a>
+                                    <a href="${pageContext.request.contextPath}/recruitment/detail/${recruitments.id}"  class="btn btn-primary py-2 ml-2">Xem chi tiết</a>
                                     <a href="${'/recruitment/editpost/'} +${recruitments.id}"  class="btn btn-warning py-2 ml-2">Cập nhật</a>
                                     <a class="btn btn-danger py-2 ml-2" href="" data-toggle="modal" data-target="#exampleModal_${recruitments.id}" >Xóa</a>
 

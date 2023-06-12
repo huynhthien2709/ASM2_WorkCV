@@ -3,7 +3,7 @@ function getid(id) {
 	$.ajax({
 		type: "GET",
 		contentType: "application/json",
-		url: root+ "/user/upload-company/"+id,
+		url: root+ "/recruitment/detail/"+id,
 		cache: false,
 		timeout: 600000,
 		success: function (data) {

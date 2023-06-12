@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="public/fragments :: html_head">
-    <title>Skillhunt - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Detail Post</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%@include file="resource.jsp"%>
@@ -53,7 +53,7 @@
     </script>
 </div>
 
-<div class="hero-wrap hero-wrap-2" style="background-image: url('/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+<div class="hero-wrap hero-wrap-2" style="background-image: url(<c:url value="/resources/assets/images/bg_1.jpg"/>);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -71,7 +71,7 @@
             <div class="col-lg-8 mb-4 mb-lg-0">
                 <div class="d-flex align-items-center">
                     <div class="border p-2 d-inline-block mr-3 rounded">
-                        <img width="100" height="100" th:src="${recruitment.company.logo}" alt="Image">
+                        <img width="100" height="100" src="${recruitment.company.logo}" alt="Image">
                     </div>
                     <div>
                         <h2></h2>
@@ -110,7 +110,7 @@
                 <div class="mb-5">
 
                     <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Mô tả công việc</h3>
-                    <p th:utext="${recruitment.description}"></p>
+                    <p >${recruitment.description}</p>
                 </div>
 
             </div>
@@ -118,14 +118,14 @@
                 <div class="bg-light p-3 border rounded mb-4">
                     <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Tóm tắt công việc</h3>
                     <ul class="list-unstyled pl-3 mb-0">
-                       <li class="mb-2"> <strong class="text-black">Ngày tạo: </strong> <span>14/10/2022</span> </li>
-                        <li class="mb-2"><strong class="text-black">Kiểu công việc: </strong> <span>Java</span></li>
-                        <li class="mb-2"><strong class="text-black">Loại công việc: </strong> <span">Java</span></li>
-                        <li class="mb-2"><strong class="text-black">Kinh nghiệm: </strong> <span>2 nan </span></li>
-                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span> Ha Noi</span></li>
-                        <li class="mb-2"><strong class="text-black">Lương: </strong> <span> 20000 </span></li>
-                        <li class="mb-2"><strong class="text-black">Số lượng: </strong><span>2</span></li>
-                        <li class="mb-2"><strong class="text-black">Hạn nộp cv: </strong><span>15/10/2023</span></li>
+                       <li class="mb-2"> <strong class="text-black">Ngày tạo: </strong> <span>${recruitment.createdAt}</span> </li>
+                        <li class="mb-2"><strong class="text-black">Kiểu công việc: </strong> <span>${recruitment.category.name}</span></li>
+                        <li class="mb-2"><strong class="text-black">Loại công việc: </strong> <span>${recruitment.type}</span></li>
+                        <li class="mb-2"><strong class="text-black">Kinh nghiệm: </strong> <span>${recruitment.experience}</span></li>
+                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span> ${recruitment.address}</span></li>
+                        <li class="mb-2"><strong class="text-black">Lương: </strong> <span> ${recruitment.salary} </span></li>
+                        <li class="mb-2"><strong class="text-black">Số lượng: </strong><span>${recruitment.quantity}</span></li>
+                        <li class="mb-2"><strong class="text-black">Hạn nộp cv: </strong><span>${recruitment.deadline}</span></li>
                     </ul>
                 </div>
 
