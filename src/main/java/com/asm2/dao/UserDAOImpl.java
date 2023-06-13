@@ -244,7 +244,7 @@ public class UserDAOImpl implements UserDAO {
 		int recruitmentId = applyPostDTO.getRecruitmentId();
 		Recruitment recruitment = getRecruitmentById(recruitmentId);
 		applyPost.setRecruitment(recruitment);
-
+			
 		int userId = applyPostDTO.getUserId();
 		User user = getUserById(userId);
 		applyPost.setUser(user);

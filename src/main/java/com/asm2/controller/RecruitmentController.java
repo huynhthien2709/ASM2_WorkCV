@@ -71,6 +71,7 @@ public class RecruitmentController {
 	public String detailPost(@PathVariable("id") int id, Model model) {
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
 		model.addAttribute("recruitmentDTO", recruitmentDTO);
+		
 		System.out.println("+++ " + recruitmentDTO.getCompany().getNameCompany() + " " + recruitmentDTO.getCompany().getLogo());
 		return "public/detail-post";
 	}
