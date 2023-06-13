@@ -1,5 +1,8 @@
 package com.asm2.DTO;
 
+import com.asm2.entity.Category;
+import com.asm2.entity.Company;
+
 public class RecruitmentDTO {
 
 	private Integer id;
@@ -31,6 +34,10 @@ public class RecruitmentDTO {
 	private Integer companyId;
 
 	private String deadline;
+	
+	private Company company;
+	
+	private Category category;
 
 	public RecruitmentDTO() {
 	}
@@ -154,5 +161,23 @@ public class RecruitmentDTO {
 	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	
 
 }

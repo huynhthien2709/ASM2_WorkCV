@@ -57,6 +57,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
+	public RecruitmentDTO getRecruitmentDTO(int id) {
+		return recruitmentDAO.getRecruitmentDTO(id);
+	}
+
+	@Override
 	public Recruitment getRecruitment(int id) {
 		return recruitmentDAO.getRecruitment(id);
 	}

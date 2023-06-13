@@ -19,9 +19,12 @@
       
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
+            
               <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
               <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
+              <c:if test="${userDTO.role == 2}">
               <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
+              </c:if>
                 <ul class="dropdown">
                   <li><a href="/">Hồ Sơ</a></li>
                   <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
@@ -31,8 +34,10 @@
                   <li><a href="/auth/logout" >Đăng xuất</a></li>
                 </ul>
                 <li></li>
+                <c:if test="${userDTO.role == 2}">
                 <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+                </c:if>
+              <li class="nav-item cta cta-colored"><a href="<c:url value = "/user/login"/>" class="nav-link">Đăng nhập</a></li>
             </ul>
           </div>
         </div>
@@ -67,50 +72,109 @@
 
 <section style="margin-top: 10px" class="site-section">
     <div class="container">
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-8 mb-4 mb-lg-0">
-                <div class="d-flex align-items-center">
-                    <div class="border p-2 d-inline-block mr-3 rounded">
-                        <img width="100" height="100" src="${recruitment.company.logo}" alt="Image">
-                    </div>
-                    <div>
-                        <h2></h2>
-                        <div>
-                            <span class="icon-briefcase mr-2"></span><a class="ml-0 mr-2 mb-2"></a>
-                            <span  class="icon-room mr-2"></span ><span class="m-2"></span>
-                            <span class="icon-clock-o mr-2"></span><span class="m-2"></span>
-                        </div>
-                        <input type="hidden">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-6">
-                        <a class="btn btn-block btn-light btn-md"><span class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
-                    </div>
-                    <div class="col-6">
-                        <a data-toggle="modal" class="btn btn-block btn-primary btn-md">Ứng tuyển</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div  class="row">
-                    <div class="col-6">
-                        <a class="btn btn-block btn-light btn-md"><span class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
-                    </div>
-                    <div class="col-6">
-                        <a data-toggle="modal" class="btn btn-block btn-primary btn-md">Ứng tuyển</a>
-                    </div>
-                </div>
-            </div>
+			<div class="row align-items-center mb-5">
+				<div class="col-lg-8 mb-4 mb-lg-0">
+					<div class="d-flex align-items-center">
+						<div class="border p-2 d-inline-block mr-3 rounded">
+							<img width="100" height="100"
+								src="${recruitmentDTO.company.logo}" alt="Image">
+						</div>
+						<div>
+							<h2></h2>
+							<div>
+								<span class="icon-briefcase mr-2"></span><a
+									class="ml-0 mr-2 mb-2">${recruitmentDTO.company.nameCompany}</a>
+								<span class="icon-room mr-2"></span><span class="m-2">${recruitmentDTO.address}</span>
+								<span class="icon-clock-o mr-2"></span><span class="m-2">${recruitmentDTO.type}</span>
+							</div>
+							<input type="hidden">
+						</div>
+					</div>
+				</div>
+				<c:if test="${sessionScope.userDTO == null}">
+					<div class="col-lg-4">
+						<div class="row">
+							<div class="col-6">
+								<a class="btn btn-block btn-light btn-md"><span
+									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+							</div>
+							<div class="col-6">
+								<a data-toggle="modal"  data-target="#myModal" class="btn btn-block btn-primary btn-md">Ứng
+									tuyển</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="row">
+							<div class="col-6">
+								<a class="btn btn-block btn-light btn-md"><span
+									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+							</div>
+							<div class="col-6">
+								<a data-toggle="modal" data-target="#myModal"
+									class="btn btn-block btn-primary btn-md">Ứng tuyển</a>
+							</div>
+						</div>
+					</div>
+				
+				<!-- Modal asking for login  -->
+				<div class="modal fade" id="myModal" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<p>Bạn cần đăng nhập để ứng tuyển</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Đóng</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</c:if>
+			<!-- modal -->
+			<c:if test="${sessionScope.userDTO != null}">
+					<div class="col-lg-4">
+						<div class="row">
+							<div class="col-6">
+								<a class="btn btn-block btn-light btn-md"><span
+									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+							</div>
+							<div class="col-6">
+								<a data-toggle="modal"  data-target="#exampleModalLabel"  class="btn btn-block btn-primary btn-md">Ứng
+									tuyển</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<div class="row">
+							<div class="col-6">
+								<a class="btn btn-block btn-light btn-md"><span
+									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+							</div>
+							<div class="col-6">
+								<a data-toggle="modal" data-target="#exampleModalLabel" 
+									class="btn btn-block btn-primary btn-md">Ứng tuyển</a>
+							</div>
+						</div>
+					</div>
+				</c:if>
+			
+           
         </div>
         <div class="row">
             <div class="col-lg-8">
                 <div class="mb-5">
 
                     <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Mô tả công việc</h3>
-                    <p >${recruitment.description}</p>
+                    <p >${recruitmentDTO.description}</p>
                 </div>
 
             </div>
@@ -118,14 +182,14 @@
                 <div class="bg-light p-3 border rounded mb-4">
                     <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Tóm tắt công việc</h3>
                     <ul class="list-unstyled pl-3 mb-0">
-                       <li class="mb-2"> <strong class="text-black">Ngày tạo: </strong> <span>${recruitment.createdAt}</span> </li>
-                        <li class="mb-2"><strong class="text-black">Kiểu công việc: </strong> <span>${recruitment.category.name}</span></li>
-                        <li class="mb-2"><strong class="text-black">Loại công việc: </strong> <span>${recruitment.type}</span></li>
-                        <li class="mb-2"><strong class="text-black">Kinh nghiệm: </strong> <span>${recruitment.experience}</span></li>
-                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span> ${recruitment.address}</span></li>
-                        <li class="mb-2"><strong class="text-black">Lương: </strong> <span> ${recruitment.salary} </span></li>
-                        <li class="mb-2"><strong class="text-black">Số lượng: </strong><span>${recruitment.quantity}</span></li>
-                        <li class="mb-2"><strong class="text-black">Hạn nộp cv: </strong><span>${recruitment.deadline}</span></li>
+                       <li class="mb-2"> <strong class="text-black">Ngày tạo: </strong> <span>${recruitmentDTO.createdAt}</span> </li>
+                        <li class="mb-2"><strong class="text-black">Kiểu công việc: </strong> <span>${recruitmentDTO.category.name}</span></li>
+                        <li class="mb-2"><strong class="text-black">Loại công việc: </strong> <span>${recruitmentDTO.type}</span></li>
+                        <li class="mb-2"><strong class="text-black">Kinh nghiệm: </strong> <span>${recruitmentDTO.experience}</span></li>
+                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span> ${recruitmentDTO.address}</span></li>
+                        <li class="mb-2"><strong class="text-black">Lương: </strong> <span> ${recruitmentDTO.salary} </span></li>
+                        <li class="mb-2"><strong class="text-black">Số lượng: </strong><span>${recruitmentDTO.quantity}</span></li>
+                        <li class="mb-2"><strong class="text-black">Hạn nộp cv: </strong><span>${recruitmentDTO.deadline}</span></li>
                     </ul>
                 </div>
 
@@ -148,7 +212,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span></span></h5>
+                <h5 class="modal-title" id="exampleModalLabel" >Ứng tuyển: <span>${recruitmentDTO.title}</span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -18,6 +18,8 @@ public interface RecruitmentService {
 	
 	public Company getCompanyById(int compId);
 	
+	public RecruitmentDTO getRecruitmentDTO(int id);
+	
 	public Recruitment getRecruitment(int id);
 	
 	public void deleteRec(Recruitment recruitment);

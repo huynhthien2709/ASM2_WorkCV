@@ -48,7 +48,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="/" class="nav-link">Trang
 							chủ</a></li>
-					<li class="'nav-item"><a href="/" class="nav-link">Công
+					<li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công
 							việc</a></li>
 
 					<li class="nav-item"><div class="nav-link dropdown1">${userDTO.fullName}

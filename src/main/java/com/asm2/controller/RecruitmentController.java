@@ -33,7 +33,7 @@ public class RecruitmentController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private HomeService homeService;
 
@@ -54,24 +54,25 @@ public class RecruitmentController {
 		Recruitment recruitment = recruitmentService.addPostJob(recruitmentDTO);
 		Company company = recruitmentService.getCompanyById(recruitmentDTO.getCompanyId());
 		model.addAttribute("company", company);
-		
 
 		return "public/post-job";
 	}
+
 	@PostMapping("/deleteRec")
 	public String deleteRec(RecruitmentDTO recruitmentDTO, Model model) {
-		Recruitment recruitment =  recruitmentService.getRecruitment(recruitmentDTO.getId());
-		System.out.println("id con" + recruitmentDTO.getId());
+		Recruitment recruitment = recruitmentService.getRecruitment(recruitmentDTO.getId());
 		recruitmentService.deleteRec(recruitment);
 		List<Recruitment> recruitments = homeService.getRecruitments();
 		model.addAttribute("recruitments", recruitments);
 		return "public/post-list";
 	}
+
 	@GetMapping("/detail/{id}")
 	public String detailPost(@PathVariable("id") int id, Model model) {
-		Recruitment recruitment = recruitmentService.getRecruitment(id);
-		model.addAttribute("recruitment", recruitment);
+		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
+		model.addAttribute("recruitmentDTO", recruitmentDTO);
+		System.out.println("+++ " + recruitmentDTO.getCompany().getNameCompany() + " " + recruitmentDTO.getCompany().getLogo());
 		return "public/detail-post";
 	}
-	
+
 }

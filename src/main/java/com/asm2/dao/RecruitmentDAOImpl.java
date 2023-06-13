@@ -56,6 +56,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitment.setCategory(category);
 		recruitment.setCompanyId(recruitmentDTO.getCompanyId());
 		recruitment.setCreatedAt(formattedDate);
+		recruitment.setQuantity(recruitmentDTO.getQuantity());
 		currentSession.saveOrUpdate(recruitment);
 		return recruitment;
 	}
@@ -75,11 +76,35 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 	}
 
 	@Override
+	public RecruitmentDTO getRecruitmentDTO(int id) {
+		Session currentSession = sessionFactory.getCurrentSession();	
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: id", Recruitment.class);
+		query.setParameter("id", id);
+		Recruitment recruitment = query.uniqueResult();
+		RecruitmentDTO recruitmentDTO = new RecruitmentDTO();
+		recruitmentDTO.setAddress(recruitment.getAddress());
+		recruitmentDTO.setCreatedAt(recruitment.getCreatedAt());
+		recruitmentDTO.setDeadline(recruitment.getDeadline());
+		recruitmentDTO.setDescription(recruitment.getDescription());
+		recruitmentDTO.setExperience(recruitment.getExperience());
+		recruitmentDTO.setId(recruitment.getId());
+		recruitmentDTO.setQuantity(recruitment.getQuantity());
+		recruitmentDTO.setSalary(recruitment.getSalary());
+		recruitmentDTO.setCompany(recruitment.getCompany());
+		recruitmentDTO.setCategory(recruitment.getCategory());
+		recruitmentDTO.setType(recruitment.getType());
+		recruitmentDTO.setTitle(recruitment.getTitle());
+		
+		return recruitmentDTO;
+	}
+
+	@Override
 	public Recruitment getRecruitment(int id) {
 		Session currentSession = sessionFactory.getCurrentSession();	
 		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: id", Recruitment.class);
 		query.setParameter("id", id);
-		return query.uniqueResult();
+		Recruitment recruitment = query.uniqueResult();
+		return recruitment;
 	}
 
 	@Override

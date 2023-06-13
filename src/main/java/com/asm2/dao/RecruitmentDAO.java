@@ -17,6 +17,8 @@ public interface RecruitmentDAO {
 	
 	public Category getCategorybyId(int categoryId);
 	
+	public RecruitmentDTO getRecruitmentDTO(int id);
+	
 	public Recruitment getRecruitment(int id);
 	
 	public Company getCompanyById(int compId);
