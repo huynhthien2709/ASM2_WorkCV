@@ -224,7 +224,7 @@
                 <div class="modal-body">
                     <div class="row">
                     <input type="hidden" id="userId_${recruitmentDTO.id}" name="user" value="${sessionScope.userDTO.id}">
-					<input type="hidden" id="recruitmentDTO_${recruitments.id}" name="recruitmentDTO" value="${recruitmentDTO.id}">
+					<input type="hidden" id="recruitmentDTO_${recruitmentDTO.id}" name="recruitmentDTO" value="${recruitmentDTO.id}">
 					<input type="hidden" id="cv_${recruitmentDTO.id}" name="cv" value="${cv.fileName}">
                         <div class="col-12">
                             <label for="fileUpload"
@@ -255,126 +255,137 @@
 
         <div class="row mb-5 justify-content-center">
             <div class="col-md-7 text-center">
-                <h2 class="section-title mb-2" th:if="${applyPosts}">Danh sách ứng viên ứng tuyển</h2>
+            	<c:if test="${sessionScope.userDTO.role == 2}">
+                <h2 class="section-title mb-2" ">Danh sách ứng viên ứng tuyển</h2>
+                </c:if>
+                <c:if test="${sessionScope.userDTO.role == 1}">
                 <h2 class="section-title mb-2" th:unless="${applyPosts}">Những công việc liên quan</h2>
+                </c:if>
             </div>
         </div>
-
-        <div th:if="${applyPosts != null}"  class="row">
-            <div class="col-lg-12 pr-lg-4">
-                <div class="row">
-                    <th:block th:if="${applyPosts.size() != 0}" th:each="applyPost : ${applyPosts}">
-                        <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
-                            <div class="team d-md-flex p-4 bg-white">
-                                <IMG class="img" th:src="${applyPost.user.image != null ? applyPost.user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
-                                <div class="text pl-md-4">
-                                    <H5 class="location mb-0" th:text="${applyPost.user.fullName}"></H5>
-                                    <p style="display: block;color: black" th:text="${applyPost.user.address}"></p>
-                                    <span class="position" style="display: block;color: black" th:text="${applyPost.user.email}"></span>
-                                    <p class="mb-4" style="width: 700px" th:utext="${applyPost.user.description}">.</p>
-                                    <div class="row">
-                                        <p><a href="#" th:if="${applyPost.nameCv != null}" class="btn btn-primary" th:href="${'http://localhost:8080/resources/uploads/'} +${applyPost.nameCv}" >Xem cv</a></p>
-                                        <p th:if="${applyPost.status == 0}" style="margin-left: 10px"><a class="btn btn-outline-primary" th:href="${'/user/approve/'} +${applyPost.user.id} +${'/'} +${recruitment.id}" >Duyệt</a></p>
-                                        <p th:if="${applyPost.status == 1}" style="margin-left: 10px;margin-top: 15px"><span style="color: #1e7e34;font-weight: bold" >Đã duyệt</span></p>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </th:block>
-                    <th:block th:if="${applyPosts.size() == 0}">
-                        <p>Chưa có ứng cử viên nào ứng tuyển</p>
-                    </th:block>
-
-
-                </div>
-            </div>
-
-            <div class="col-lg-4 sidebar">
-                <div class="sidebar-box bg-white p-4 ftco-animate">
-                    <h3 class="heading-sidebar">Browse Category</h3>
-                    <form action="#" class="search-form mb-3">
-                        <div class="form-group">
-                            <span class="icon icon-search"></span>
-                            <input type="text" class="form-control" placeholder="Search...">
-                        </div>
-                    </form>
-                    <form action="#" class="browse-form">
-                        <label for="option-job-1"><input type="checkbox" id="option-job-1" name="vehicle" value="" checked> Website &amp; Software</label><br>
-                        <label for="option-job-2"><input type="checkbox" id="option-job-2" name="vehicle" value=""> Education &amp; Training</label><br>
-                        <label for="option-job-3"><input type="checkbox" id="option-job-3" name="vehicle" value=""> Graphics Design</label><br>
-                        <label for="option-job-4"><input type="checkbox" id="option-job-4" name="vehicle" value=""> Accounting &amp; Finance</label><br>
-                        <label for="option-job-5"><input type="checkbox" id="option-job-5" name="vehicle" value=""> Restaurant &amp; Food</label><br>
-                        <label for="option-job-6"><input type="checkbox" id="option-job-6" name="vehicle" value=""> Health &amp; Hospital</label><br>
-                    </form>
-                </div>
-
-                <div class="sidebar-box bg-white p-4 ftco-animate">
-                    <h3 class="heading-sidebar">Select Location</h3>
-                    <form action="#" class="search-form mb-3">
-                        <div class="form-group">
-                            <span class="icon icon-search"></span>
-                            <input type="text" class="form-control" placeholder="Search...">
-                        </div>
-                    </form>
-                    <form action="#" class="browse-form">
-                        <label for="option-location-1"><input type="checkbox" id="option-location-1" name="vehicle" value="" checked> Sydney, Australia</label><br>
-                        <label for="option-location-2"><input type="checkbox" id="option-location-2" name="vehicle" value=""> New York, United States</label><br>
-                        <label for="option-location-3"><input type="checkbox" id="option-location-3" name="vehicle" value=""> Tokyo, Japan</label><br>
-                        <label for="option-location-4"><input type="checkbox" id="option-location-4" name="vehicle" value=""> Manila, Philippines</label><br>
-                        <label for="option-location-5"><input type="checkbox" id="option-location-5" name="vehicle" value=""> Seoul, South Korea</label><br>
-                        <label for="option-location-6"><input type="checkbox" id="option-location-6" name="vehicle" value=""> Western City, UK</label><br>
-                    </form>
-                </div>
-
-                <div class="sidebar-box bg-white p-4 ftco-animate">
-                    <h3 class="heading-sidebar">Job Type</h3>
-                    <form action="#" class="browse-form">
-                        <label for="option-job-type-1"><input type="checkbox" id="option-job-type-1" name="vehicle" value="" checked> Partime</label><br>
-                        <label for="option-job-type-2"><input type="checkbox" id="option-job-type-2" name="vehicle" value=""> Fulltime</label><br>
-                        <label for="option-job-type-3"><input type="checkbox" id="option-job-type-3" name="vehicle" value=""> Intership</label><br>
-                        <label for="option-job-type-4"><input type="checkbox" id="option-job-type-4" name="vehicle" value=""> Temporary</label><br>
-                        <label for="option-job-type-5"><input type="checkbox" id="option-job-type-5" name="vehicle" value=""> Freelance</label><br>
-                        <label for="option-job-type-6"><input type="checkbox" id="option-job-type-6" name="vehicle" value=""> Fixed</label><br>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <th:block  th:each="recruitment : ${listRelated}">
-            <div th:unless="${applyPosts}" class="col-md-12 ">
+		
+		<!-- Mentor change -->
+		<c:if test="${sessionScope.userDTO.role == 2}">
+	        <div th:if="${applyPosts != null}"  class="row">
+	            <div class="col-lg-12 pr-lg-4">            
+	                <div class="row">
+	                <c:if test="${sessionScope.userDTO.role == 2}">
+	                    <th:block th:if="${applyPosts.size() != 0}" th:each="applyPost : ${applyPosts}">
+	                        <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
+	                            <div class="team d-md-flex p-4 bg-white">
+	                                <IMG class="img" th:src="${applyPost.user.image != null ? applyPost.user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
+	                                <div class="text pl-md-4">
+	                                    <H5 class="location mb-0" th:text="${applyPost.user.fullName}"></H5>
+	                                    <p style="display: block;color: black" th:text="${applyPost.user.address}"></p>
+	                                    <span class="position" style="display: block;color: black" th:text="${applyPost.user.email}"></span>
+	                                    <p class="mb-4" style="width: 700px" th:utext="${applyPost.user.description}">.</p>
+	                                    <div class="row">
+	                                        <p><a href="#" th:if="${applyPost.nameCv != null}" class="btn btn-primary" th:href="${'http://localhost:8080/resources/uploads/'} +${applyPost.nameCv}" >Xem cv</a></p>
+	                                        <p th:if="${applyPost.status == 0}" style="margin-left: 10px"><a class="btn btn-outline-primary" th:href="${'/user/approve/'} +${applyPost.user.id} +${'/'} +${recruitment.id}" >Duyệt</a></p>
+	                                        <p th:if="${applyPost.status == 1}" style="margin-left: 10px;margin-top: 15px"><span style="color: #1e7e34;font-weight: bold" >Đã duyệt</span></p>
+	                                    </div>
+	
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </th:block>
+	                    <th:block th:if="${applyPosts.size() == 0}">
+	                        <p>Chưa có ứng cử viên nào ứng tuyển</p>
+	                    </th:block>
+					</c:if>
+	
+	                </div>
+	            </div>
+	
+	            <div class="col-lg-4 sidebar">
+	                <div class="sidebar-box bg-white p-4 ftco-animate">
+	                    <h3 class="heading-sidebar">Browse Category</h3>
+	                    <form action="#" class="search-form mb-3">
+	                        <div class="form-group">
+	                            <span class="icon icon-search"></span>
+	                            <input type="text" class="form-control" placeholder="Search...">
+	                        </div>
+	                    </form>
+	                    <form action="#" class="browse-form">
+	                        <label for="option-job-1"><input type="checkbox" id="option-job-1" name="vehicle" value="" checked> Website &amp; Software</label><br>
+	                        <label for="option-job-2"><input type="checkbox" id="option-job-2" name="vehicle" value=""> Education &amp; Training</label><br>
+	                        <label for="option-job-3"><input type="checkbox" id="option-job-3" name="vehicle" value=""> Graphics Design</label><br>
+	                        <label for="option-job-4"><input type="checkbox" id="option-job-4" name="vehicle" value=""> Accounting &amp; Finance</label><br>
+	                        <label for="option-job-5"><input type="checkbox" id="option-job-5" name="vehicle" value=""> Restaurant &amp; Food</label><br>
+	                        <label for="option-job-6"><input type="checkbox" id="option-job-6" name="vehicle" value=""> Health &amp; Hospital</label><br>
+	                    </form>
+	                </div>
+	
+	                <div class="sidebar-box bg-white p-4 ftco-animate">
+	                    <h3 class="heading-sidebar">Select Location</h3>
+	                    <form action="#" class="search-form mb-3">
+	                        <div class="form-group">
+	                            <span class="icon icon-search"></span>
+	                            <input type="text" class="form-control" placeholder="Search...">
+	                        </div>
+	                    </form>
+	                    <form action="#" class="browse-form">
+	                        <label for="option-location-1"><input type="checkbox" id="option-location-1" name="vehicle" value="" checked> Sydney, Australia</label><br>
+	                        <label for="option-location-2"><input type="checkbox" id="option-location-2" name="vehicle" value=""> New York, United States</label><br>
+	                        <label for="option-location-3"><input type="checkbox" id="option-location-3" name="vehicle" value=""> Tokyo, Japan</label><br>
+	                        <label for="option-location-4"><input type="checkbox" id="option-location-4" name="vehicle" value=""> Manila, Philippines</label><br>
+	                        <label for="option-location-5"><input type="checkbox" id="option-location-5" name="vehicle" value=""> Seoul, South Korea</label><br>
+	                        <label for="option-location-6"><input type="checkbox" id="option-location-6" name="vehicle" value=""> Western City, UK</label><br>
+	                    </form>
+	                </div>
+	
+	                <div class="sidebar-box bg-white p-4 ftco-animate">
+	                    <h3 class="heading-sidebar">Job Type</h3>
+	                    <form action="#" class="browse-form">
+	                        <label for="option-job-type-1"><input type="checkbox" id="option-job-type-1" name="vehicle" value="" checked> Partime</label><br>
+	                        <label for="option-job-type-2"><input type="checkbox" id="option-job-type-2" name="vehicle" value=""> Fulltime</label><br>
+	                        <label for="option-job-type-3"><input type="checkbox" id="option-job-type-3" name="vehicle" value=""> Intership</label><br>
+	                        <label for="option-job-type-4"><input type="checkbox" id="option-job-type-4" name="vehicle" value=""> Temporary</label><br>
+	                        <label for="option-job-type-5"><input type="checkbox" id="option-job-type-5" name="vehicle" value=""> Freelance</label><br>
+	                        <label for="option-job-type-6"><input type="checkbox" id="option-job-type-6" name="vehicle" value=""> Fixed</label><br>
+	                    </form>
+	                </div>
+	            </div>
+	        </div>
+        </c:if>
+        <!-- Mentor change -->
+     
+        <c:if test="${sessionScope.userDTO.role == 1}">
+        <c:forEach items="${recruitments}" var="recruitment">      
+            <div  class="col-md-12 ">
                 <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                     <div class="one-third mb-4 mb-md-0">
                         <div class="job-post-item-header align-items-center">
-                            <span class="subadge" th:text="${recruitment.type}"></span>
-                            <h2 class="mr-3 text-black" ><a th:text="${recruitment.title}" th:href="${'/recruitment/detail/'} +${recruitment.id}"></a></h2>
+                            <span class="subadge"> <c:out value="${recruitment.type}"/></span>
+                            <h2 class="mr-3 text-black" ><a <%-- href="${'/recruitment/detail/'} +${recruitment.id}" --%>><c:out value="${recruitment.title}"/></a></h2>
                         </div>
                         <div class="job-post-item-body d-block d-md-flex">
-                            <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${recruitment.Company.nameCompany}" ></a></div>
-                            <div><span class="icon-my_location"></span> <span th:text="${recruitment.address}"></span></div>
+                            <div class="mr-3"><span class="icon-layers"></span> <a href="#" ><c:out value="${recruitment.company.nameCompany}"/></a></div>
+                            <div><span class="icon-my_location"></span> <span><c:out value="${recruitment.address}"/></span></div>
                         </div>
                     </div>
 
-                    <input type="hidden" th:id="${'idRe'}+${recruitment.id}" th:value="${recruitment.id}">
-                    <div th:if="${session.user}" class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-                        <div th:if="${session.user.role.id == 1}">
-                            <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
-                                <span class="icon-heart"></span>
-                            </a>
-                        </div>
-                        <a th:if="${session.user.role.id == 1}" data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
-                    </div>
-                    <div th:unless="${session.user}" class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+                    <%-- <input type="hidden" id="${'idRe'}+${recruitment.id}" value="${recruitment.id}"> --%>
+                    <div  class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                         <div >
-                            <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                            <a  onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                 <span class="icon-heart"></span>
                             </a>
                         </div>
                         <a  data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                     </div>
+                    <div  class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+                        <div >
+                            <a  onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                <span class="icon-heart"></span>
+                            </a>
+                        </div>
+                        <a  data-toggle="modal" data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                    </div>
                 </div>
             </div><!-- end -->
-        </th:block>
-
+        </c:forEach>
+	</c:if>
         <script>
 
             function apply(id){

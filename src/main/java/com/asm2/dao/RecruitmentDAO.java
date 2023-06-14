@@ -28,4 +28,6 @@ public interface RecruitmentDAO {
 	public void updadetApplyPost(ApplyPost applyPost);
 	
 	public void  deleteApplyPost(int recId);
+	
+	public List<Recruitment> getRecruitmentbyCompId(int compId);
 }

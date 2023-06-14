@@ -2,6 +2,9 @@ package com.asm2.dao;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -94,6 +97,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitmentDTO.setCategory(recruitment.getCategory());
 		recruitmentDTO.setType(recruitment.getType());
 		recruitmentDTO.setTitle(recruitment.getTitle());
+		recruitmentDTO.setCompanyId(recruitment.getCompanyId());
 		
 		return recruitmentDTO;
 	}
@@ -138,6 +142,19 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		Query query = currentSession.createQuery("delete from ApplyPost where recruitment_id =: recId");
 		query.setParameter("recId", recId);
 		query.executeUpdate();
+	}
+
+	@Override
+	public List<Recruitment> getRecruitmentbyCompId(int compId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where company_id =: compId", Recruitment.class);
+		query.setParameter("compId", compId);
+		
+		List<Recruitment> recruitments = query.getResultList();
+//		List<RecruitmentDTO>  recruitmentDTO = new ArrayList<>();
+//		Collections.copy(recruitmentDTO, recruitments);
+		return recruitments;
 	}
 	
 	

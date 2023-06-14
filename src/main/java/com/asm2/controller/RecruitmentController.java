@@ -68,11 +68,16 @@ public class RecruitmentController {
 	}
 
 	@GetMapping("/detail/{id}")
-	public String detailPost(@PathVariable("id") int id, Model model) {
+	public String detailPost(@PathVariable("id") String idStr, Model model) {
+		int id = Integer.parseInt(idStr);
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
 		model.addAttribute("recruitmentDTO", recruitmentDTO);
+		System.out.println(id);
+		System.out.println("///compid " + recruitmentDTO.getCompanyId());
+		List<Recruitment> recruitments = recruitmentService.getRecruitmentbyCompId(recruitmentDTO.getCompanyId());
 		
-		System.out.println("+++ " + recruitmentDTO.getCompany().getNameCompany() + " " + recruitmentDTO.getCompany().getLogo());
+		model.addAttribute("recruitments", recruitments);
+		
 		return "public/detail-post";
 	}
 

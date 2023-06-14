@@ -23,5 +23,7 @@ public interface RecruitmentService {
 	public Recruitment getRecruitment(int id);
 	
 	public void deleteRec(Recruitment recruitment);
+	
+	public List<Recruitment> getRecruitmentbyCompId(int compId);
 }
 
