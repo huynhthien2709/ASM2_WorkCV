@@ -54,6 +54,12 @@ public class Company {
 	@JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User user;
 	
+	/*
+	 * sử dụng các annotion để lấy qua lại các trường
+	 * 1 cty sẽ có nhiều bài đăng nên từ cty sẽ trả về 1 list các bài đăng
+	 */	@OneToMany(mappedBy = "company", fetch = FetchType.EAGER)
+	private List<Recruitment> recruitments;
+	
 
 	public Company() {
 	}
@@ -67,6 +73,15 @@ public class Company {
 		this.nameCompany = nameCompany;
 		this.phoneNumber = phoneNumber;
 		this.status = status;
+	}
+	
+
+	public List<Recruitment> getRecruitments() {
+		return recruitments;
+	}
+
+	public void setRecruitments(List<Recruitment> recruitments) {
+		this.recruitments = recruitments;
 	}
 
 	public int getId() {

@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -552,7 +553,7 @@
 									</h3>
 									<p>
 										 <span class="number" style="color: black"
-											><c:out value="${company}"/></span> <span>Vị trí ứng tuyển</span>
+											><c:out value="${fn:length(company.recruitments)}"/></span> <span>Vị trí ứng tuyển</span>
 									</p>
 								</div>
 							</div>

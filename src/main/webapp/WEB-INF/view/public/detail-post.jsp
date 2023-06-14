@@ -263,8 +263,7 @@
                 </c:if>
             </div>
         </div>
-		
-		<!-- Mentor change -->
+
 		<c:if test="${sessionScope.userDTO.role == 2}">
 	        <div th:if="${applyPosts != null}"  class="row">
 	            <div class="col-lg-12 pr-lg-4">            
@@ -348,7 +347,7 @@
 	            </div>
 	        </div>
         </c:if>
-        <!-- Mentor change -->
+    
      
         <c:if test="${sessionScope.userDTO.role == 1}">
         <c:forEach items="${recruitments}" var="recruitment">      
