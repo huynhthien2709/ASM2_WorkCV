@@ -25,6 +25,7 @@ import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
+import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
@@ -71,7 +72,7 @@ public class UserController {
 			Cv cv = userService.getCvById(cvid);
 			model.addAttribute("cv", cv);
 		} else {
-			model.addAttribute("msg", "no CV");
+			model.addAttribute("msg", "bạn chưa có CV");
 		}
 
 		model.addAttribute("user", user);
@@ -273,6 +274,24 @@ public class UserController {
 		model.addAttribute("recruitments", recruitments);
 		System.out.println("///" + recruitments.size());
 		return "public/post-list";
+	}
+	
+	@GetMapping("/list-save-job")
+	public String listSaveJob(Model model, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		List<SaveJob> saveJobs = userService.getListSaveJob(userDTO.getId());
+		model.addAttribute("saveJobs", saveJobs);
+		User user = userService.getUserById(userDTO.getId());
+		if (user.getCv() != null) {
+			int cvid = user.getCv().getId();
+			Cv cv = userService.getCvById(cvid);
+			model.addAttribute("cv", cv);
+		} else {
+			model.addAttribute("msg", "bạn chưa có CV");
+		}
+
+		model.addAttribute("user", user);
+		return "public/list-save-job";
 	}
 
 }

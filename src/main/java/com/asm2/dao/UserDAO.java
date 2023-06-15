@@ -10,6 +10,7 @@ import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
+import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
 
 public interface UserDAO {
@@ -43,6 +44,8 @@ public interface UserDAO {
 	public Recruitment getRecruitmentById(int recruitmentId);
 
 	public Cv updateCvApplyJobCv (String path, int userId);
+	
+	public List<SaveJob>  getListSaveJob(int userId);
 	
 
 }

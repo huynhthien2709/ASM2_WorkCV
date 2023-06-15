@@ -60,7 +60,7 @@
 									</p>
 							
 								<p>
-									<a href="/save-job/get-list">Công việc đã lưu</a>
+									<a href="<c:url value = "/user/list-save-job"/>">Công việc đã lưu</a>
 								</p>
 								<c:if test="${userDTO.role == 2}">
 									<p>
@@ -464,7 +464,7 @@
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
-										<form method="post" action="${pageContext.request.contextPath}/user/applyJobNoUploadCv" name="user">
+										<form method="post" action="${pageContext.request.contextPath}/user/applyJob" name="user">
 											<div class="modal-body">
 												<div class="row">
 													<div class="col-12">
@@ -652,10 +652,7 @@
 			formData.append('recruitmentId', recruitmentId);
 			formData.append('nameCv', cvPath);
 			formData.append('text', text);
-			console.log('userId', userId);
-			console.log('recruitmentId', recruitmentId);
-			console.log('cvPath', cvPath);
-			console.log('text', text);
+			
 			
 			if (cvPath == '') {
 				swal({
@@ -781,8 +778,7 @@
 		}
 	</script>
 	<script>
-    /* $(function () { */
-    	/* $('#fileUpload1').change(function () { */
+    
         function fileUploadChange(inputId) {
             if (window.FormData !== undefined) {
                 var fileUpload = $('#fileUpload1_' + inputId).get(0);
@@ -845,7 +841,7 @@
 
             }
         }
-    /* }) */
+
 </script>
 
 

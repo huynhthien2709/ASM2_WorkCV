@@ -17,10 +17,13 @@ import org.springframework.stereotype.Repository;
 
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.RecruitmentDTO;
+import com.asm2.DTO.SaveJobDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
+import com.asm2.entity.SaveJob;
+import com.asm2.entity.User;
 
 @Repository
 @Transactional
@@ -183,6 +186,24 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		
 		return applyPost;
 	}
+
+	@Override
+	public SaveJob addSaveJob(SaveJobDTO saveJobDTO) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		SaveJob saveJob = new SaveJob();
+		Recruitment recruitment = new Recruitment();
+		User user = new User();
+		System.out.println(saveJobDTO.getRecruitmentId());
+		System.out.println(saveJobDTO.getUserId());
+		recruitment.setId(saveJobDTO.getRecruitmentId());
+		user.setId(saveJobDTO.getUserId());
+		saveJob.setRecruitment(recruitment);
+		saveJob.setUser(user);
+		currentSession.saveOrUpdate(saveJob);
+		return saveJob;
+	}
+	
+	
 	
 	
 	

@@ -16,6 +16,7 @@ import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
+import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
 
 @Service
@@ -112,6 +113,13 @@ public class UserServiceImpl implements UserService {
 	public ApplyPost applyJob(ApplyPostDTO applyPostDTO) {
 		ApplyPost applyPost = userDAO.applyJob(applyPostDTO);
 		return applyPost;
+	}
+
+	@Override
+	@Transactional
+	public List<SaveJob> getListSaveJob(int userId) {
+
+		return userDAO.getListSaveJob(userId);
 	}
 
 }

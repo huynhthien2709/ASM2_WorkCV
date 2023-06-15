@@ -9,6 +9,7 @@ import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Role;
+import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
 
 public interface UserService {
@@ -32,4 +33,6 @@ public interface UserService {
 	public void deleteCv(User user);
 	
 	public ApplyPost applyJob(ApplyPostDTO applyPostDTO);
+	
+	public List<SaveJob>  getListSaveJob(int userId);
 }

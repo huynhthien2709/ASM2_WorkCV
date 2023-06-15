@@ -3,10 +3,12 @@ package com.asm2.service;
 import java.util.List;
 
 import com.asm2.DTO.RecruitmentDTO;
+import com.asm2.DTO.SaveJobDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
+import com.asm2.entity.SaveJob;
 
 public interface RecruitmentService {
 	
@@ -29,5 +31,7 @@ public interface RecruitmentService {
 	public List<ApplyPost> getListCandidate(int recId);
 	
 	public ApplyPost approveCandidate(int id);
+	
+	public SaveJob addSaveJob(SaveJobDTO saveJobDTO);
 }
 

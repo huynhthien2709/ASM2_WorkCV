@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.RecruitmentDTO;
+import com.asm2.DTO.SaveJobDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
@@ -99,6 +100,16 @@ public class RecruitmentController {
 		Company company = recruitmentService.getCompanyById(recruitmentDTO.getCompanyId());
 		model.addAttribute("company", company);
 		return "public/post-job";
+	}
+	
+	@GetMapping("/saveJob/{id}")
+	public String saveJob(@PathVariable("id") int id, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		SaveJobDTO saveJobDTO = new SaveJobDTO();
+		saveJobDTO.setRecruitmentId(id);
+		saveJobDTO.setUserId(userDTO.getId());
+		recruitmentService.addSaveJob(saveJobDTO);
+		return "redirect:/recruitment/detail/" + id;
 	}
 
 }

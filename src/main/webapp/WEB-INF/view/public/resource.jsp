@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/assets/css/style.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/assets/css/bootstrap/bootstrap-grid.css">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/resources/assets/css/bootstrap/bootstrap-reboot.css">
+  
+
 
   <!-- JS -->
   <script src="<%= request.getContextPath() %>/resources/assets/js/jquery.min.js"></script>

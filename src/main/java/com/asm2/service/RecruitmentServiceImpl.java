@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.asm2.DTO.RecruitmentDTO;
+import com.asm2.DTO.SaveJobDTO;
 import com.asm2.dao.RecruitmentDAO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
+import com.asm2.entity.SaveJob;
 
 @Service
 public class RecruitmentServiceImpl implements RecruitmentService {
@@ -88,6 +90,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		return recruitmentDAO.approveCandidate(id);
 		
 	}
+
+	@Override
+	@Transactional
+	public SaveJob addSaveJob(SaveJobDTO saveJobDTO) {
+		
+		return recruitmentDAO.addSaveJob(saveJobDTO);
+	}
+	
 	
 	
 	

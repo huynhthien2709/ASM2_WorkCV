@@ -95,7 +95,7 @@
 					<div class="col-lg-4">
 						<div class="row">
 							<div class="col-6">
-								<a class="btn btn-block btn-light btn-md"><span
+								<a class="btn btn-block btn-light btn-md" ><span
 									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
 							</div>
 							<div class="col-6">
@@ -107,7 +107,7 @@
 					<div class="col-lg-4">
 						<div class="row">
 							<div class="col-6">
-								<a class="btn btn-block btn-light btn-md"><span
+								<a class="btn btn-block btn-light btn-md" ><span
 									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
 							</div>
 							<div class="col-6">
@@ -144,7 +144,7 @@
 					<div class="col-lg-4">
 						<div class="row">
 							<div class="col-6">
-								<a class="btn btn-block btn-light btn-md"><span
+								<a href="<c:url value = "/recruitment/saveJob/${recruitmentDTO.id}"/>" class="btn btn-block btn-light btn-md"><span
 									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
 							</div>
 							<div class="col-6">
@@ -157,7 +157,7 @@
 					<div class="col-lg-4">
 						<div class="row">
 							<div class="col-6">
-								<a class="btn btn-block btn-light btn-md"><span
+								<a href="<c:url value = "/recruitment/saveJob/${recruitmentDTO.id}"/>" class="btn btn-block btn-light btn-md"><span
 									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
 							</div>
 							<div class="col-6">
@@ -233,7 +233,7 @@
                                    id="${'fileUpload'}_${recruitmentDTO.id}" name="file"  required>
                             <label for="fileUpload"
                                    class="col-form-label">Giới thiệu:</label>
-                            <textarea rows="10" cols="3" class="form-control" name="text" id="text_${recruitmentDTO.id}"> >
+                            <textarea rows="10" cols="3" class="form-control" name="text" id="text_${recruitmentDTO.id}"> 
 								
                         </textarea>
                         </div>
@@ -375,16 +375,17 @@
                                 <span class="icon-heart"></span>
                             </a>
                         </div>
-                        <a  data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                        <input type="hidden" id="recruitment_${recruitment.id}" name="recruitmentDTO" value="${recruitment.id}">
+                        <a  data-toggle="modal"  data-target="#exampleModal_${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                     </div>
-                    <div  class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
+                 <%--    <div  class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                         <div >
                             <a  onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                 <span class="icon-heart"></span>
                             </a>
                         </div>
                         <a  data-toggle="modal" data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
-                    </div>
+                    </div> --%>
                 </div>
             </div><!-- end -->
         </c:forEach>

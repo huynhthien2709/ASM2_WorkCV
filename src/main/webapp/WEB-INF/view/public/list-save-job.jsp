@@ -1,50 +1,18 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-<head">
+<head>
     <title>Work CV</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-  <link rel="stylesheet" href="/assets/css/animate.css">
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/assets/css/aos.css">
-  <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-  <link rel="stylesheet" href="/assets/css/css/bootstrap-reboot.css">
-  <link rel="stylesheet" href="/assets/css/css/mixins/_text-hide.css">
-  <link rel="stylesheet" href="/assets/css/flaticon.css">
-  <link rel="stylesheet" href="/assets/css/icomoon.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap-grid.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap-reboot.css">
-
-  <!-- JS -->
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/assets/js/popper.min.js"></script>
-  <script src="/assets/js/bootstrap.min.js"></script>
-  <script src="/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/assets/js/jquery.waypoints.min.js"></script>
-  <script src="/assets/js/jquery.stellar.min.js"></script>
-  <script src="/assets/js/owl.carousel.min.js"></script>
-  <script src="/assets/js/jquery.magnific-popup.min.js"></script>
-  <script src="/assets/js/aos.js"></script>
-  <script src="/assets/js/jquery.animateNumber.min.js"></script>
-  <script src="/assets/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/assets/js/google-map.js"></script>
-  <script src="/assets/js/main.js"></script>
-  <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+<%@include file="resource.jsp"%>
+  
 </head>
 <body>
 <body>
@@ -73,7 +41,7 @@
         </div>
       </nav>
 <!-- END nav -->
-<div th:if="${success}" class="toast" data-delay="2000" style="position:fixed;top: 100PX; right: 10PX;z-index: 2000;width: 300px">
+<%-- <div th:if="${success}" class="toast" data-delay="2000" style="position:fixed;top: 100PX; right: 10PX;z-index: 2000;width: 300px">
     <script>
         swal({
             title: 'Xóa thành công!',
@@ -84,9 +52,9 @@
             type: 'success'
         })
     </script>
-</div>
+</div> --%>
 <!-- END nav -->
-<div class="hero-wrap hero-wrap-2" style="background-image: url('user/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5" th:if="${session.user.role.id == 1 }">
+<div class="hero-wrap hero-wrap-2" style="background-image: url(<c:url value="/resources/assets/images/bg_1.jpg"/>);" data-stellar-background-ratio="0.5" th:if="${session.user.role.id == 1 }">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -97,7 +65,7 @@
         </div>
     </div>
 </div>
-<div class="hero-wrap hero-wrap-2" style="background-image: url('user/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5" th:if="${session.user.role.id == 2 }">
+<%-- <div class="hero-wrap hero-wrap-2" style="background-image: url(<c:url value="/resources/assets/images/bg_1.jpg"/>);" data-stellar-background-ratio="0.5" th:if="${session.user.role.id == 2 }">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -107,73 +75,80 @@
             </div>
         </div>
     </div>
-</div>
+</div> --%>
 
-<section class="ftco-section bg-light" th:if="${session.user.role.id == 1 }">
+<section class="ftco-section bg-light">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 pr-lg-5">
-                <div th:if="${saveJobList.totalPages > 0}" class="row">
-                    <th:block th:each="saveJob : ${saveJobList.content}">
+                <div class="row">
+                	<c:forEach items="${saveJobs}" var="saveJob">
+                   
                         <div class="col-md-12 ">
                             <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                                 <div class="one-third mb-4 mb-md-0">
                                     <div class="job-post-item-header align-items-center">
-                                        <span class="subadge" th:text="${saveJob.recruitment.type}"></span>
-                                        <h2 class="mr-3 text-black" ><a th:text="${saveJob.recruitment.title}" th:href="${'/recruitment/detail/'} +${saveJob.recruitment.id}"></a></h2>
+                                        <span class="subadge"><c:out value="${saveJob.recruitment.type}"/></span>
+                                        <h2 class="mr-3 text-black" ><a  href="<c:url value = "/recruitment/detail/${saveJob.recruitment.id}"/>"><c:out value="${saveJob.recruitment.title}"/></a></h2>
                                     </div>
                                     <div class="job-post-item-body d-block d-md-flex">
-                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${saveJob.recruitment.Company.nameCompany}" ></a></div>
-                                        <div><span class="icon-my_location"></span> <span th:text="${saveJob.recruitment.address}"></span></div>
+                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#"  ><c:out value="${saveJob.recruitment.company.nameCompany}"/></a></div>
+                                        <div><span class="icon-my_location"></span> <span><c:out value="${saveJob.recruitment.address}"/></span></div>
                                     </div>
                                 </div>
-                                <input type="hidden" th:id="${'idRe'}+${saveJob.recruitment.id}" th:value="${saveJob.recruitment.id}">
+                               <%--  <input type="hidden" th:id="${'idRe'}+${saveJob.recruitment.id}" th:value="${saveJob.recruitment.id}"> --%>
                                 <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                                     <div>
                                         <a  th:href="${'/save-job/delete/'}+${saveJob.id}" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                             <span class="icon-delete"></span>
                                         </a>
                                     </div>
-                                    <a  data-toggle="modal" th:data-target="${'#exampleModal'}+${saveJob.recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                                    <a  data-toggle="modal" data-target="#exampleModal_${saveJob.recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                                 </div>
                             </div>
                         </div><!-- end -->
                         <!-- Modal -->
-                        <div class="modal fade" th:id="${'exampleModal'}+${saveJob.recruitment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal_${saveJob.recruitment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span th:text="${saveJob.recruitment.title}"></span></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span ><c:out value="${saveJob.recruitment.title}"/></span></h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="/user/apply-job">
+                                    <form method="post" action="${pageContext.request.contextPath}/user/applyJob" name="user">
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <select th:id="${'choose'}+${saveJob.recruitment.id}" th:onchange="'choosed(' +${saveJob.recruitment.id}+ ')'" class="form-control" aria-label="Default select example">
+                                                    <select id="${'choose'}_${saveJob.recruitment.id}" onchange="choosed(${saveJob.recruitment.id})" class="form-control" aria-label="Default select example">
                                                         <option selected>Chọn phương thức nộp</option>
                                                         <option value="1">Dùng cv đã cập nhật</option>
                                                         <option value="2">Nộp cv mới</option>
                                                     </select>
                                                 </div>
-                                                <div th:id="${'loai1'}+${saveJob.recruitment.id}" style="display:none" class="col-12">
+                                                <div id="loai1_${saveJob.recruitment.id}" style="display:none" class="col-12">
+                                                	<input type="hidden" id="userId_${saveJob.recruitment.id}" name="user" value="${user.id}">
+													<input type="hidden" id="recruitments_${saveJob.recruitment.id}" name="recruitments" value="${saveJob.recruitment.id}">
+													<input type="hidden" id="cv_${saveJob.recruitment.id}" name="cv" value="${cv.fileName}">
                                                     <label for="fileUpload"
                                                            class="col-form-label">Giới thiệu:</label>
-                                                    <textarea rows="10" cols="3" class="form-control"  th:id="${'text'}+${saveJob.recruitment.id}" >
+                                                    <textarea rows="10" cols="3" class="form-control"  id="text_${saveJob.recruitment.id}" >
 
                                                     </textarea>
                                                 </div>
-                                                <div th:id="${'loai2'}+${saveJob.recruitment.id}" style="display:none" class="col-12">
-
-                                                    <label for="fileUpload"
-                                                           class="col-form-label">Chọn cv:</label>
-                                                    <input type="file" class="form-control"
-                                                           th:id="${'fileUpload'}+${saveJob.recruitment.id}" name="file"   required>
-                                                    <label for="fileUpload"
+                                                <div id="loai2_${saveJob.recruitment.id}" style="display:none" class="col-12">
+													<input type="hidden" id="userId_${saveJob.recruitment.id}" name="user" value="${user.id}">
+													<input type="hidden" id="recruitments_${saveJob.recruitment.id}" name="recruitments" value="${saveJob.recruitment.id}">
+													<%-- <input type="hidden" id="cv_${saveJob.recruitment.id}" name="cv" value="${cv.fileName}"> --%>
+                                                    <label for="fileUpload1"
+                                                           class="col-form-label">Chọn cv:</label>                                                    
+															  
+                                                    <input type="file" class="form-control"  id="${'fileUpload1'}_${saveJob.recruitment.id}"  
+                                                    		onchange="fileUploadChange(${saveJob.recruitment.id})" name="file"   required>
+                                                    <label for="fileUpload1"
                                                            class="col-form-label">Giới thiệu:</label>
-                                                    <textarea rows="10" cols="3" class="form-control"  th:id="${'text'}+${saveJob.recruitment.id}" >
+                                                    <textarea rows="10" cols="3" class="form-control"  id="text_${saveJob.recruitment.id}" value="">
 
                                                     </textarea>
                                                 </div>
@@ -181,8 +156,8 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                <button type="button" th:id="${'button1'}+${saveJob.recruitment.id}" style="display: none" th:onclick="'apply1(' +${saveJob.recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
-                                                <button type="button" th:id="${'button2'}+${saveJob.recruitment.id}" style="display: none" th:onclick="'apply(' +${saveJob.recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
+                                                <button type="button" id="button1_${saveJob.recruitment.id}" style="display: none" onclick="apply1(${saveJob.recruitment.id})" class="btn btn-primary">Nộp</button>
+                                                <button type="button" id="button2_${saveJob.recruitment.id}" style="display: none" onclick="apply(${saveJob.recruitment.id})" class="btn btn-primary">Nộp</button>
                                             </div>
                                         </div>
                                     </form>
@@ -213,12 +188,15 @@
                                 </div>
                             </div>
                         </div>
-                    </th:block>
+               
+                    </c:forEach>
 
                 </div>
-                <div style="text-align: center" th:if="${saveJobList.totalPages < 1}">
+                <c:if test="${saveJobs.size() == 0}">
+                <div style="text-align: center" >
                     <p style="color:red;">Danh sách trống</p>
                 </div>
+                </c:if>
                 <div class="row mt-5">
                     <div class="col text-center">
                         <div class="block-27">
@@ -245,13 +223,22 @@
         var nameText = "#text" +id;
         var idRe = $(name).val();
         var textvalue = $(nameText).val();
+        
+        
+        var userId = $("#userId_" + id).val();
+		var recruitmentId = $("#recruitments_" + id).val();
+		var cvPath = $("#cv_" + id).val();
+		var text = $("#text_" + id).val();
+		
         var formData = new FormData();
-        formData.append('idRe', idRe);
-        formData.append('text', textvalue);
+        formData.append('userId', userId);
+		formData.append('recruitmentId', recruitmentId);
+		formData.append('nameCv', cvPath);
+		formData.append('text', text);
         $.ajax(
             {
                 type: 'POST',
-                url: '/user/apply-job1/',
+                url: '${pageContext.request.contextPath}/user/apply-job/',
                 contentType: false,
                 processData: false,
                 data: formData,
@@ -297,12 +284,14 @@
 
 
     }
+   
+    
     function choosed(id){
-        var name = '#choose' + id;
-        var name1 = 'loai1' + id;
-        var name2 = 'loai2' + id;
-        var button1 = 'button1' + id;
-        var button2 = 'button2' + id;
+        var name = '#choose_' + id;
+        var name1 = 'loai1_' + id;
+        var name2 = 'loai2_' + id;
+        var button1 = 'button1_' + id;
+        var button2 = 'button2_' + id;
         var giaitri = $(name).val();
         if(giaitri == 1){
             document.getElementById(name1).style.display = 'block'
@@ -324,13 +313,19 @@
         var nameText = "#text" +id;
         var idRe = $(name).val();
         var textvalue = $(nameText).val();
-        var fileUpload = $(nameFile).get(0);
-        var files = fileUpload.files;
+       /*  var fileUpload = $(nameFile).get(0);
+        var files = fileUpload.files; */
+        
+        var userId = $("#userId_" + id).val();
+		var recruitmentId = $("#recruitments_" + id).val();
+		var cvPath = $("#cv_" + id).val();
+		var text = $("#text_" + id).val();
         var formData = new FormData();
-        formData.append('file', files[0]);
-        formData.append('idRe', idRe);
-        formData.append('text', textvalue);
-        if(files[0] == null){
+        formData.append('userId', userId);
+		formData.append('recruitmentId', recruitmentId);
+		formData.append('nameCv', cvPath);
+		formData.append('text', text);
+        if(cvPath == ''){
             swal({
                 title: 'Bạn cần phải chọn cv!',
                 /* text: 'Redirecting...', */
@@ -343,7 +338,7 @@
             $.ajax(
                 {
                     type: 'POST',
-                    url: '/user/apply-job/',
+                    url: '${pageContext.request.contextPath}/user/apply-job/',
                     contentType: false,
                     processData: false,
                     data: formData,
@@ -437,6 +432,71 @@
             }
         )
     }
+    function fileUploadChange(inputId) {
+        if (window.FormData !== undefined) {
+            var fileUpload = $('#fileUpload1_' + inputId).get(0);
+            var files = fileUpload.files;
+            var text = $("#text_" + id).val();
+            var formData = new FormData();
+            formData.append('file', files[0]);
+            formData.append('text', text);
+            if(files[0] == null){
+                // document.getElementById("change").style.backgroundColor = 'red';
+                // $('#text').val(" ❌ Cập nhật ảnh thất bại");
+                $(".toast").toast("show");
+            } else {
+                $.ajax(
+                    {
+                        type: 'POST',
+                        url: '${pageContext.request.contextPath}/user/upload-Candidate/',
+                        contentType: false,
+                        processData: false,  
+                        data: formData,
+                        success: function (urlImage) {
+                            console.log(urlImage)
+                            if(urlImage == "Error"){
+                                // document.getElementById("change").style.backgroundColor = 'red';
+
+                                swal({
+                                    title: 'Cần chọn đúng loại file (PDF)!',
+                                    /* text: 'Redirecting...', */
+                                    icon: 'error',
+                                    timer: 3000,
+                                    buttons: true,
+                                    type: 'error'
+                                })
+                               
+                            }else{
+                               
+                                document.getElementById('cv_' + inputId).value = urlImage;
+                                
+									
+                                swal({
+                                    title: 'Cập nhật CV thành công!',
+                                    /* text: 'Redirecting...', */
+                                    icon: 'success',
+                                    timer: 3000,
+                                    buttons: true,
+                                    type: 'success'
+                                })
+                            }
+
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+                    }
+                )
+            }
+
+        }
+    }
+</script>
+	<script>
+    /* $(function () { */
+    	/* $('#fileUpload1').change(function () { */
+       
+    /* }) */
 </script>
 
 

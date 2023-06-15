@@ -21,6 +21,7 @@ import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
+import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
 
 @Repository
@@ -274,5 +275,15 @@ public class UserDAOImpl implements UserDAO {
 		user.setCv(cv);
 		return null;
 	}
+
+	@Override
+	public List<SaveJob> getListSaveJob(int userId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<SaveJob> query = currentSession.createQuery("from SaveJob where user_id =: userId", SaveJob.class);
+		query.setParameter("userId", userId);
+		return query.getResultList();
+	}
+	
+	
 
 }
