@@ -30,4 +30,8 @@ public interface RecruitmentDAO {
 	public void  deleteApplyPost(int recId);
 	
 	public List<Recruitment> getRecruitmentbyCompId(int compId);
+	
+	public List<ApplyPost> getListCandidate(int recId);
+	
+	public ApplyPost approveCandidate(int id);
 }

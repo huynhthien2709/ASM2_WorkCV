@@ -58,6 +58,7 @@ public class UserDAOImpl implements UserDAO {
 			user1.setFullName(userDTO.getFullName());
 			user1.setPassword(BCrypt.hashpw(userDTO.getPassword(), BCrypt.gensalt(12)));
 			user1.setRole(role);
+			user1.setImage("/PRJ321x_ASM2_thienhtfx17332/resources/images/Default.png");
 			currentSession.save(user1);
 		}
 

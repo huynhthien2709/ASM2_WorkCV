@@ -97,7 +97,7 @@
 <!--    </script>-->
 <!--</div>-->
 <!-- HOME -->
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('images/hero_1.jpg');" id="home-section" th:if="${session.user.role.id == 2 }">
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('images/hero_1.jpg');" id="home-section">
     <div class="container">
         <div class="row">
             <div class="col-md-7">
@@ -129,9 +129,16 @@
         <div class="row align-items-center mb-5">
             <div class="col-lg-8 mb-4 mb-lg-0">
                 <div class="d-flex align-items-center">
+                <c:if test="${recruitmentDTO.id == null }">
                     <div>
                         <h2>Đăng bài</h2>
                     </div>
+                    </c:if>
+                    <c:if test="${recruitmentDTO.id != null }">
+                    <div>
+                        <h2>Cập nhật bài đăng</h2>
+                    </div>
+                   </c:if>
                 </div>
             </div>
             <div class="col-lg-4">
@@ -139,9 +146,16 @@
                     <div class="col-6">
                         <a href="#" class="btn btn-block btn-light btn-md"></a>
                     </div>
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-block btn-primary btn-md">Đăng</button>
-                    </div>
+                    <c:if test="${recruitmentDTO.id == null }">
+	                    <div class="col-6">
+	                        <button type="submit" class="btn btn-block btn-primary btn-md">Đăng</button>
+	                    </div>
+                    </c:if>
+                     <c:if test="${recruitmentDTO.id != null }">
+	                    <div class="col-6">
+	                        <button type="submit" class="btn btn-block btn-primary btn-md">Cập nhật</button>
+	                    </div>
+                    </c:if>
                 </div>
             </div>
         </div>
@@ -160,6 +174,7 @@
                         <c:if test="${companyDTO.id == null}">
                         <input type="hidden" class="form-control" name="companyId" value="${company.id}" id="job-title" placeholder="ID">
                         </c:if>
+                        <input type="hidden" class="form-control" name="id" value="${recruitmentDTO.id}" id="job-title" placeholder="ID">
                         <!--  <input type="hidden" class="form-control" name="id" value="${recruitmentDTO.id}" id="job-title" placeholder="ID">-->
                     </div>
                     <div class="form-group">
@@ -172,7 +187,7 @@
                     </div>
                     <div class="form-group">
                         <label for="job-title">Số người cần tuyển</label>
-                        <input type="number" class="form-control" id="job-title" name="quantity"  value="${recruitmentDTO.quantity }" placeholder="Số người cần tuyển">
+                        <input type="number" class="form-control" id="job-title" name="quantity"  value="${recruitmentDTO.quantity}" placeholder="Số người cần tuyển">
                     </div>
                     <div class="form-group">
                         <label for="job-location">Địa chỉ</label>
@@ -219,9 +234,16 @@
                     <div class="col-6">
                         <a href="#" class="btn btn-block btn-light btn-md"></a>
                     </div>
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-block btn-primary btn-md">Đăng tuyển</button>
-                    </div>
+                     <c:if test="${recruitmentDTO.id == null }">
+	                    <div class="col-6">
+	                        <button type="submit" class="btn btn-block btn-primary btn-md">Đăng tuyển</button>
+	                    </div>
+                    </c:if>
+                    <c:if test="${recruitmentDTO.id != null }">
+	                    <div class="col-6">
+	                        <button type="submit" class="btn btn-block btn-primary btn-md">Cập nhật</button>
+	                    </div>
+                    </c:if>
                 </div>
             </div>
         </div>

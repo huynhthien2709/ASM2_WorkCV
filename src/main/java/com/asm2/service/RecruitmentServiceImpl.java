@@ -48,6 +48,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
+	@Transactional
 	public void deleteRec(Recruitment recruitment) {
 		recruitmentDAO.deleteApplyPost(recruitment.getId());
 		System.out.println("id service" + recruitment.getId());
@@ -57,20 +58,40 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
+	@Transactional
 	public RecruitmentDTO getRecruitmentDTO(int id) {
 		return recruitmentDAO.getRecruitmentDTO(id);
 	}
 
 	@Override
+	@Transactional
 	public Recruitment getRecruitment(int id) {
 		return recruitmentDAO.getRecruitment(id);
 	}
 
 	@Override
+	@Transactional
 	public List<Recruitment> getRecruitmentbyCompId(int compId) {
 		
 		return recruitmentDAO.getRecruitmentbyCompId(compId);
 	}
+
+	@Override
+	@Transactional
+	public List<ApplyPost> getListCandidate(int recId) {
+		return recruitmentDAO.getListCandidate(recId);
+	}
+
+	@Override
+	@Transactional
+	public ApplyPost approveCandidate(int id) {
+		return recruitmentDAO.approveCandidate(id);
+		
+	}
+	
+	
+	
+	
 
 	
 }

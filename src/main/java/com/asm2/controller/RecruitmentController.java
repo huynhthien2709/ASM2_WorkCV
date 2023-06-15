@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.RecruitmentDTO;
 import com.asm2.DTO.UserDTO;
+import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
+import com.asm2.entity.User;
 import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
 import com.asm2.service.UserService;
@@ -68,17 +70,35 @@ public class RecruitmentController {
 	}
 
 	@GetMapping("/detail/{id}")
-	public String detailPost(@PathVariable("id") String idStr, Model model) {
-		int id = Integer.parseInt(idStr);
+	public String detailPost(@PathVariable("id") int id, Model model) {		
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
 		model.addAttribute("recruitmentDTO", recruitmentDTO);
-		System.out.println(id);
-		System.out.println("///compid " + recruitmentDTO.getCompanyId());
-		List<Recruitment> recruitments = recruitmentService.getRecruitmentbyCompId(recruitmentDTO.getCompanyId());
-		
+		List<Recruitment> recruitments = recruitmentService.getRecruitmentbyCompId(recruitmentDTO.getCompanyId());		
 		model.addAttribute("recruitments", recruitments);
 		
+		System.out.println("recId " + recruitmentDTO.getId() );
+		
+		List<ApplyPost> applyPosts = recruitmentService.getListCandidate(recruitmentDTO.getId());
+
+		model.addAttribute("applyPosts", applyPosts);
+
+		
 		return "public/detail-post";
+	}
+	@GetMapping("/approveCandidate/{id}")
+	public String approveCandidate(@PathVariable("id") int id) {
+		ApplyPost applyPost =  recruitmentService.approveCandidate(id);
+		return "redirect:/recruitment/detail/" + applyPost.getRecruitment().getId();
+	}
+	@GetMapping("/updatePost/{id}")
+	public String updatePost(@PathVariable("id") int id,  Model model) {
+		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
+		model.addAttribute("recruitmentDTO", recruitmentDTO);
+		List<Category> categories = recruitmentService.getCategories();
+		model.addAttribute("categories", categories);
+		Company company = recruitmentService.getCompanyById(recruitmentDTO.getCompanyId());
+		model.addAttribute("company", company);
+		return "public/post-job";
 	}
 
 }

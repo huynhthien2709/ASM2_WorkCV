@@ -25,5 +25,9 @@ public interface RecruitmentService {
 	public void deleteRec(Recruitment recruitment);
 	
 	public List<Recruitment> getRecruitmentbyCompId(int compId);
+	
+	public List<ApplyPost> getListCandidate(int recId);
+	
+	public ApplyPost approveCandidate(int id);
 }
 

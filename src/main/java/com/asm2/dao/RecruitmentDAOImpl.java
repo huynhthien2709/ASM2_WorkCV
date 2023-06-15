@@ -15,7 +15,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.RecruitmentDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
@@ -49,6 +49,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = myDateObj.format(myFormatObj);
 		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));
+		recruitment.setId(recruitmentDTO.getId());
 		recruitment.setTitle(recruitmentDTO.getTitle());
 		recruitment.setDescription(recruitmentDTO.getDescription());
 		recruitment.setExperience(recruitmentDTO.getExperience());
@@ -152,10 +153,39 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		query.setParameter("compId", compId);
 		
 		List<Recruitment> recruitments = query.getResultList();
-//		List<RecruitmentDTO>  recruitmentDTO = new ArrayList<>();
-//		Collections.copy(recruitmentDTO, recruitments);
 		return recruitments;
 	}
+
+	@Override
+	public List<ApplyPost> getListCandidate(int recId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where recruitment_id =: recId", ApplyPost.class);
+		query.setParameter("recId", recId);
+		
+		List<ApplyPost> applyPosts = query.getResultList();
+		
+		return applyPosts;
+	}
+
+	@Override
+	public ApplyPost approveCandidate(int id) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where id =: id", ApplyPost.class);
+		query.setParameter("id", id);		
+		ApplyPost applyPost = query.uniqueResult();
+		if (applyPost.getStatus() == 0) {
+			applyPost.setStatus(1);
+		}else {
+			applyPost.setStatus(0);
+		}
+		
+		return applyPost;
+	}
+	
+	
+	
 	
 	
 	

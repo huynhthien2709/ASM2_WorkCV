@@ -22,11 +22,11 @@ public class ApplyPost {
 	@Column(name = "created_at")
 	private String createdAt;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "recruitment_id")
 	private Recruitment recruitment;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private User user;
 

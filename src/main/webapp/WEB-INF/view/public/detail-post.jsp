@@ -259,38 +259,42 @@
                 <h2 class="section-title mb-2" ">Danh sách ứng viên ứng tuyển</h2>
                 </c:if>
                 <c:if test="${sessionScope.userDTO.role == 1}">
-                <h2 class="section-title mb-2" th:unless="${applyPosts}">Những công việc liên quan</h2>
+                <h2 class="section-title mb-2" >Những công việc liên quan</h2>
                 </c:if>
             </div>
         </div>
 
 		<c:if test="${sessionScope.userDTO.role == 2}">
-	        <div th:if="${applyPosts != null}"  class="row">
+	        <div class="row">
 	            <div class="col-lg-12 pr-lg-4">            
 	                <div class="row">
 	                <c:if test="${sessionScope.userDTO.role == 2}">
-	                    <th:block th:if="${applyPosts.size() != 0}" th:each="applyPost : ${applyPosts}">
+	                    <c:forEach items="${applyPosts}" var="applyPost">
 	                        <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
 	                            <div class="team d-md-flex p-4 bg-white">
-	                                <IMG class="img" th:src="${applyPost.user.image != null ? applyPost.user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
+	                                <IMG class="img" src="${applyPost.user.image}"></IMG>
 	                                <div class="text pl-md-4">
-	                                    <H5 class="location mb-0" th:text="${applyPost.user.fullName}"></H5>
-	                                    <p style="display: block;color: black" th:text="${applyPost.user.address}"></p>
-	                                    <span class="position" style="display: block;color: black" th:text="${applyPost.user.email}"></span>
-	                                    <p class="mb-4" style="width: 700px" th:utext="${applyPost.user.description}">.</p>
+	                                    <H5 class="location mb-0"><c:out value="${applyPost.user.fullName}"/></H5>
+	                                    <p style="display: block;color: black" ><c:out value="${applyPost.user.address}"/></p>
+	                                    <span class="position" style="display: block;color: black" ><c:out value="${applyPost.user.email}"/></span>	                                   
+	                                    <input type="hidden"  name="id" value="${applyPost.id}">
 	                                    <div class="row">
-	                                        <p><a href="#" th:if="${applyPost.nameCv != null}" class="btn btn-primary" th:href="${'http://localhost:8080/resources/uploads/'} +${applyPost.nameCv}" >Xem cv</a></p>
-	                                        <p th:if="${applyPost.status == 0}" style="margin-left: 10px"><a class="btn btn-outline-primary" th:href="${'/user/approve/'} +${applyPost.user.id} +${'/'} +${recruitment.id}" >Duyệt</a></p>
-	                                        <p th:if="${applyPost.status == 1}" style="margin-left: 10px;margin-top: 15px"><span style="color: #1e7e34;font-weight: bold" >Đã duyệt</span></p>
+	                                        <p><a class="btn btn-primary" href="<c:out value="${applyPost.nameCv}"/>" target="_blank"> Xem cv</a></p>
+	                                        <c:if test="${applyPost.status == 0}">
+	                                        <p  style="margin-left: 10px"><a class="btn btn-outline-primary" href="<c:url value = "/recruitment/approveCandidate/${applyPost.id}"/>">Duyệt</a></p>
+	                                        </c:if>
+	                                        <c:if test="${applyPost.status == 1}">
+	                                        <p  style="margin-left: 10px;margin-top: 15px"><span style="color: #1e7e34;font-weight: bold" >Đã duyệt</span></p>
+	                                        </c:if>
 	                                    </div>
 	
 	                                </div>
 	                            </div>
 	                        </div>
-	                    </th:block>
-	                    <th:block th:if="${applyPosts.size() == 0}">
+	                    </c:forEach>
+	                    <c:if test="${applyPosts.size() == 0}">	               
 	                        <p>Chưa có ứng cử viên nào ứng tuyển</p>
-	                    </th:block>
+	                    </c:if>
 					</c:if>
 	
 	                </div>
