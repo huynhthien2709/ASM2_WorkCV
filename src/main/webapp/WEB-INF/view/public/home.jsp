@@ -85,7 +85,7 @@
 
 							</div>
 						</div></li>
-					<li class="nav-item"><a href="/" class="nav-link">Ứng cử
+					<li class="nav-item"><a href="<c:url value = "/user/list-user"/>"" class="nav-link">Ứng cử
 							viên</a></li>
 
 

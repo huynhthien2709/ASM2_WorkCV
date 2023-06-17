@@ -293,5 +293,10 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "public/list-save-job";
 	}
+	
+	@GetMapping("/list-user")
+	public String listUser() {
+		return "public/list-user";
+	}
 
 }
