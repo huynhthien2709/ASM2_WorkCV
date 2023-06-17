@@ -498,7 +498,7 @@
 															  onchange="fileUploadChange(${recruitments.id})" required /> 
 															<label for="fileUpload1" class="col-form-label">Giới
 																thiệu:</label>
-															<textarea rows="10" cols="3" class="form-control" name="text" id="text_${recruitments.id}">														
+															<textarea rows="10" cols="3" class="form-control" name="text" id="text-${recruitments.id}">														
                                                    		    </textarea>
 													</div>
 
@@ -646,7 +646,7 @@
 			var userId = $("#userId_" + id).val();
 			var recruitmentId = $("#recruitments_" + id).val();
 			var cvPath = $("#cv_" + id).val();
-			var text = $("#text_" + id).val();
+			var text = $("#text-" + id).val();
 			var formData = new FormData();
 			formData.append('userId', userId);
 			formData.append('recruitmentId', recruitmentId);

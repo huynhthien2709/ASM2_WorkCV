@@ -144,11 +144,11 @@
                                                     <label for="fileUpload1"
                                                            class="col-form-label">Chọn cv:</label>                                                    
 															  
-                                                    <input type="file" class="form-control"  id="${'fileUpload1'}_${saveJob.recruitment.id}"  
+                                                    <input type="file" class="form-control"  id="fileUpload1_${saveJob.recruitment.id}"  
                                                     		onchange="fileUploadChange(${saveJob.recruitment.id})" name="file"   required>
                                                     <label for="fileUpload1"
                                                            class="col-form-label">Giới thiệu:</label>
-                                                    <textarea rows="10" cols="3" class="form-control"  id="text_${saveJob.recruitment.id}" value="">
+                                                    <textarea rows="10" cols="3" class="form-control"  id="text-${saveJob.recruitment.id}">
 
                                                     </textarea>
                                                 </div>
@@ -319,7 +319,7 @@
         var userId = $("#userId_" + id).val();
 		var recruitmentId = $("#recruitments_" + id).val();
 		var cvPath = $("#cv_" + id).val();
-		var text = $("#text_" + id).val();
+		var text = $("#text-" + id).val();
         var formData = new FormData();
         formData.append('userId', userId);
 		formData.append('recruitmentId', recruitmentId);
@@ -436,10 +436,8 @@
         if (window.FormData !== undefined) {
             var fileUpload = $('#fileUpload1_' + inputId).get(0);
             var files = fileUpload.files;
-            var text = $("#text_" + id).val();
             var formData = new FormData();
             formData.append('file', files[0]);
-            formData.append('text', text);
             if(files[0] == null){
                 // document.getElementById("change").style.backgroundColor = 'red';
                 // $('#text').val(" ❌ Cập nhật ảnh thất bại");
