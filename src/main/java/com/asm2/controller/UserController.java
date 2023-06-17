@@ -2,6 +2,7 @@ package com.asm2.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.service.HomeService;
+import com.asm2.service.RecruitmentService;
 import com.asm2.service.UserService;
 
 @Controller
@@ -42,6 +44,9 @@ public class UserController {
 
 	@Autowired
 	private HomeService homeService;
+	
+	@Autowired
+	private RecruitmentService recruitmentService;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -295,7 +300,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/list-user")
-	public String listUser() {
+	public String listUser(Model model, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		List<ApplyPost> applyPosts = userService.getUserbyApplyPosts();			
+		Company company = userService.getCompanyByUserId(userDTO.getId());
+		List<ApplyPost> applyPosts2 = new ArrayList<>();
+		int i = 0;
+		for (ApplyPost applyPost : applyPosts) {			
+			if (applyPosts.get(i).getRecruitment().getCompany().getId() == company.getId()) {
+				applyPosts2.add(applyPosts.get(i));
+			}
+			i++;
+			
+		}
+		model.addAttribute("applyPosts2", applyPosts2);
 		return "public/list-user";
 	}
 

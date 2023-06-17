@@ -122,4 +122,20 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getListSaveJob(userId);
 	}
 
+	@Override
+	@Transactional
+	public List<ApplyPost> getUserbyApplyPosts() {
+		
+		return userDAO.getUserbyApplyPosts();
+	}
+
+	@Override
+	@Transactional
+	public Company getCompanyByUserId(int userId) {
+		
+		return userDAO.getCompanyByUserId(userId);
+	}
+	
+	
+
 }

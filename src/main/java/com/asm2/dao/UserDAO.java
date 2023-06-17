@@ -47,5 +47,8 @@ public interface UserDAO {
 	
 	public List<SaveJob>  getListSaveJob(int userId);
 	
+	public List<ApplyPost> getUserbyApplyPosts();
+	
+	public Company getCompanyByUserId(int userId);
 
 }

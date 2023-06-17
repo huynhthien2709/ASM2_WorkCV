@@ -69,25 +69,27 @@
     <div class="row">
       <div class="col-lg-12 pr-lg-5">
         <div class="row">
-          <th:block th:each="applyPost : ${list.content}">
+          <c:forEach items="${applyPosts2}" var="applyPost" >
             <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
-              <div class="team d-md-flex p-4 bg-white">
-                <IMG style="margin-top: 10px" class="img" th:src="${applyPost.image != null ? applyPost.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
+              <div class="team d-md-flex p-4 bg-white">              
+                <img style="margin-top: 10px" class="img" src="<c:out value="${applyPost.user.image}"/>"></img>
                 <div class="text pl-md-4">
-                  <H5 class="location mb-0" th:text="${applyPost.fullName}"></H5>
-                  <p style="display: block;color: black" th:text="${applyPost.address}"></p>
-                  <span class="position" style="display: block;color: black" th:text="${applyPost.email}"></span>
-                  <p class="mb-4" style="width: 700px" th:utext="${applyPost.description}">.</p>
-                  <div th:if="${applyPost.cv != null}" style="margin-left: 1px" class="row">
-                    <p><a th:href="${'/user/getCv/'}+${applyPost.id}"  class="btn btn-primary">Xem cv</a></p>
+                  <H5 class="location mb-0"><c:out value="${applyPost.user.fullName}"/></H5>
+                  <p style="display: block;color: black"><c:out value="${applyPost.user.address}"/></p>
+                  <span class="position" style="display: block;color: black"><c:out value="${applyPost.user.email}"/></span>
+                  <p class="mb-4" style="width: 700px" ><c:out value="${applyPost.recruitment.category.name}"/></p>
+                  <div style="margin-left: 1px" class="row">
+                    <p><a href="<c:out value="${applyPost.nameCv}"/>" target="_blank" class="btn btn-primary">Xem cv</a></p>
                   </div>
                 </div>
               </div>
             </div>
-          </th:block>
-          <div  style="text-align: center" th:if="${list.totalPages == 0}">
-            <p style="color: red">Không có kết quả nào</p>
-          </div>
+          </c:forEach>
+          <c:if test="${applyPosts2.size() == 0 }" >
+	          <div  style="text-align: center" >
+	            <p style="color: red">Không có kết quả nào</p>
+	          </div>
+          </c:if>
         </div>
         <div class="row mt-5">
           <div class="col text-center">

@@ -2,15 +2,18 @@ package com.asm2.dao;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Repository;
 
 import com.asm2.DTO.ApplyPostDTO;
@@ -283,6 +286,33 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("userId", userId);
 		return query.getResultList();
 	}
+
+	@Override
+	public List<ApplyPost> getUserbyApplyPosts() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		String sql1 = "select a.user_id from applypost a, recruitment r, company c where a.recruitment_id = r.id and r.company_id = c.id";
+		SQLQuery theQuery = currentSession.createSQLQuery(sql1);
+		List<Integer> rows = theQuery.list();
+		List<Integer> userIdList = new ArrayList<>();
+		for (Integer row : rows) {
+			int userId = rows.get(0);  
+			userIdList.add(userId);;
+		} 
+		String sql2 = "from ApplyPost where user_id in :userIdList";
+		Query<ApplyPost> query2 = currentSession.createQuery(sql2, ApplyPost.class);
+		query2.setParameter("userIdList", userIdList);
+		List<ApplyPost> applyPosts = query2.list();
+		return applyPosts;
+	}
+
+	@Override
+	public Company getCompanyByUserId(int userId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Company> query = currentSession.createQuery("from Company where user_id =: userId", Company.class);
+		query.setParameter("userId", userId);
+		return query.uniqueResult();
+	}
+	
 	
 	
 
