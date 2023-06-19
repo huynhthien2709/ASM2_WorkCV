@@ -85,7 +85,7 @@
 
 							</div>
 						</div></li>
-					<li class="nav-item"><a href="<c:url value = "/user/list-user"/>"" class="nav-link">Ứng cử
+					<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử
 							viên</a></li>
 
 
@@ -542,13 +542,12 @@
 									class="company-wrap"><img src='${company.logo}'
 									class="img-fluid" alt="Colorlib Free Template"/></a>
 								<div class="text p-3">
+									
 									<h3>
-										<!--  <a th:href="${'/user/detail-company/'}+${companies[0]}"
-											th:text="${companies[1]}"></a>-->
-									</h3>
-									<h3>
+										<a href="${pageContext.request.contextPath}/user/detail-company/${company.id	}">
+											
 										 <span class="number" style="color: black">
-										 <c:out value="${company.nameCompany}"/></span>
+										 <c:out value="${company.nameCompany}"/></span></a>
 											
 									</h3>
 									<p>

@@ -18,10 +18,12 @@ import org.springframework.stereotype.Repository;
 
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
+import com.asm2.DTO.FollowCompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
+import com.asm2.entity.FollowCompany;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.SaveJob;
@@ -33,6 +35,10 @@ public class UserDAOImpl implements UserDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired 
+	private RecruitmentDAO recruitmentDAO;
+	
 
 	@Override
 	public List<Role> getRoles() {
@@ -312,6 +318,48 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("userId", userId);
 		return query.uniqueResult();
 	}
+
+	@Override
+	public CompanyDTO getCompanybyId(int compId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Company> query = currentSession.createQuery("from Company where id =: compId", Company.class);
+		query.setParameter("compId", compId);
+		Company company = query.uniqueResult();
+		CompanyDTO companyDTO = new CompanyDTO();
+		companyDTO.setAddress(company.getAddress());
+		companyDTO.setDescription(company.getDescription());
+		companyDTO.setEmail(company.getEmail());
+		companyDTO.setId(company.getId());
+		companyDTO.setLogo(company.getLogo());
+		companyDTO.setNameCompany(company.getNameCompany());
+		companyDTO.setPhoneNumber(company.getPhoneNumber());
+		
+		return companyDTO;
+	}
+
+	@Override
+	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		FollowCompany followCompany =  new FollowCompany();
+		int compId = followCompanyDTO.getCompanyId();
+		Company company =  recruitmentDAO.getCompanyById(compId);
+		followCompany.setCompany(company);
+		
+		int userId = followCompanyDTO.getUserId();
+		User user = this.getUserById(userId);
+		followCompany.setUser(user);
+		
+		System.out.println("userid " + followCompanyDTO.getUserId());
+		System.out.println("compid " + followCompanyDTO.getCompanyId());
+		currentSession.saveOrUpdate(followCompany);
+		return followCompany;
+		
+	}
+	
+
+	
+	
+	
 	
 	
 	

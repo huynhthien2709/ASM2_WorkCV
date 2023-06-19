@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
+import com.asm2.DTO.FollowCompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
+import com.asm2.entity.FollowCompany;
 import com.asm2.entity.Role;
 import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
@@ -39,4 +41,8 @@ public interface UserService {
 	public List<ApplyPost> getUserbyApplyPosts();
 	
 	public Company getCompanyByUserId(int userId);
+	
+	public CompanyDTO getCompanybyId(int compId);
+	
+	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO);
 }

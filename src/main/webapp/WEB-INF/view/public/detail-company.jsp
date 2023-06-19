@@ -1,3 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="public/fragments :: html_head">
@@ -6,45 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-  <link rel="stylesheet" href="/assets/css/animate.css">
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/assets/css/aos.css">
-  <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-  <link rel="stylesheet" href="/assets/css/css/bootstrap-reboot.css">
-  <link rel="stylesheet" href="/assets/css/css/mixins/_text-hide.css">
-  <link rel="stylesheet" href="/assets/css/flaticon.css">
-  <link rel="stylesheet" href="/assets/css/icomoon.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap-grid.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap-reboot.css">
-
-  <!-- JS -->
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/assets/js/popper.min.js"></script>
-  <script src="/assets/js/bootstrap.min.js"></script>
-  <script src="/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/assets/js/jquery.waypoints.min.js"></script>
-  <script src="/assets/js/jquery.stellar.min.js"></script>
-  <script src="/assets/js/owl.carousel.min.js"></script>
-  <script src="/assets/js/jquery.magnific-popup.min.js"></script>
-  <script src="/assets/js/aos.js"></script>
-  <script src="/assets/js/jquery.animateNumber.min.js"></script>
-  <script src="/assets/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/assets/js/google-map.js"></script>
-  <script src="/assets/js/main.js"></script>
-  <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ <%@include file="resource.jsp"%>
+  
 </head>
 <body>
 
@@ -94,13 +62,13 @@
             <div class="col-lg-8 mb-4 mb-lg-0">
                 <div class="d-flex align-items-center">
                     <div class="border p-2 d-inline-block mr-3 rounded">
-                        <img width="100" height="100" th:src="${company.logo}" alt="Image">
+                        <img width="100" height="100" src="${companyDTO.logo}" alt="Image">
                     </div>
                     <div>
-                        <h2 th:text="${company.nameCompany}"></h2>
+                        <h2 >${companyDTO.nameCompany}</h2>
                         <div>
-                            <span class="icon-briefcase mr-2"></span><span th:text="${company.email}" class="ml-0 mr-2 mb-2"></span>
-                            <span  class="icon-room mr-2"></span ><span th:text="${company.address}" class="m-2"></span>
+                            <span class="icon-briefcase mr-2"></span><span class="ml-0 mr-2 mb-2">${companyDTO.email}</span>
+                            <span  class="icon-room mr-2"></span ><span class="m-2">${companyDTO.address}</span>
 
                         </div>
                         <input type="hidden" id="idCompany">
@@ -109,12 +77,19 @@
             </div>
             <div class="col-lg-4">
                 <div class="row">
-                    <div th:if="${session.user}" class="col-6">
-                        <a th:if="${session.user.role.id == 1}" onclick="follow()" class="btn btn-block btn-light btn-md"><span class="icon-heart-o mr-2 text-danger"></span>Theo dõi</a>
+                	<c:if test="${sessionScope.userDTO == null}">
+                	<div class="col-6">
+                        <a class="btn btn-block btn-light btn-md"><span class="icon-heart-o mr-2 text-danger"></span>Đăng nhập để theo dõi</a>
                     </div>
-                    <div th:unless="${session.user}" class="col-6">
-                        <a  onclick="follow()" class="btn btn-block btn-light btn-md"><span class="icon-heart-o mr-2 text-danger"></span>Theo dõi</a>
+                    </c:if>
+                
+                   <c:if test="${sessionScope.userDTO != null}">
+                    <div class="col-6">
+                    	<input type="hidden" id="userId_${sessionScope.userDTO.id}" name="user" value="${sessionScope.userDTO.id}">
+						<input type="hidden" id="companyId_${companyDTO.id}" name="recruitments" value="${companyDTO.id}">
+                        <a  onclick="follow(${sessionScope.userDTO.id}, ${companyDTO.id})" class="btn btn-block btn-light btn-md"><span class="icon-heart-o mr-2 text-danger"></span>Theo dõi</a>
                     </div>
+                    </c:if>
                     <div class="col-6">
 
                     </div>
@@ -125,19 +100,19 @@
             <div class="col-lg-8">
                 <div class="mb-5">
 
-                    <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Mô tả công việc</h3>
-                    <p th:utext="${company.description}"></p>
+                    <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Mô tả công ty</h3>
+                    <p>${companyDTO.description}</p>
                 </div>
 
             </div>
             <div class="col-lg-4">
                 <div class="bg-light p-3 border rounded mb-4">
-                    <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Tóm tắt công việc</h3>
+                    <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Thông tin liên hệ</h3>
                     <ul class="list-unstyled pl-3 mb-0">
 
-                        <li class="mb-2"><strong class="text-black">Email công ty: </strong> <span th:text="${company.email}"></span></li>
-                        <li class="mb-2"><strong class="text-black">Số điện thoại: </strong> <span th:text="${company.phoneNumber}"></span></li>
-                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span th:text="${company.address}"></span></li>
+                        <li class="mb-2"><strong class="text-black">Email công ty: </strong> <span>${companyDTO.email}</span></li>
+                        <li class="mb-2"><strong class="text-black">Số điện thoại: </strong> <span ">${companyDTO.phoneNumber}</span></li>
+                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span>${companyDTO.address}</span></li>
                     </ul>
                 </div>
 
@@ -155,15 +130,21 @@
         </div>
     </div>
     <script>
-        function follow(){
+        function follow(userId, compId){
             var name = "#idCompany";
             var idCompany = $(name).val();
-            var formData = new FormData();
-            formData.append('idCompany', idCompany);
+            
+            var userId = $("#userId_" + userId).val();
+			var companyId = $("#companyId_" + compId).val();
+            var formData = new FormData();            
+            
+            /* formData.append('idCompany', idCompany); */
+            formData.append('userId', userId);
+			formData.append('companyId', companyId);
             $.ajax(
                 {
                     type: 'POST',
-                    url: '/user/follow-company/',
+                    url: '${pageContext.request.contextPath}/user/follow-company/',
                     contentType: false,
                     processData: false,
                     data: formData,

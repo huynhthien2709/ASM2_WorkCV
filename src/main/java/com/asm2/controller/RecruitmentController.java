@@ -71,28 +71,27 @@ public class RecruitmentController {
 	}
 
 	@GetMapping("/detail/{id}")
-	public String detailPost(@PathVariable("id") int id, Model model) {		
+	public String detailPost(@PathVariable("id") int id, Model model) {
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
 		model.addAttribute("recruitmentDTO", recruitmentDTO);
-		List<Recruitment> recruitments = recruitmentService.getRecruitmentbyCompId(recruitmentDTO.getCompanyId());		
+		List<Recruitment> recruitments = recruitmentService.getRecruitmentbyCompId(recruitmentDTO.getCompanyId());
 		model.addAttribute("recruitments", recruitments);
-		
-		System.out.println("recId " + recruitmentDTO.getId() );
-		
+
 		List<ApplyPost> applyPosts = recruitmentService.getListCandidate(recruitmentDTO.getId());
 
 		model.addAttribute("applyPosts", applyPosts);
 
-		
 		return "public/detail-post";
 	}
+
 	@GetMapping("/approveCandidate/{id}")
 	public String approveCandidate(@PathVariable("id") int id) {
-		ApplyPost applyPost =  recruitmentService.approveCandidate(id);
+		ApplyPost applyPost = recruitmentService.approveCandidate(id);
 		return "redirect:/recruitment/detail/" + applyPost.getRecruitment().getId();
 	}
+
 	@GetMapping("/updatePost/{id}")
-	public String updatePost(@PathVariable("id") int id,  Model model) {
+	public String updatePost(@PathVariable("id") int id, Model model) {
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
 		model.addAttribute("recruitmentDTO", recruitmentDTO);
 		List<Category> categories = recruitmentService.getCategories();
@@ -101,7 +100,7 @@ public class RecruitmentController {
 		model.addAttribute("company", company);
 		return "public/post-job";
 	}
-	
+
 	@GetMapping("/saveJob/{id}")
 	public String saveJob(@PathVariable("id") int id, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");

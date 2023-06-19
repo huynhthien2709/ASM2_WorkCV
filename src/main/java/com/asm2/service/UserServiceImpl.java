@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
+import com.asm2.DTO.FollowCompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.dao.UserDAO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
+import com.asm2.entity.FollowCompany;
 import com.asm2.entity.Role;
 import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
@@ -135,6 +137,21 @@ public class UserServiceImpl implements UserService {
 		
 		return userDAO.getCompanyByUserId(userId);
 	}
+
+	@Override
+	@Transactional
+	public CompanyDTO getCompanybyId(int compId) {
+		return  userDAO.getCompanybyId(compId);
+	}
+
+	@Override
+	@Transactional
+	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO) {
+		
+		return userDAO.addFollowCompany(followCompanyDTO);
+	}
+	
+	
 	
 	
 

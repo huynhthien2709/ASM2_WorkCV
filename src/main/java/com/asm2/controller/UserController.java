@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +31,7 @@ import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
+import com.asm2.DTO.FollowCompanyDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
@@ -240,9 +242,6 @@ public class UserController {
 			fileout.write(data);
 
 			fileout.close();
-//			String path = file.getOriginalFilename();
-//			System.out.println(file.getOriginalFilename());
-//			model.addAttribute("path", path);
 			return request.getContextPath() + "/resources/CandidateImage/" + file.getOriginalFilename();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -315,6 +314,23 @@ public class UserController {
 		}
 		model.addAttribute("applyPosts2", applyPosts2);
 		return "public/list-user";
+	}
+	
+	@GetMapping("/detail-company/{id}")
+	public String detailCompany(@PathVariable("id") int id, Model model) {
+		CompanyDTO companyDTO = userService.getCompanybyId(id);
+		model.addAttribute("companyDTO", companyDTO);
+		return "public/detail-company";
+	}
+	
+	@PostMapping("/follow-company")
+	public String followCompany(FollowCompanyDTO followCompanyDTO) {
+		userService.addFollowCompany(followCompanyDTO);
+		/*
+		 * System.out.println("userid " + followCompanyDTO.getUserId());
+		 * System.out.println("compid " + followCompanyDTO.getCompanyId());
+		 */
+		return "public/detail-company";
 	}
 
 }
