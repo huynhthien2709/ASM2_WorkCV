@@ -25,6 +25,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
+import com.asm2.entity.FollowCompany;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.SaveJob;
@@ -46,7 +47,7 @@ public class UserController {
 
 	@Autowired
 	private HomeService homeService;
-	
+
 	@Autowired
 	private RecruitmentService recruitmentService;
 
@@ -279,7 +280,7 @@ public class UserController {
 		System.out.println("///" + recruitments.size());
 		return "public/post-list";
 	}
-	
+
 	@GetMapping("/list-save-job")
 	public String listSaveJob(Model model, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -297,40 +298,45 @@ public class UserController {
 		model.addAttribute("user", user);
 		return "public/list-save-job";
 	}
-	
+
 	@GetMapping("/list-user")
 	public String listUser(Model model, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		List<ApplyPost> applyPosts = userService.getUserbyApplyPosts();			
+		List<ApplyPost> applyPosts = userService.getUserbyApplyPosts();
 		Company company = userService.getCompanyByUserId(userDTO.getId());
 		List<ApplyPost> applyPosts2 = new ArrayList<>();
 		int i = 0;
-		for (ApplyPost applyPost : applyPosts) {			
+		for (ApplyPost applyPost : applyPosts) {
 			if (applyPosts.get(i).getRecruitment().getCompany().getId() == company.getId()) {
 				applyPosts2.add(applyPosts.get(i));
 			}
 			i++;
-			
+
 		}
 		model.addAttribute("applyPosts2", applyPosts2);
 		return "public/list-user";
 	}
-	
+
 	@GetMapping("/detail-company/{id}")
 	public String detailCompany(@PathVariable("id") int id, Model model) {
 		CompanyDTO companyDTO = userService.getCompanybyId(id);
 		model.addAttribute("companyDTO", companyDTO);
 		return "public/detail-company";
 	}
-	
+
 	@PostMapping("/follow-company")
 	public String followCompany(FollowCompanyDTO followCompanyDTO) {
 		userService.addFollowCompany(followCompanyDTO);
-		/*
-		 * System.out.println("userid " + followCompanyDTO.getUserId());
-		 * System.out.println("compid " + followCompanyDTO.getCompanyId());
-		 */
 		return "public/detail-company";
+	}
+
+	@GetMapping("/list-follow-company")
+	public String listFollowCompany(Model model, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		int userId = userDTO.getId();
+		List<FollowCompany> followCompanies = userService.getListFollowCompany(userId);
+		model.addAttribute("followCompanies", followCompanies);
+		return "public/list-follow-company";
 	}
 
 }

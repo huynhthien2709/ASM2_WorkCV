@@ -348,13 +348,20 @@ public class UserDAOImpl implements UserDAO {
 		int userId = followCompanyDTO.getUserId();
 		User user = this.getUserById(userId);
 		followCompany.setUser(user);
-		
-		System.out.println("userid " + followCompanyDTO.getUserId());
-		System.out.println("compid " + followCompanyDTO.getCompanyId());
 		currentSession.saveOrUpdate(followCompany);
 		return followCompany;
 		
 	}
+
+	@Override
+	public List<FollowCompany> getListFollowCompany(int userId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<FollowCompany> query = currentSession.createQuery("from FollowCompany where user_id =: userId", FollowCompany.class);
+		query.setParameter("userId", userId);
+		return query.getResultList();
+	}
+	
+	
 	
 
 	

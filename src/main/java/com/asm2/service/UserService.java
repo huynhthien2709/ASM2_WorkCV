@@ -33,16 +33,18 @@ public interface UserService {
 	public Cv getCvById(int cvid);
 
 	public void deleteCv(User user);
-	
+
 	public ApplyPost applyJob(ApplyPostDTO applyPostDTO);
-	
-	public List<SaveJob>  getListSaveJob(int userId);
-	
+
+	public List<SaveJob> getListSaveJob(int userId);
+
 	public List<ApplyPost> getUserbyApplyPosts();
-	
+
 	public Company getCompanyByUserId(int userId);
-	
+
 	public CompanyDTO getCompanybyId(int compId);
-	
+
 	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO);
+
+	public List<FollowCompany> getListFollowCompany(int userId);
 }

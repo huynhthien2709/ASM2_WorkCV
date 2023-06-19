@@ -127,32 +127,35 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public List<ApplyPost> getUserbyApplyPosts() {
-		
+
 		return userDAO.getUserbyApplyPosts();
 	}
 
 	@Override
 	@Transactional
 	public Company getCompanyByUserId(int userId) {
-		
+
 		return userDAO.getCompanyByUserId(userId);
 	}
 
 	@Override
 	@Transactional
 	public CompanyDTO getCompanybyId(int compId) {
-		return  userDAO.getCompanybyId(compId);
+		return userDAO.getCompanybyId(compId);
 	}
 
 	@Override
 	@Transactional
 	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO) {
-		
+
 		return userDAO.addFollowCompany(followCompanyDTO);
 	}
-	
-	
-	
-	
+
+	@Override
+	@Transactional
+	public List<FollowCompany> getListFollowCompany(int userId) {
+		
+		return userDAO.getListFollowCompany(userId);
+	}
 
 }

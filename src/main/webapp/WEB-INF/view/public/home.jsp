@@ -72,7 +72,7 @@
 										<a href="/user/get-list-apply">Công việc đã ứng tuyển</a>
 									</p>
 									<p>
-										<a href="/user/get-list-company">Công ty đã theo dõi</a>
+										<a href="<c:url value = "/user/list-follow-company"/>">Công ty đã theo dõi</a>
 									</p>
 								</c:if>
 								<p><form style="padding: 0"
@@ -544,7 +544,7 @@
 								<div class="text p-3">
 									
 									<h3>
-										<a href="${pageContext.request.contextPath}/user/detail-company/${company.id	}">
+										<a href="${pageContext.request.contextPath}/user/detail-company/${company.id}">
 											
 										 <span class="number" style="color: black">
 										 <c:out value="${company.nameCompany}"/></span></a>
