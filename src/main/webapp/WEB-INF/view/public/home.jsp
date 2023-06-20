@@ -69,7 +69,7 @@
 								</c:if>
 								<c:if test="${userDTO.role == 1}">
 									<p>
-										<a href="/user/get-list-apply">Công việc đã ứng tuyển</a>
+										<a href="<c:url value="/user/list-apply-job"/>">Công việc đã ứng tuyển</a>
 									</p>
 									<p>
 										<a href="<c:url value = "/user/list-follow-company"/>">Công ty đã theo dõi</a>

@@ -339,9 +339,12 @@ public class UserController {
 		model.addAttribute("followCompanies", followCompanies);
 		return "public/list-follow-company";
 	}
-	@GetMapping("/post-company")
-	public String listPostJobCompany() {
-		return "public/post-company";
+	@GetMapping("/list-apply-job")
+	public String listPostJobCompany(Model model, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		List<ApplyPost> applyPosts = userService.getListApplyPosts(userDTO.getId());
+		model.addAttribute("applyPosts", applyPosts);
+		return "public/list-apply-job";
 	}
 	@GetMapping("/delete-save-job/{id}")
 	public String deleteSaveJob(@PathVariable("id") int id, HttpSession session, HttpServletRequest request) {		

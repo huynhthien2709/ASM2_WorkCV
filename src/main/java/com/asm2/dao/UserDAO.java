@@ -60,5 +60,7 @@ public interface UserDAO {
 	public List<FollowCompany> getListFollowCompany(int userId);
 	
 	public void deleteSaveJob(int userId, int recId);
+	
+	public List<ApplyPost> getListApplyPosts(int userId);
 
 }

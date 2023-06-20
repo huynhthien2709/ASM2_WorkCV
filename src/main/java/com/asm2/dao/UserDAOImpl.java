@@ -367,10 +367,18 @@ public class UserDAOImpl implements UserDAO {
 		Query query = currentSession.createQuery("delete SaveJob where user_id =: userId and recruitment_id =: recId");
 		query.setParameter("userId", userId);
 		query.setParameter("recId", recId);
-		
-		query.executeUpdate();
-		
+		query.executeUpdate();		
 	}
+
+	@Override
+	public List<ApplyPost> getListApplyPosts(int userId) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where user_id =: userId", ApplyPost.class);
+		query.setParameter("userId", userId);
+		return query.getResultList();
+	}
+	
+	
 	
 	
 	
