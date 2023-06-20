@@ -43,6 +43,8 @@ public interface UserService {
 	public Company getCompanyByUserId(int userId);
 
 	public CompanyDTO getCompanybyId(int compId);
+	
+	public void deleteSaveJob(int userId, int recId);
 
 	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO);
 

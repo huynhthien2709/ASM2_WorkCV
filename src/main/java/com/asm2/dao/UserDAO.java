@@ -58,5 +58,7 @@ public interface UserDAO {
 	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO);
 	
 	public List<FollowCompany> getListFollowCompany(int userId);
+	
+	public void deleteSaveJob(int userId, int recId);
 
 }

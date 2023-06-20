@@ -33,6 +33,7 @@ import com.asm2.entity.User;
 import com.asm2.DTO.ApplyPostDTO;
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.FollowCompanyDTO;
+import com.asm2.DTO.SaveJobDTO;
 import com.asm2.DTO.UserDTO;
 import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
@@ -337,6 +338,18 @@ public class UserController {
 		List<FollowCompany> followCompanies = userService.getListFollowCompany(userId);
 		model.addAttribute("followCompanies", followCompanies);
 		return "public/list-follow-company";
+	}
+	@GetMapping("/post-company")
+	public String listPostJobCompany() {
+		return "public/post-company";
+	}
+	@GetMapping("/delete-save-job/{id}")
+	public String deleteSaveJob(@PathVariable("id") int id, HttpSession session, HttpServletRequest request) {		
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		int userId = userDTO.getId();
+		userService.deleteSaveJob(userId, id);
+		String 	previousUrl = request.getHeader("public/list-save-job");
+		return "redirect:" + previousUrl;
 	}
 
 }

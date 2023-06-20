@@ -158,4 +158,12 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getListFollowCompany(userId);
 	}
 
+	@Override
+	@Transactional
+	public void deleteSaveJob(int userId, int recId) {
+		userDAO.deleteSaveJob(userId, recId);
+	}
+	
+	
+
 }
