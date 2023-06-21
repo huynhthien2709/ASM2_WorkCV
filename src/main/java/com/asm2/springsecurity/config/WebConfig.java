@@ -15,6 +15,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -26,6 +28,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+/*import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import javax.persistence.EntityManagerFactory;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.orm.jpa.vendor.Database;
+import static org.springframework.orm.jpa.vendor.Database.MYSQL;*/
 
 
 @ComponentScan(basePackages = "com.asm2")
@@ -104,5 +112,37 @@ public class WebConfig implements WebMvcConfigurer {
 
 		return hibernateProperties;
 	}
-
+	
+	//Handle hibernate search
+	/*
+	 * @Bean public LocalContainerEntityManagerFactoryBean
+	 * entityManagerFactoryBean() { LocalContainerEntityManagerFactoryBean
+	 * entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+	 * entityManagerFactoryBean.setDataSource(dataSource());
+	 * entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
+	 * entityManagerFactoryBean.setPackagesToScan("com.asm2.*");
+	 * entityManagerFactoryBean.setJpaProperties(hibernateProperties());
+	 * 
+	 * FullTextEntityManager fullTextEntityManager =
+	 * Search.getFullTextEntityManager(entityManagerFactoryBean.getObject().
+	 * createEntityManager()); try {
+	 * fullTextEntityManager.createIndexer().startAndWait(); } catch
+	 * (InterruptedException e) { // TODO: handle exception } return
+	 * entityManagerFactoryBean; }
+	 * 
+	 * @Bean public JpaVendorAdapter jpaVendorAdapter() { HibernateJpaVendorAdapter
+	 * jpaVendorAdapter = new HibernateJpaVendorAdapter();
+	 * jpaVendorAdapter.setDatabase(Database.MYSQL);
+	 * jpaVendorAdapter.setShowSql(true); jpaVendorAdapter.setGenerateDdl(false);
+	 * jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
+	 * 
+	 * 
+	 * return jpaVendorAdapter; }
+	 */
+	
+	
+	
+	
+	
+	
 }
