@@ -202,7 +202,7 @@
 
 										<div class="tab-pane fade show active" id="v-pills-1"
 											role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-											<form action="/recruitment/search" method="post"
+											<form action="${pageContext.request.contextPath}/recruitment/searchByJobName"  method="post"
 												class="search-job">
 												<div class="row no-gutters">
 
@@ -212,7 +212,7 @@
 																<div class="icon">
 																	<span class="icon-map-marker"></span>
 																</div>
-																<input type="text" name="keySearch" class="form-control"
+																<input type="text" name="jobName" class="form-control"
 																	placeholder="Tìm kiếm công việc">
 															</div>
 														</div>

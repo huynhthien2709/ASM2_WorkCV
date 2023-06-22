@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head">
@@ -6,45 +10,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="/assets/css/open-iconic-bootstrap.min.css">
-  <link rel="stylesheet" href="/assets/css/animate.css">
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/assets/css/magnific-popup.css">
-  <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
-  <link rel="stylesheet" href="/assets/css/owl.theme.default.min.css">
-  <link rel="stylesheet" href="/assets/css/aos.css">
-  <link rel="stylesheet" href="/assets/css/ionicons.min.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap-datepicker.css">
-  <link rel="stylesheet" href="/assets/css/jquery.timepicker.css">
-  <link rel="stylesheet" href="/assets/css/css/bootstrap-reboot.css">
-  <link rel="stylesheet" href="/assets/css/css/mixins/_text-hide.css">
-  <link rel="stylesheet" href="/assets/css/flaticon.css">
-  <link rel="stylesheet" href="/assets/css/icomoon.css">
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap-grid.css">
-  <link rel="stylesheet" href="/assets/css/bootstrap/bootstrap-reboot.css">
-
-  <!-- JS -->
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/jquery-migrate-3.0.1.min.js"></script>
-  <script src="/assets/js/popper.min.js"></script>
-  <script src="/assets/js/bootstrap.min.js"></script>
-  <script src="/assets/js/jquery.easing.1.3.js"></script>
-  <script src="/assets/js/jquery.waypoints.min.js"></script>
-  <script src="/assets/js/jquery.stellar.min.js"></script>
-  <script src="/assets/js/owl.carousel.min.js"></script>
-  <script src="/assets/js/jquery.magnific-popup.min.js"></script>
-  <script src="/assets/js/aos.js"></script>
-  <script src="/assets/js/jquery.animateNumber.min.js"></script>
-  <script src="/assets/js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="/assets/js/google-map.js"></script>
-  <script src="/assets/js/main.js"></script>
-  <script src="https://cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<%@include file="resource.jsp"%>
+  
 </head>
 <body>
 <body>
@@ -87,18 +54,7 @@
       </div>
 </nav>
 <!-- END nav -->
-<div th:if="${msg_register_success}" class="toast" data-delay="2000" style="position:fixed;top: 100PX; right: 10PX;z-index: 2000;width: 300px">
-    <script>
-        swal({
-            title: 'Đăng nhập thành công!',
-            /* text: 'Redirecting...', */
-            icon: 'success',
-            timer: 3000,
-            buttons: true,
-            type: 'success'
-        })
-    </script>
-</div>
+
 <div class="hero-wrap img" style="background-image: url(user/assets/images/bg_1.jpg);">
     <div class="overlay"></div>
     <div class="container">
@@ -240,29 +196,29 @@
     </div>
 </div>
 
-<section class="ftco-section bg-light" th:if="${session.user}">
+<section class="ftco-section bg-light" >
     <div class="container">
-        <h4 style="margin-top: -20px">Kết quả tìm kiếm cho : <span th:text="${keySearch}"></span></h4>
+        <h4 style="margin-top: -20px">Kết quả tìm kiếm cho : <span>${jobName}</span></h4>
         <div class="row">
             <div class="col-lg-12 pr-lg-5">
-                <div class="row">
-                    <th:block th:if="${list.totalPages>0}" th:each="recruitment : ${list.content}">
+                <div class="row">                  
+                    <c:forEach items="${recruitments}" var="recruitment">
                         <div class="col-md-12 ">
                             <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                                 <div class="one-third mb-4 mb-md-0">
                                     <div class="job-post-item-header align-items-center">
-                                        <span class="subadge" th:text="${recruitment.type}"></span>
-                                        <h2 class="mr-3 text-black" ><a th:text="${recruitment.title}" th:href="${'/recruitment/detail/'} +${recruitment.id}"></a></h2>
+                                        <span class="subadge" ><c:out value="${recruitment.type}"/></span>
+                                        <h2 class="mr-3 text-black" ><a href="${pageContext.request.contextPath}/recruitment/detail/${recruitments.id}" ><c:out value="${recruitment.title}"/></a></h2>
                                     </div>
                                     <div class="job-post-item-body d-block d-md-flex">
-                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${recruitment.Company.nameCompany}" ></a></div>
-                                        <div><span class="icon-my_location"></span> <span th:text="${recruitment.address}"></span></div>
+                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#"  ><c:out value="${recruitment.company.nameCompany}"/></a></div>
+                                        <div><span class="icon-my_location"></span> <span><c:out value="${recruitment.address}"/></span></div>
                                     </div>
                                 </div>
-                                <input type="hidden" th:id="${'idRe'}+${recruitment.id}" th:value="${recruitment.id}">
-                                <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-                                    <div th:if="${session.user.role.id == 1 }">
-                                        <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                <input type="hidden" id="${'idRe'}+${recruitment.id}" value="${recruitment.id}">
+                                <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">                                
+                                    <div>
+                                        <a  href="<c:url value = "/recruitment/saveJob/${recruitmentDTO.id}"/>> class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                             <span class="icon-heart"></span>
                                         </a>
                                     </div>
@@ -323,7 +279,7 @@
                                 </div>
                             </div>
                         </div>
-                    </th:block>
+                    </c:forEach>>
                     <div   style="text-align: center" th:if="${list.totalPages == 0}">
                         <p style="color: red">Không có kết quả nào</p>
                     </div>

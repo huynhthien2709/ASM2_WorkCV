@@ -1,9 +1,11 @@
 package com.asm2.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asm2.DTO.CompanyDTO;
 import com.asm2.DTO.RecruitmentDTO;
@@ -110,5 +113,28 @@ public class RecruitmentController {
 		recruitmentService.addSaveJob(saveJobDTO);
 		return "redirect:/recruitment/detail/" + id;
 	}
+	
+	
+	@PostMapping("/searchByJobName")
+	public String searchByJobName(@RequestParam("jobName") String jobName, Model model) {
+		System.out.println("////" + jobName);
+		List<Recruitment> recruitments = this.searchRecByName(jobName);
+		model.addAttribute("recruitments", recruitments);
+		model.addAttribute("jobName", jobName);
+		return "public/result-search";
+	}
+	private List<Recruitment> searchRecByName(String jobName){
+		List<Recruitment> recruitments = recruitmentService.getListRecruitments();
+		System.out.println( "????? " + recruitments.get(0).getCategory().getName());
+		List<Recruitment> resultList = new ArrayList<>();
+		
+		for (Recruitment rec : recruitments) {
+			if(rec.getCategory().getName().trim().contains(jobName)) {
+				resultList.add(rec);
+			}
+		}
 
+		return resultList;
+	}
+ 
 }

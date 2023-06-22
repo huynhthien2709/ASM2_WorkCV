@@ -97,6 +97,15 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		
 		return recruitmentDAO.addSaveJob(saveJobDTO);
 	}
+
+	@Override
+	@Transactional
+	public List<Recruitment> getListRecruitments() {
+		
+		return recruitmentDAO.getListRecruitments();
+	}
+	
+	
 	
 	
 	

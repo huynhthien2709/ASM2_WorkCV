@@ -33,5 +33,7 @@ public interface RecruitmentService {
 	public ApplyPost approveCandidate(int id);
 	
 	public SaveJob addSaveJob(SaveJobDTO saveJobDTO);
+	
+	public List<Recruitment> getListRecruitments();
 }
 

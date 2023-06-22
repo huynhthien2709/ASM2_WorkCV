@@ -31,15 +31,15 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public List<Category> getCategories() {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		Query<Category> query = currentSession.createQuery("from Category", Category.class);
-		
+
 		List<Category> categories = query.getResultList();
-		
+
 		return categories;
 	}
 
@@ -84,7 +84,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 
 	@Override
 	public RecruitmentDTO getRecruitmentDTO(int id) {
-		Session currentSession = sessionFactory.getCurrentSession();	
+		Session currentSession = sessionFactory.getCurrentSession();
 		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: id", Recruitment.class);
 		query.setParameter("id", id);
 		Recruitment recruitment = query.uniqueResult();
@@ -102,13 +102,13 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		recruitmentDTO.setType(recruitment.getType());
 		recruitmentDTO.setTitle(recruitment.getTitle());
 		recruitmentDTO.setCompanyId(recruitment.getCompanyId());
-		
+
 		return recruitmentDTO;
 	}
 
 	@Override
 	public Recruitment getRecruitment(int id) {
-		Session currentSession = sessionFactory.getCurrentSession();	
+		Session currentSession = sessionFactory.getCurrentSession();
 		Query<Recruitment> query = currentSession.createQuery("from Recruitment where id =: id", Recruitment.class);
 		query.setParameter("id", id);
 		Recruitment recruitment = query.uniqueResult();
@@ -120,7 +120,7 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<Company> query = currentSession.createQuery("from Company where id =: compId", Company.class);
 		query.setParameter("compId", compId);
-		Company	company = (Company) query.uniqueResult();
+		Company company = (Company) query.uniqueResult();
 		return company;
 	}
 
@@ -128,16 +128,16 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 	public void deleteRec(int id) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query theQuery = currentSession.createQuery("delete from Recruitment where id =:id");
-		theQuery.setParameter("id", id);		
+		theQuery.setParameter("id", id);
 		theQuery.executeUpdate();
-		
+
 	}
 
 	@Override
 	public void updadetApplyPost(ApplyPost applyPost) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.saveOrUpdate(applyPost);
-		
+
 	}
 
 	@Override
@@ -151,10 +151,11 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 	@Override
 	public List<Recruitment> getRecruitmentbyCompId(int compId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		Query<Recruitment> query = currentSession.createQuery("from Recruitment where company_id =: compId", Recruitment.class);
+
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where company_id =: compId",
+				Recruitment.class);
 		query.setParameter("compId", compId);
-		
+
 		List<Recruitment> recruitments = query.getResultList();
 		return recruitments;
 	}
@@ -162,28 +163,29 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 	@Override
 	public List<ApplyPost> getListCandidate(int recId) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where recruitment_id =: recId", ApplyPost.class);
+
+		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where recruitment_id =: recId",
+				ApplyPost.class);
 		query.setParameter("recId", recId);
-		
+
 		List<ApplyPost> applyPosts = query.getResultList();
-		
+
 		return applyPosts;
 	}
 
 	@Override
 	public ApplyPost approveCandidate(int id) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where id =: id", ApplyPost.class);
-		query.setParameter("id", id);		
+		query.setParameter("id", id);
 		ApplyPost applyPost = query.uniqueResult();
 		if (applyPost.getStatus() == 0) {
 			applyPost.setStatus(1);
-		}else {
+		} else {
 			applyPost.setStatus(0);
 		}
-		
+
 		return applyPost;
 	}
 
@@ -202,14 +204,15 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		currentSession.saveOrUpdate(saveJob);
 		return saveJob;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public List<Recruitment> getListRecruitments() {
+		Session currentSession = sessionFactory.getCurrentSession();
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment", Recruitment.class);
+
+		List<Recruitment> recruitments = query.getResultList();
+
+		return recruitments;
+	}
 
 }
