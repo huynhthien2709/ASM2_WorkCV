@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.asm2.entity.ApplyPost;
+import com.asm2.entity.Category;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.FollowCompany;
@@ -70,6 +71,8 @@ public class UserController {
 		model.addAttribute("recruitments", recruitments);
 		List<Company> companies = homeService.getCompanies();
 		model.addAttribute("companies", companies);
+		List<Category> categories = homeService.getCategories();
+		model.addAttribute("categories", categories);
 		boolean check = userService.checkUserLogin(userDTO);
 		session = request.getSession(true);
 		userDTO.setPassword(null);
@@ -116,9 +119,11 @@ public class UserController {
 	}
 
 	@PostMapping("/logout")
-	public String logout(HttpServletRequest request) {
+	public String logout(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("userDTO");
+		List<Category> categories = homeService.getCategories();
+		model.addAttribute("categories", categories);
 		return "public/home";
 	}
 

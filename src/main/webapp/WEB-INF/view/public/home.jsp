@@ -187,8 +187,7 @@
 											việc</a> 
 											<a class="nav-link" id="v-pills-2-tab"
 											data-toggle="pill" href="#v-pills-2" role="tab"
-											aria-controls="v-pills-2" aria-selected="false">Tìm ứng
-											cử viên</a> 
+											aria-controls="v-pills-2" aria-selected="false">Tìm theo công ty</a> 
 											<a class="nav-link" id="v-pills-3-tab"
 											data-toggle="pill" href="#v-pills-3" role="tab"
 											aria-controls="v-pills-3" aria-selected="false">Tìm theo
@@ -231,7 +230,7 @@
 
 										<div class="tab-pane fade" id="v-pills-2" role="tabpanel"
 											aria-labelledby="v-pills-performance-tab">
-											<form action="/user/search" method="post" class="search-job">
+											<form action="${pageContext.request.contextPath}/recruitment/searchByCompanyName" method="post" class="search-job">
 												<div class="row no-gutters">
 
 													<div class="col-md-10 mr-md-2">
@@ -240,8 +239,8 @@
 																<div class="icon">
 																	<span class="icon-map-marker"></span>
 																</div>
-																<input type="text" name="keySearch" class="form-control"
-																	placeholder="Tìm kiếm ứng cử viên">
+																<input type="text" name="companyName" class="form-control"
+																	placeholder="Tìm kiếm công ty">
 															</div>
 														</div>
 													</div>
@@ -258,7 +257,7 @@
 										</div>
 										<div class="tab-pane fade" id="v-pills-3" role="tabpanel"
 											aria-labelledby="v-pills-performance-tab">
-											<form action="/recruitment/searchaddress" method="post"
+											<form action="${pageContext.request.contextPath}/recruitment/searchByAddress" method="post"
 												class="search-job">
 												<div class="row no-gutters">
 
@@ -268,7 +267,7 @@
 																<div class="icon">
 																	<span class="icon-map-marker"></span>
 																</div>
-																<input type="text" name="keySearch" class="form-control"
+																<input type="text" name="address" class="form-control"
 																	placeholder="Tìm kiếm theo địa điểm">
 															</div>
 														</div>

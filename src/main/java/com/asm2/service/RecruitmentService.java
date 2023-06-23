@@ -37,5 +37,9 @@ public interface RecruitmentService {
 	public SaveJob addSaveJob(SaveJobDTO saveJobDTO);
 	
 	public List<Recruitment> getListRecruitments();
+	
+	public List<Company> searchByJobCompanyName(String companyName);
+	
+	public List<Recruitment> searchByAddress(String address);
 }
 

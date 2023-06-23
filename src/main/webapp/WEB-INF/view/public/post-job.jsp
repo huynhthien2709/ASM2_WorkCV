@@ -65,7 +65,7 @@
         </div>
     </div>
 </div>
-<div th:if="${success}" class="toast" data-delay="2500" style="position:fixed; top: 100PX; right: 10PX;z-index: 2000;width: 300px">
+<%-- <div th:if="${success}" class="toast" data-delay="2500" style="position:fixed; top: 100PX; right: 10PX;z-index: 2000;width: 300px">
     <script>
         swal({
             title: 'Đăng tuyển thành công!',
@@ -76,7 +76,7 @@
             type: 'success'
         })
     </script>
-</div>
+</div> --%>
 
 <!--<div th:if="${msg_register_error}" class="toast" data-delay="2500" style="position:fixed; top: 100PX; right: 10PX;z-index: 2000;width: 300px">-->
 <!--    <div class="toast-header" style="background-color: red">-->

@@ -120,14 +120,14 @@
                                 <div class="tab-content p-4" id="v-pills-tabContent">
 
                                     <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                                        <form action="/recruitment/search" method="post" class="search-job">
+                                        <form action="${pageContext.request.contextPath}/recruitment/searchByJobName" method="post" class="search-job">
                                             <div class="row no-gutters">
 
                                                 <div class="col-md-10 mr-md-2">
                                                     <div class="form-group">
                                                         <div class="form-field">
                                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                                            <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm công việc">
+                                                            <input type="text" name="jobName" class="form-control" placeholder="Tìm kiếm công việc">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -143,14 +143,14 @@
                                     </div>
 
                                     <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                                        <form action="/user/search" method="post" class="search-job">
+                                        <form action="${pageContext.request.contextPath}/recruitment/searchByCompanyName" method="post" class="search-job">
                                             <div class="row no-gutters">
 
                                                 <div class="col-md-10 mr-md-2">
                                                     <div class="form-group">
                                                         <div class="form-field">
                                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                                            <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm ứng cử viên">
+                                                            <input type="text" name="companyName" class="form-control" placeholder="Tìm kiếm công ty">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -165,14 +165,14 @@
                                         </form>
                                     </div>
                                     <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                                        <form action="/recruitment/searchaddress" method="post" class="search-job">
+                                        <form action="${pageContext.request.contextPath}/recruitment/searchByAddress" method="post" class="search-job">
                                             <div class="row no-gutters">
 
                                                 <div class="col-md-10 mr-md-2">
                                                     <div class="form-group">
                                                         <div class="form-field">
                                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                                            <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm theo địa điểm">
+                                                            <input type="text" name="address" class="form-control" placeholder="Tìm kiếm theo địa điểm">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -218,11 +218,16 @@
                              <%--  <input type="hidden" id="${'idRe'}+${recruitment.id}" value="${recruitment.id}"> --%> 
                                 <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">                                
                                     <div>
-                                        <a  href="<c:url value = "/recruitment/saveJob/${recruitment.id}"/>> class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                        <a  href="<c:url value = "/recruitment/saveJob/${recruitment.id}"/> class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                             <span class="icon-heart"></span>
                                         </a>
                                     </div>
-                                    <a  data-toggle="modal" data-target="#exampleModal_${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                                    <c:if test="${sessionScope.userDTO == null}">
+                                    	<a href="<c:url value = "/user/login"/>" class="btn btn-primary py-2">Đăng nhập</a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.userDTO != null}">
+                                    	<a  data-toggle="modal" data-target="#exampleModal_${recruitment.id}"  class="btn btn-primary py-2">Apply Job</a>
+                                    </c:if>
                                 </div>
                             </div>
                         </div><!-- end -->
@@ -247,6 +252,9 @@
                                                     </select>
                                                 </div>
                                                 <div id="loai1_${recruitment.id}" style="display:none" class="col-12">
+                                               		<input type="hidden" id="userId_${recruitment.id}" name="user" value="${user.id}">
+													<input type="hidden" id="recruitments_${recruitment.id}" name="recruitments" value="${recruitment.id}">
+													<input type="hidden" id="cv_${recruitment.id}" name="cv" value="${cv.fileName}">
                                                     <label for="fileUpload"
                                                            class="col-form-label">Giới thiệu:</label>
                                                     <textarea rows="10" cols="3" class="form-control"  id="text_${recruitment.id}">
@@ -254,7 +262,8 @@
                                                     </textarea>
                                                 </div>
                                                 <div id="loai2_${recruitment.id}" style="display:none" class="col-12">
-
+													<input type="hidden" id="userId_${recruitment.id}" name="user" value="${user.id}">
+													<input type="hidden" id="recruitments_${recruitment.id}" name="recruitments" value="${recruitment.id}">	
                                                     <label for="fileUpload"
                                                            class="col-form-label">Chọn cv:</label>
                                                     <input type="file" class="form-control"
@@ -281,9 +290,11 @@
                             </div>
                         </div>
                     </c:forEach>>
-                    <div   style="text-align: center" th:if="${list.totalPages == 0}">
-                        <p style="color: red">Không có kết quả nào</p>
-                    </div>
+                    <c:if test="${recruitments.size() == 0 }">
+	                    <div   style="text-align: center" >
+	                        <p style="color: red">Không có kết quả nào</p>
+	                    </div>
+                    </c:if>
                 </div>
 
                 <div class="row mt-5">
@@ -373,11 +384,11 @@
 
     }
     function choosed(id){
-        var name = '#choose' + id;
-        var name1 = 'loai1' + id;
-        var name2 = 'loai2' + id;
-        var button1 = 'button1' + id;
-        var button2 = 'button2' + id;
+        var name = '#choose_' + id;
+        var name1 = 'loai1_' + id;
+        var name2 = 'loai2_' + id;
+        var button1 = 'button1_' + id;
+        var button2 = 'button2_' + id;
         var giaitri = $(name).val();
         if(giaitri == 1){
             document.getElementById(name1).style.display = 'block'
@@ -461,7 +472,7 @@
 		formData.append('recruitmentId', recruitmentId);
 		formData.append('nameCv', cvPath);
 		formData.append('text', text);
-        if(files[0] == null){
+        if(cvPath == ''){
             swal({
                 title: 'Bạn cần phải chọn cv!',
                 /* text: 'Redirecting...', */

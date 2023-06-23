@@ -106,10 +106,26 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 	}
 
 	@Override
+	@Transactional
 	public List<Recruitment> searchByJobName(String jobName) {
-		// TODO Auto-generated method stub
 		return recruitmentDAO.searchByJobName(jobName);
 	}
+
+	@Override
+	@Transactional
+	public List<Company> searchByJobCompanyName(String companyName) {
+		
+		return recruitmentDAO.searchByCompanyName(companyName);
+	}
+
+	@Override
+	@Transactional
+	public List<Recruitment> searchByAddress(String address) {
+		
+		return recruitmentDAO.searchByAddress(address);
+	}
+	
+	
 	
 	
 	

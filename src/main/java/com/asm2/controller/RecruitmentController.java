@@ -22,6 +22,7 @@ import com.asm2.DTO.UserDTO;
 import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Category;
 import com.asm2.entity.Company;
+import com.asm2.entity.Cv;
 import com.asm2.entity.Recruitment;
 import com.asm2.entity.User;
 import com.asm2.service.HomeService;
@@ -113,21 +114,58 @@ public class RecruitmentController {
 		recruitmentService.addSaveJob(saveJobDTO);
 		return "redirect:/recruitment/detail/" + id;
 	}
-	
-	
+
 	@PostMapping("/searchByJobName")
-	public String searchByJobName(@RequestParam("jobName") String jobName, Model model) {
-		System.out.println("////" + jobName);
+	public String searchByJobName(@RequestParam("jobName") String jobName, Model model, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		List<Recruitment> recruitments = recruitmentService.searchByJobName(jobName);
 		model.addAttribute("recruitments", recruitments);
 		model.addAttribute("jobName", jobName);
+		if (userDTO != null) {
+			User user = userService.getUserById(userDTO.getId());
+			if (user.getCv() != null) {
+				int cvid = user.getCv().getId();
+				Cv cv = userService.getCvById(cvid);
+				model.addAttribute("cv", cv);
+			} else {
+				model.addAttribute("msg", "bạn chưa có CV");
+			}
+
+			model.addAttribute("user", user);
+		}
+
 		return "public/result-search";
 	}
-//	private List<Recruitment> searchRecByName(String jobName){
-//		List<Recruitment> recruitments = recruitmentService.searchByJobName(jobName);
-//
-//
-//		return recruitments;
-//	}
- 
+	
+	@PostMapping("/searchByCompanyName")
+	public String searchByCompanyName(@RequestParam("companyName") String companyName, Model model) {
+		List<Company> companies = recruitmentService.searchByJobCompanyName(companyName);
+		model.addAttribute("companies", companies);
+		model.addAttribute("companyName", companyName);
+		
+
+		return "public/result-search-company";
+	}
+	
+	@PostMapping("/searchByAddress")
+	public String searchByAddress(@RequestParam("address") String address, Model model, HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		List<Recruitment> recruitments = recruitmentService.searchByAddress(address);
+		model.addAttribute("recruitments", recruitments);
+		model.addAttribute("address", address);		
+		if (userDTO != null) {
+			User user = userService.getUserById(userDTO.getId());
+			if (user.getCv() != null) {
+				int cvid = user.getCv().getId();
+				Cv cv = userService.getCvById(cvid);
+				model.addAttribute("cv", cv);
+			} else {
+				model.addAttribute("msg", "bạn chưa có CV");
+			}
+
+			model.addAttribute("user", user);
+		}
+		return "public/result-search-address";
+	}
+
 }

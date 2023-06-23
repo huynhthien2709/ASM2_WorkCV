@@ -217,11 +217,35 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 	@Override
 	public List<Recruitment> searchByJobName(String jobName) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		jobName = "%" + jobName + "%";
-		Query<Recruitment> query = currentSession.createQuery("from Recruitment where title like :jobName", Recruitment.class);
+		jobName = "%" + jobName.toLowerCase() + "%";
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where LOWER( title ) like :jobName", Recruitment.class);
 		query.setParameter("jobName", jobName);
 		List<Recruitment> recruitments = query.getResultList();
 		return recruitments;
 	}
+
+	@Override
+	public List<Company> searchByCompanyName(String companyName) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		companyName = "%" + companyName.toLowerCase() + "%";
+		Query<Company> query = currentSession.createQuery("from Company where  LOWER( name_company ) like :companyName", Company.class);
+		query.setParameter("companyName", companyName);
+		List<Company> companies = query.getResultList();
+		
+		return companies;
+	}
+
+	@Override
+	public List<Recruitment> searchByAddress(String address) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		address = "%" + address.toLowerCase() + "%";
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where LOWER( address ) like :address", Recruitment.class);
+		query.setParameter("address", address);
+		List<Recruitment> recruitments = query.getResultList();
+		return recruitments;
+	}
+	
+	
+	
 
 }
