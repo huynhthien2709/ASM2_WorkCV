@@ -40,4 +40,5 @@ public interface RecruitmentDAO {
 	public SaveJob addSaveJob(SaveJobDTO saveJobDTO);
 	
 	public List<Recruitment> getListRecruitments();
+	public List<Recruitment> searchByJobName(String jobName);
 }

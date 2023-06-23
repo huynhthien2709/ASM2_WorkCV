@@ -214,5 +214,14 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 
 		return recruitments;
 	}
+	@Override
+	public List<Recruitment> searchByJobName(String jobName) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		jobName = "%" + jobName + "%";
+		Query<Recruitment> query = currentSession.createQuery("from Recruitment where title like :jobName", Recruitment.class);
+		query.setParameter("jobName", jobName);
+		List<Recruitment> recruitments = query.getResultList();
+		return recruitments;
+	}
 
 }

@@ -1,6 +1,5 @@
 package com.asm2.springsecurity.config;
 
-
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -34,7 +33,6 @@ import javax.persistence.EntityManagerFactory;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.Database;
 import static org.springframework.orm.jpa.vendor.Database.MYSQL;*/
-
 
 @ComponentScan(basePackages = "com.asm2")
 @Configuration
@@ -92,7 +90,7 @@ public class WebConfig implements WebMvcConfigurer {
 
 		return dataSource;
 	}
-	
+
 	@Bean
 	public CommonsMultipartResolver multipartResolver() {
 		return new CommonsMultipartResolver();
@@ -112,8 +110,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 		return hibernateProperties;
 	}
-	
-	//Handle hibernate search
+
+	// Handle hibernate search
 	/*
 	 * @Bean public LocalContainerEntityManagerFactoryBean
 	 * entityManagerFactoryBean() { LocalContainerEntityManagerFactoryBean
@@ -139,10 +137,5 @@ public class WebConfig implements WebMvcConfigurer {
 	 * 
 	 * return jpaVendorAdapter; }
 	 */
-	
-	
-	
-	
-	
-	
+
 }

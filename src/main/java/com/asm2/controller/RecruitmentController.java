@@ -118,23 +118,16 @@ public class RecruitmentController {
 	@PostMapping("/searchByJobName")
 	public String searchByJobName(@RequestParam("jobName") String jobName, Model model) {
 		System.out.println("////" + jobName);
-		List<Recruitment> recruitments = this.searchRecByName(jobName);
+		List<Recruitment> recruitments = recruitmentService.searchByJobName(jobName);
 		model.addAttribute("recruitments", recruitments);
 		model.addAttribute("jobName", jobName);
 		return "public/result-search";
 	}
-	private List<Recruitment> searchRecByName(String jobName){
-		List<Recruitment> recruitments = recruitmentService.getListRecruitments();
-		System.out.println( "????? " + recruitments.get(0).getCategory().getName());
-		List<Recruitment> resultList = new ArrayList<>();
-		
-		for (Recruitment rec : recruitments) {
-			if(rec.getCategory().getName().trim().contains(jobName)) {
-				resultList.add(rec);
-			}
-		}
-
-		return resultList;
-	}
+//	private List<Recruitment> searchRecByName(String jobName){
+//		List<Recruitment> recruitments = recruitmentService.searchByJobName(jobName);
+//
+//
+//		return recruitments;
+//	}
  
 }

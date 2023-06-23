@@ -104,6 +104,14 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 		
 		return recruitmentDAO.getListRecruitments();
 	}
+
+	@Override
+	public List<Recruitment> searchByJobName(String jobName) {
+		// TODO Auto-generated method stub
+		return recruitmentDAO.searchByJobName(jobName);
+	}
+	
+	
 	
 	
 	

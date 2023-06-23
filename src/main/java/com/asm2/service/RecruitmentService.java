@@ -30,6 +30,8 @@ public interface RecruitmentService {
 	
 	public List<ApplyPost> getListCandidate(int recId);
 	
+	public List<Recruitment> searchByJobName(String jobName);
+	
 	public ApplyPost approveCandidate(int id);
 	
 	public SaveJob addSaveJob(SaveJobDTO saveJobDTO);

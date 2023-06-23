@@ -208,30 +208,30 @@
                                 <div class="one-third mb-4 mb-md-0">
                                     <div class="job-post-item-header align-items-center">
                                         <span class="subadge" ><c:out value="${recruitment.type}"/></span>
-                                        <h2 class="mr-3 text-black" ><a href="${pageContext.request.contextPath}/recruitment/detail/${recruitments.id}" ><c:out value="${recruitment.title}"/></a></h2>
+                                        <h2 class="mr-3 text-black" ><a href="${pageContext.request.contextPath}/recruitment/detail/${recruitment.id}" ><c:out value="${recruitment.title}"/></a></h2>
                                     </div>
                                     <div class="job-post-item-body d-block d-md-flex">
                                         <div class="mr-3"><span class="icon-layers"></span> <a href="#"  ><c:out value="${recruitment.company.nameCompany}"/></a></div>
                                         <div><span class="icon-my_location"></span> <span><c:out value="${recruitment.address}"/></span></div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="${'idRe'}+${recruitment.id}" value="${recruitment.id}">
+                             <%--  <input type="hidden" id="${'idRe'}+${recruitment.id}" value="${recruitment.id}"> --%> 
                                 <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">                                
                                     <div>
-                                        <a  href="<c:url value = "/recruitment/saveJob/${recruitmentDTO.id}"/>> class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                        <a  href="<c:url value = "/recruitment/saveJob/${recruitment.id}"/>> class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                             <span class="icon-heart"></span>
                                         </a>
                                     </div>
-                                    <a  data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2" th:if="${session.user.role.id == 1 }">Apply Job</a>
+                                    <a  data-toggle="modal" data-target="#exampleModal_${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                                 </div>
                             </div>
                         </div><!-- end -->
                         <!-- Modal -->
-                        <div class="modal fade" th:id="${'exampleModal'}+${recruitment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="exampleModal_${recruitment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span th:text="${recruitment.title}"></span></h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span><c:out value="${recruitment.title}"/></span></h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -240,28 +240,29 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <select th:id="${'choose'}+${recruitment.id}" th:onchange="'choosed(' +${recruitment.id}+ ')'" class="form-control" aria-label="Default select example">
+                                                    <select id="${'choose'}_${recruitment.id}" onchange="choosed(${recruitment.id})" class="form-control" aria-label="Default select example">
                                                         <option selected>Chọn phương thức nộp</option>
                                                         <option value="1">Dùng cv đã cập nhật</option>
                                                         <option value="2">Nộp cv mới</option>
                                                     </select>
                                                 </div>
-                                                <div th:id="${'loai1'}+${recruitment.id}" style="display:none" class="col-12">
+                                                <div id="loai1_${recruitment.id}" style="display:none" class="col-12">
                                                     <label for="fileUpload"
                                                            class="col-form-label">Giới thiệu:</label>
-                                                    <textarea rows="10" cols="3" class="form-control"  th:id="${'text'}+${recruitment.id}" >
+                                                    <textarea rows="10" cols="3" class="form-control"  id="text_${recruitment.id}">
 
                                                     </textarea>
                                                 </div>
-                                                <div th:id="${'loai2'}+${recruitment.id}" style="display:none" class="col-12">
+                                                <div id="loai2_${recruitment.id}" style="display:none" class="col-12">
 
                                                     <label for="fileUpload"
                                                            class="col-form-label">Chọn cv:</label>
                                                     <input type="file" class="form-control"
-                                                           th:id="${'fileUpload'}+${recruitment.id}" name="file"   required>
+                                                           id="${'fileUpload1'}_${recruitment.id}" name="file" 
+                                                           onchange="fileUploadChange(${recruitment.id})"  required>
                                                     <label for="fileUpload"
                                                            class="col-form-label">Giới thiệu:</label>
-                                                    <textarea rows="10" cols="3" class="form-control"  th:id="${'text'}+${recruitment.id}" >
+                                                    <textarea rows="10" cols="3" class="form-control"  id="text-${recruitment.id}" >
 
                                                     </textarea>
                                                 </div>
@@ -269,8 +270,8 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                                <button type="button" th:id="${'button1'}+${recruitment.id}" style="display: none" th:onclick="'apply1(' +${recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
-                                                <button type="button" th:id="${'button2'}+${recruitment.id}" style="display: none" th:onclick="'apply(' +${recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
+                                                <button type="button" id="button1_${recruitment.id}" style="display: none" onclick="apply1(${recruitment.id})" class="btn btn-primary">Nộp</button>
+                                                <button type="button" id="button2_${recruitment.id}" style="display: none" onclick="apply(${recruitment.id})" class="btn btn-primary">Nộp</button>
                                             </div>
                                         </div>
                                     </form>
@@ -312,13 +313,20 @@
         var nameText = "#text" +id;
         var idRe = $(name).val();
         var textvalue = $(nameText).val();
+        
+        var userId = $("#userId_" + id).val();
+		var recruitmentId = $("#recruitments_" + id).val();
+		var cvPath = $("#cv_" + id).val();
+		var text = $("#text_" + id).val();
         var formData = new FormData();
-        formData.append('idRe', idRe);
-        formData.append('text', textvalue);
+        formData.append('userId', userId);
+		formData.append('recruitmentId', recruitmentId);
+		formData.append('nameCv', cvPath);
+		formData.append('text', text);
         $.ajax(
             {
                 type: 'POST',
-                url: '/user/apply-job1/',
+                url: '${pageContext.request.contextPath}/user/apply-job/',
                 contentType: false,
                 processData: false,
                 data: formData,
@@ -441,12 +449,18 @@
         var nameText = "#text" +id;
         var idRe = $(name).val();
         var textvalue = $(nameText).val();
-        var fileUpload = $(nameFile).get(0);
-        var files = fileUpload.files;
+/*         var fileUpload = $(nameFile).get(0);
+        var files = fileUpload.files; */
+        
+        var userId = $("#userId_" + id).val();
+		var recruitmentId = $("#recruitments_" + id).val();
+		var cvPath = $("#cv_" + id).val();
+		var text = $("#text-" + id).val();
         var formData = new FormData();
-        formData.append('file', files[0]);
-        formData.append('idRe', idRe);
-        formData.append('text', textvalue);
+        formData.append('userId', userId);
+		formData.append('recruitmentId', recruitmentId);
+		formData.append('nameCv', cvPath);
+		formData.append('text', text);
         if(files[0] == null){
             swal({
                 title: 'Bạn cần phải chọn cv!',
@@ -460,7 +474,7 @@
             $.ajax(
                 {
                     type: 'POST',
-                    url: '/user/apply-job/',
+                    url: '${pageContext.request.contextPath}/user/apply-job/',
                     contentType: false,
                     processData: false,
                     data: formData,
@@ -506,6 +520,72 @@
         }
 
     }
+</script>
+<script>
+    
+        function fileUploadChange(inputId) {
+            if (window.FormData !== undefined) {
+                var fileUpload = $('#fileUpload1_' + inputId).get(0);
+                var files = fileUpload.files;
+                var formData = new FormData();
+                formData.append('file', files[0]);
+                if(files[0] == null){
+                    // document.getElementById("change").style.backgroundColor = 'red';
+                    // $('#text').val(" ❌ Cập nhật ảnh thất bại");
+                    $(".toast").toast("show");
+                } else {
+                    $.ajax(
+                        {
+                            type: 'POST',
+                            url: '${pageContext.request.contextPath}/user/upload-Candidate/',
+                            contentType: false,
+                            processData: false,  
+                            data: formData,
+                            success: function (urlImage) {
+                                console.log(urlImage)
+                                if(urlImage == "Error"){
+                                    // document.getElementById("change").style.backgroundColor = 'red';
+
+                                    swal({
+                                        title: 'Cần chọn đúng loại file (PDF)!',
+                                        /* text: 'Redirecting...', */
+                                        icon: 'error',
+                                        timer: 3000,
+                                        buttons: true,
+                                        type: 'error'
+                                    })
+                                    // $("#divImage").css("display","block")
+                                }else{
+                                    // $('#avatar').attr('src', urlImage)
+                                     /* $('#fileUploadCVJob').val(urlImage);
+                                    const fileName = urlImage.substr(urlImage.lastIndexOf('/') + 1);
+                                    document.getElementById('cvErrorMsg').innerHTML = fileName;
+                                    document.getElementById('nameCv').innerHTML = 'Xem cv';
+                                    document.getElementById('nameCv').href = "http://localhost:8080/resources/CandidateImage/"+urlImage ; //or grab it by tagname etc */
+                                    document.getElementById('cv_' + inputId).value = urlImage;
+                                    
+										
+                                    swal({
+                                        title: 'Cập nhật CV thành công!',
+                                        /* text: 'Redirecting...', */
+                                        icon: 'success',
+                                        timer: 3000,
+                                        buttons: true,
+                                        type: 'success'
+                                    })
+                                }
+
+                            },
+                            error: function (err) {
+                                alert(err);
+                            }
+                        }
+                    )
+                }
+
+            }
+        }
+
 </script>
 
 
