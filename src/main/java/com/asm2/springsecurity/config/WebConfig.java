@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -111,31 +113,24 @@ public class WebConfig implements WebMvcConfigurer {
 		return hibernateProperties;
 	}
 
-	// Handle hibernate search
-	/*
-	 * @Bean public LocalContainerEntityManagerFactoryBean
-	 * entityManagerFactoryBean() { LocalContainerEntityManagerFactoryBean
-	 * entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-	 * entityManagerFactoryBean.setDataSource(dataSource());
-	 * entityManagerFactoryBean.setJpaVendorAdapter(jpaVendorAdapter());
-	 * entityManagerFactoryBean.setPackagesToScan("com.asm2.*");
-	 * entityManagerFactoryBean.setJpaProperties(hibernateProperties());
-	 * 
-	 * FullTextEntityManager fullTextEntityManager =
-	 * Search.getFullTextEntityManager(entityManagerFactoryBean.getObject().
-	 * createEntityManager()); try {
-	 * fullTextEntityManager.createIndexer().startAndWait(); } catch
-	 * (InterruptedException e) { // TODO: handle exception } return
-	 * entityManagerFactoryBean; }
-	 * 
-	 * @Bean public JpaVendorAdapter jpaVendorAdapter() { HibernateJpaVendorAdapter
-	 * jpaVendorAdapter = new HibernateJpaVendorAdapter();
-	 * jpaVendorAdapter.setDatabase(Database.MYSQL);
-	 * jpaVendorAdapter.setShowSql(true); jpaVendorAdapter.setGenerateDdl(false);
-	 * jpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.MySQLDialect");
-	 * 
-	 * 
-	 * return jpaVendorAdapter; }
-	 */
+	@Bean
+	public JavaMailSender getMailSender() {
+		JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+		mailSender.setHost("smtp.gmail.com");
+		mailSender.setPort(587);
+		mailSender.setUsername("thienhtfx17332@funix.edu.vn");
+		mailSender.setPassword("fYhqcTWh9tqL");
+		
+		Properties javaMailProperties = new Properties();
+		javaMailProperties.put("mail.smtp.starttls.enable", "true");
+		javaMailProperties.put("mail.smtp.auth", "true");
+		javaMailProperties.put("mail.transport.protocol", "smtp");
+		javaMailProperties.put("mail.debug", "true");
+		
+		mailSender.setJavaMailProperties(javaMailProperties);
+		return mailSender;
+		
+			
+	}
 
 }

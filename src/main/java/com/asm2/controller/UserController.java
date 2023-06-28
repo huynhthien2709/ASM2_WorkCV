@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +42,9 @@ import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
 import com.asm2.service.UserService;
 
+
+import javassist.Loader.Simple;
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -52,6 +57,9 @@ public class UserController {
 
 	@Autowired
 	private RecruitmentService recruitmentService;
+	
+	@Autowired
+	private MailSender mailSender;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -358,6 +366,22 @@ public class UserController {
 		userService.deleteSaveJob(userId, id);
 		String 	previousUrl = request.getHeader("public/list-save-job");
 		return "redirect:" + previousUrl;
+	}
+	
+	public void sendMail(String from, String to, String subject, String content) {
+		SimpleMailMessage mailMessage = new SimpleMailMessage();
+		mailMessage.setFrom(from);
+		mailMessage.setTo(to);
+		mailMessage.setSubject(subject);
+		mailMessage.setText(content);
+		
+		mailSender.send(mailMessage);
+	}
+	@PostMapping("/sendMail")
+	public String verificationUserMail(HttpSession session) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		sendMail(userDTO.getEmail(), "thienhtfx17332@funix.edu.vn", "verificationUserMail", "verificationUserMail");
+		return "public/profile";
 	}
 
 }

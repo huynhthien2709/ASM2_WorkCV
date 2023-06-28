@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,16 +95,17 @@
         </div>
     </div>
 </div>
-<!-- HOME 
-<div th:if="${userInformation.status == 0}" class="container-fluid" style="text-align: center">
+<!-- HOME -->
+<c:if test="${userDTO.role == 2 }">
+<div class="container-fluid" style="text-align: center">
     <p style="font-size: 20px;font-weight: bold;color: #aaa;margin-top: 10px">Xác thực email đăng nhập</p>
     <div style="width: 600px;height: 400px;border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;padding: 15px">
-        <p style="line-height: 35px;font-size: 16px">Xin chào, <span th:text="${userInformation.fullName}" ></span> và làm theo hướng dẫn trong email.
+        <p style="line-height: 35px;font-size: 16px">Xin chào, <span th:text="${userDTO.fullName}" ></span> và làm theo hướng dẫn trong email.
             Trường hợp không nhận được email, bạn vui lòng bấm nút Nhận email xác thực dưới đây.</p>
         <div class="row form-group">
-            <form action="/user/confirm-account" method="post" class="col-md-12">
-                <input type="hidden" th:value="${userInformation.email}" name="email" class="btn px-4 btn-primary text-white">
+            <form action="${pageContext.request.contextPath}/user/sendMail" name="user" method="post" class="col-md-12">
+                <input type="hidden" value="${userDTO.email}" name="email" class="btn px-4 btn-primary text-white">
                 <input type="submit" value="Nhận email xác thực" class="btn px-4 btn-primary text-white">
             </form>
         </div>
@@ -121,7 +122,8 @@
         - Điện thoại:<span style="color:#5f80ec">(024) 6680 5588</span><br>
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
-</div>-->
+</div>
+</c:if>
 <section th:if="${userInformation.status == 1 && userInformation.role.id == 1}" class="site-section" style="margin-top: 10px">
     <div class="container">
         <form enctype="multipart/form-data">
