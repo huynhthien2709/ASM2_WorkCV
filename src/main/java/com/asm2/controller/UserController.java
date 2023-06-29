@@ -380,8 +380,8 @@ public class UserController {
 	@PostMapping("/sendMail")
 	public String verificationUserMail(HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		sendMail(userDTO.getEmail(), "thienhtfx17332@funix.edu.vn", "verificationUserMail", "verificationUserMail");
-		return "public/profile";
+		sendMail("thienhtfx17332@funix.edu.vn", "huynhthien2709@gmail.com",  "verificationUserMail", "verificationUserMail");
+		return "redirect:/public/profile";
 	}
 
 }
