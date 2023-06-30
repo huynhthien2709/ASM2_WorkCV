@@ -124,7 +124,7 @@
     </div>
 </div>
 </c:if>
-<section th:if="${userInformation.status == 1 && userInformation.role.id == 1}" class="site-section" style="margin-top: 10px">
+<section class="site-section" style="margin-top: 10px">
     <div class="container">
         <form enctype="multipart/form-data">
             <div class="row align-items-center mb-5">
