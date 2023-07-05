@@ -57,7 +57,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 pr-lg-5">
-                <div th:if="${saveJobList.totalPages > 0}" class="row">
+                <div  class="row">
                 	<c:forEach items="${applyPosts}" var="applyPost">
                         <div class="col-md-12 ">
                             <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
@@ -127,19 +127,32 @@
                    </c:forEach>
 
                 </div>
-                <div style="text-align: center" th:if="${saveJobList.totalPages < 1}">
-                    <p style="color:red;">Danh sách trống</p>
-                </div>
+                <c:if test="${applyPosts.size() == 0}">
+	                <div style="text-align: center" >
+	                    <p style="color:red;">Danh sách trống</p>
+	                </div>
+                </c:if>
                 <div class="row mt-5">
                     <div class="col text-center">
                         <div class="block-27">
-                            <ul>
-                                <li th:if="${numberPage>0}"><a th:href="@{/save-job/get-list(page = ${saveJobList.number - 1})}">&lt;</a></li>
-                                <th:block th:each="recruitment,state  : ${recruitmentList}">
-                                    <li th:class="${numberPage == state.index  ? 'active' : null }"><a th:href="@{/save-job/get-list(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
-                                </th:block>
-                                <li th:if="${numberPage<saveJobList.totalPages - 1}"><a th:href="@{/save-job/get-list(page = ${saveJobList.number + 1})}">&gt;</a></li>
-                            </ul>
+                          
+                                <c:if test="${currentPage > 1}">
+   									 <a href="${pageContext.request.contextPath}/user/list-apply-job?page=${currentPage - 1}"> <- Trang trước</a>
+  								</c:if>
+  								<c:forEach begin="1" end="${totalPages}" var="page">
+								    <c:choose>
+								      <c:when test="${page == currentPage}">
+								        <span class="active">Trang: ${page}</span>
+								      </c:when>
+								      <c:otherwise>
+								        <a href="${pageContext.request.contextPath}/user/list-apply-job?page=${page}">${page}</a>
+								      </c:otherwise>
+								    </c:choose>
+							 </c:forEach>
+							   <c:if test="${currentPage <= totalPages}">
+							    	<a href="${pageContext.request.contextPath}/user/list-apply-job?page=${currentPage + 1}"> -> Trang kế tiếp</a>
+							   </c:if>
+			
                         </div>
                     </div>
                 </div>

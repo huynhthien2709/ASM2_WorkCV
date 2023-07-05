@@ -353,10 +353,15 @@ public class UserController {
 		return "public/list-follow-company";
 	}
 	@GetMapping("/list-apply-job")
-	public String listPostJobCompany(Model model, HttpSession session) {
+	public String listPostJompany(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
+		int recordsPerPage = 5;
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		List<ApplyPost> applyPosts = userService.getListApplyPosts(userDTO.getId());
+		List<ApplyPost> applyPosts = userService.getListApplyPosts(userDTO.getId(), page);
 		model.addAttribute("applyPosts", applyPosts);
+		int totalRecords = userService.getListApplyPosts(userDTO.getId(), page).size();
+		int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
 		return "public/list-apply-job";
 	}
 	@GetMapping("/delete-save-job/{id}")

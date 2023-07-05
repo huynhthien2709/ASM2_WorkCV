@@ -371,9 +371,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<ApplyPost> getListApplyPosts(int userId) {
+	public List<ApplyPost> getListApplyPosts(int userId, int page) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<ApplyPost> query = currentSession.createQuery("from ApplyPost where user_id =: userId", ApplyPost.class);
+		query.setMaxResults(5);
+		query.setFirstResult((page -1) * 5);
+		
 		query.setParameter("userId", userId);
 		return query.getResultList();
 	}

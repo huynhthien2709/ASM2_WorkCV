@@ -50,5 +50,5 @@ public interface UserService {
 
 	public List<FollowCompany> getListFollowCompany(int userId);
 	
-	public List<ApplyPost> getListApplyPosts(int userId);
+	public List<ApplyPost> getListApplyPosts(int userId, int page);
 }

@@ -58,10 +58,11 @@
 									<p>
 										<a href="<c:url value = "/user/profile"/>">Hồ Sơ</a>
 									</p>
-							
-								<p>
-									<a href="<c:url value = "/user/list-save-job"/>">Công việc đã lưu</a>
-								</p>
+								<c:if test="${userDTO.role == 1}">
+									<p>
+										<a href="<c:url value = "/user/list-save-job"/>">Công việc đã lưu</a>
+									</p>
+								</c:if>
 								<c:if test="${userDTO.role == 2}">
 									<p>
 										<a href="<c:url value = "/user/post-list"/>">Danh sách bài đăng</a>
@@ -85,8 +86,38 @@
 
 							</div>
 						</div></li>
-					<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử
+						<c:if test="${sessionScope.userDTO == null}">
+							<li class="nav-item"><a data-toggle="modal" data-target="#myModal" class="nav-link">Ứng cử
 							viên</a></li>
+						</c:if>
+						<c:if test="${sessionScope.userDTO != null}">
+							<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử
+							viên</a></li>
+						</c:if>
+						
+						 <!-- Modal -->
+						  <div class="modal fade" id="myModal" role="dialog">
+						    <div class="modal-dialog">
+						    
+						      <!-- Modal content-->
+						      <div class="modal-content">
+						        <div class="modal-header">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title"></h4>
+						        </div>
+						        <div class="modal-body">
+						          <p>Bạn cần đăng nhập để xem</p>
+						        </div>
+						        <div class="modal-footer">
+						          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+						          <a href="<c:url value = "/user/login"/>" class="nav-link">Đăng nhập</a>
+						        </div>
+						      </div>
+						      
+						    </div>
+						  </div>
+
+						
 
 
 					<li></li>

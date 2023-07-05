@@ -166,9 +166,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public List<ApplyPost> getListApplyPosts(int userId) {
+	public List<ApplyPost> getListApplyPosts(int userId, int page) {
 		
-		return userDAO.getListApplyPosts(userId);
+		return userDAO.getListApplyPosts(userId, page);
 	}
 	
 	
