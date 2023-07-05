@@ -36,7 +36,7 @@ public interface UserService {
 
 	public ApplyPost applyJob(ApplyPostDTO applyPostDTO);
 
-	public List<SaveJob> getListSaveJob(int userId);
+	public List<SaveJob> getListSaveJob(int userId, int page);
 
 	public List<ApplyPost> getUserbyApplyPosts();
 
@@ -48,7 +48,7 @@ public interface UserService {
 
 	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO);
 
-	public List<FollowCompany> getListFollowCompany(int userId);
+	public List<FollowCompany> getListFollowCompany(int userId,int page);
 	
 	public List<ApplyPost> getListApplyPosts(int userId, int page);
 }

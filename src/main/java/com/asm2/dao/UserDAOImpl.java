@@ -286,10 +286,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<SaveJob> getListSaveJob(int userId) {
+	public List<SaveJob> getListSaveJob(int userId, int page) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<SaveJob> query = currentSession.createQuery("from SaveJob where user_id =: userId", SaveJob.class);
 		query.setParameter("userId", userId);
+		query.setMaxResults(5);
+		query.setFirstResult((page -1) * 5);
 		return query.getResultList();
 	}
 
@@ -354,10 +356,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<FollowCompany> getListFollowCompany(int userId) {
+	public List<FollowCompany> getListFollowCompany(int userId, int page) {
 		Session currentSession = sessionFactory.getCurrentSession();
 		Query<FollowCompany> query = currentSession.createQuery("from FollowCompany where user_id =: userId", FollowCompany.class);
 		query.setParameter("userId", userId);
+		query.setMaxResults(5);
+		query.setFirstResult((page -1) * 5);
 		return query.getResultList();
 	}
 

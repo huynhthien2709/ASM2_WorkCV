@@ -134,8 +134,7 @@
                 </c:if>
                 <div class="row mt-5">
                     <div class="col text-center">
-                        <div class="block-27">
-                          
+                        <div class="block-27">                          
                                 <c:if test="${currentPage > 1}">
    									 <a href="${pageContext.request.contextPath}/user/list-apply-job?page=${currentPage - 1}"> <- Trang trước</a>
   								</c:if>

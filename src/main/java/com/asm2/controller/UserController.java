@@ -60,6 +60,8 @@ public class UserController {
 	
 	@Autowired
 	private MailSender mailSender;
+	
+	private int recordsPerPage = 5;
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -287,18 +289,21 @@ public class UserController {
 		return "public/home";
 	}
 
-	@GetMapping("post-list")
-	public String postListPage(Model model) {
-		List<Recruitment> recruitments = homeService.getRecruitments();
+	@GetMapping("/post-list")
+	public String postListPage(Model model, @RequestParam(name =  "page", defaultValue = "1") int page) {
+		List<Recruitment> recruitments = homeService.getRecruitments(page);
 		model.addAttribute("recruitments", recruitments);
-		System.out.println("///" + recruitments.size());
+		int totalRecords = homeService.getRecruitments(page).size();
+		int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
 		return "public/post-list";
 	}
 
 	@GetMapping("/list-save-job")
-	public String listSaveJob(Model model, HttpSession session) {
+	public String listSaveJob(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		List<SaveJob> saveJobs = userService.getListSaveJob(userDTO.getId());
+		List<SaveJob> saveJobs = userService.getListSaveJob(userDTO.getId(), page);
 		model.addAttribute("saveJobs", saveJobs);
 		User user = userService.getUserById(userDTO.getId());
 		if (user.getCv() != null) {
@@ -310,6 +315,10 @@ public class UserController {
 		}
 
 		model.addAttribute("user", user);
+		int totalRecords = userService.getListSaveJob(userDTO.getId(), page).size();
+		int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
 		return "public/list-save-job";
 	}
 
@@ -345,16 +354,19 @@ public class UserController {
 	}
 
 	@GetMapping("/list-follow-company")
-	public String listFollowCompany(Model model, HttpSession session) {
+	public String listFollowCompany(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
-		List<FollowCompany> followCompanies = userService.getListFollowCompany(userId);
+		List<FollowCompany> followCompanies = userService.getListFollowCompany(userId, page);
 		model.addAttribute("followCompanies", followCompanies);
+		int totalRecords = userService.getListFollowCompany(userId, page).size();
+		int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
 		return "public/list-follow-company";
 	}
 	@GetMapping("/list-apply-job")
-	public String listPostJompany(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
-		int recordsPerPage = 5;
+	public String listPostJompany(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {		
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		List<ApplyPost> applyPosts = userService.getListApplyPosts(userDTO.getId(), page);
 		model.addAttribute("applyPosts", applyPosts);

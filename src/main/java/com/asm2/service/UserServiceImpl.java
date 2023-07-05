@@ -119,9 +119,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public List<SaveJob> getListSaveJob(int userId) {
+	public List<SaveJob> getListSaveJob(int userId, int page) {
 
-		return userDAO.getListSaveJob(userId);
+		return userDAO.getListSaveJob(userId, page);
 	}
 
 	@Override
@@ -153,9 +153,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public List<FollowCompany> getListFollowCompany(int userId) {
+	public List<FollowCompany> getListFollowCompany(int userId, int page) {
 		
-		return userDAO.getListFollowCompany(userId);
+		return userDAO.getListFollowCompany(userId, page);
 	}
 
 	@Override

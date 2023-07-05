@@ -47,7 +47,7 @@ public interface UserDAO {
 
 	public Cv updateCvApplyJobCv (String path, int userId);
 	
-	public List<SaveJob> getListSaveJob(int userId);
+	public List<SaveJob> getListSaveJob(int userId, int page);
 	
 	public List<ApplyPost> getUserbyApplyPosts();
 	
@@ -57,7 +57,7 @@ public interface UserDAO {
 	
 	public FollowCompany addFollowCompany(FollowCompanyDTO followCompanyDTO);
 	
-	public List<FollowCompany> getListFollowCompany(int userId);
+	public List<FollowCompany> getListFollowCompany(int userId, int page);
 	
 	public void deleteSaveJob(int userId, int recId);
 	
