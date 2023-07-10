@@ -95,6 +95,7 @@ public class UserDAOImpl implements UserDAO {
 			userDTO.setPhoneNumber(user.getPhoneNumber());
 			userDTO.setDescription(user.getDescription());
 			userDTO.setImage(user.getImage());
+			userDTO.setStatus(user.getStatus());
 			if (user.getCv() == null) {
 				userDTO.setCv("0");
 			} else {
@@ -383,6 +384,16 @@ public class UserDAOImpl implements UserDAO {
 		
 		query.setParameter("userId", userId);
 		return query.getResultList();
+	}
+
+	@Override
+	public void updateStatusUser(int userId) {		
+		User user = getUserById(userId);
+		System.out.println("DAO " + user.getStatus());
+		if (user.getRole().getId() == 2 && user.getStatus() == 0) {
+			user.setStatus(1);
+		}
+		
 	}
 	
 	

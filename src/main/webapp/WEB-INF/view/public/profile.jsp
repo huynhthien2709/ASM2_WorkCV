@@ -27,8 +27,7 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-            <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-            <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
+            <li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công việc</a></li>
     <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
     <!-- 
             <li th:if="${session.user}" class="nav-item"><a th:href="@{'/user/profile/'+${session.user.id}}" th:text="${session.user.fullName}" class="nav-link" ></a> -->
@@ -48,8 +47,11 @@
     
               <li></li>
     
-              <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-            <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+             <c:if test="${sessionScope.userDTO.role == '2'}">
+	    		<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử viên</a></li>
+	             <li class="nav-item cta mr-md-1"><a href="<c:url value = "/recruitment/post" />" class="nav-link">Đăng tuyển</a></li>	           
+    		</c:if>
+    		<li class="nav-item cta cta-colored"><a href="<c:url value = "/user/login"/>" class="nav-link">Đăng nhập</a></li>
     
           </ul>
         </div>
@@ -96,7 +98,7 @@
     </div>
 </div>
 <!-- HOME -->
-<c:if test="${userDTO.role == 2 }">
+<c:if test="${userDTO.role == 2 && userDTO.status == 0 }">
 <div class="container-fluid" style="text-align: center">
     <p style="font-size: 20px;font-weight: bold;color: #aaa;margin-top: 10px">Xác thực email đăng nhập</p>
     <div style="width: 600px;height: 400px;border-radius: 5px;
@@ -123,6 +125,9 @@
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
 </div>
+</c:if>
+<c:if test="${userDTO.role == 2 && userDTO.status != 0 }">
+	<p style="color:red;">${msg}</p>
 </c:if>
 <section class="site-section" style="margin-top: 10px">
     <div class="container">

@@ -152,6 +152,9 @@ public class UserController {
 			Cv cv = userService.getCvById(cvid);
 			model.addAttribute("cv", cv);
 		}
+		if (user.getStatus() != 0) {
+			model.addAttribute("msg", "tài khoản đã xác thực");
+		}
 
 		return "public/profile";
 	}
@@ -377,12 +380,11 @@ public class UserController {
 		return "public/list-apply-job";
 	}
 	@GetMapping("/delete-save-job/{id}")
-	public String deleteSaveJob(@PathVariable("id") int id, HttpSession session, HttpServletRequest request) {		
+	public String deleteSaveJob(@PathVariable("id") int id, HttpSession session) {		
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
 		userService.deleteSaveJob(userId, id);
-		String 	previousUrl = request.getHeader("public/list-save-job");
-		return "redirect:" + previousUrl;
+		return "redirect:/user/list-save-job";
 	}
 	
 	public void sendMail(String from, String to, String subject, String content) {
@@ -393,12 +395,22 @@ public class UserController {
 		mailMessage.setText(content);
 		
 		mailSender.send(mailMessage);
+
 	}
 	@PostMapping("/sendMail")
-	public String verificationUserMail(HttpSession session) {
+	public String verificationUserMail(HttpSession session, Model model) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		sendMail("thienhtfx17332@funix.edu.vn", "huynhthien2709@gmail.com",  "verificationUserMail", "verificationUserMail");
-		return "redirect:/public/profile";
+		System.out.println("////" + userDTO.getStatus());
+		if (userDTO.getRole().equals("2") && userDTO.getStatus() == 0) {
+			sendMail("huynhthien2709@gmail.com", "huynhthien2709@gmail.com",  "Xác thực tài khoản người dùng " + userDTO.getFullName(),
+					   "Tài khoản của bạn đã được xác thực");
+			userService.updateStatusUser(userDTO.getId());
+		}else {
+			model.addAttribute("msg", "tài khoản đã được xác thực");
+		}
+		
+		userService.updateStatusUser(userDTO.getId());
+		return "redirect:/user/profile";
 	}
 
 }

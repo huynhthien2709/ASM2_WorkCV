@@ -51,4 +51,6 @@ public interface UserService {
 	public List<FollowCompany> getListFollowCompany(int userId,int page);
 	
 	public List<ApplyPost> getListApplyPosts(int userId, int page);
+
+	public void updateStatusUser(int userId);
 }

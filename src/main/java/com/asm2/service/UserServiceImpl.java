@@ -170,6 +170,12 @@ public class UserServiceImpl implements UserService {
 		
 		return userDAO.getListApplyPosts(userId, page);
 	}
+
+	@Override
+	public void updateStatusUser(int userId) {
+		userDAO.updateStatusUser(userId);
+		
+	}
 	
 	
 

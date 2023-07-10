@@ -62,5 +62,7 @@ public interface UserDAO {
 	public void deleteSaveJob(int userId, int recId);
 	
 	public List<ApplyPost> getListApplyPosts(int userId, int page);
+	
+	public void updateStatusUser (int userId);
 
 }
