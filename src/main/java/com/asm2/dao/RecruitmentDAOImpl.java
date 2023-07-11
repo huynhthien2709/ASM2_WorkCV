@@ -52,7 +52,9 @@ public class RecruitmentDAOImpl implements RecruitmentDAO {
 		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = myDateObj.format(myFormatObj);
 		category.setId(Integer.parseInt(recruitmentDTO.getCategoryId()));
-		recruitment.setId(recruitmentDTO.getId());
+		if (recruitmentDTO.getId() != null) {
+			recruitment.setId(recruitmentDTO.getId());
+		}		
 		recruitment.setTitle(recruitmentDTO.getTitle());
 		recruitment.setDescription(recruitmentDTO.getDescription());
 		recruitment.setExperience(recruitmentDTO.getExperience());

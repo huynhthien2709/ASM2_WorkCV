@@ -1,11 +1,10 @@
 package com.asm2.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.taglibs.standard.lang.jstl.test.beans.PublicBean1;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,9 @@ import com.asm2.service.HomeService;
 import com.asm2.service.RecruitmentService;
 import com.asm2.service.UserService;
 
-import net.bytebuddy.asm.Advice.Return;
+
+
+
 
 @Controller
 @RequestMapping(value = "/recruitment")
@@ -43,7 +44,12 @@ public class RecruitmentController {
 
 	@Autowired
 	private HomeService homeService;
-
+	
+	
+	/**
+	 * diplay form add recruitment
+	 *
+	 */
 	@GetMapping("/post")
 	public String recruitmentPage(Model model, CompanyDTO companyDTO, HttpSession session) {
 		List<Category> categories = recruitmentService.getCategories();
@@ -51,9 +57,14 @@ public class RecruitmentController {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
 		int userId = userDTO.getId();
 		Company company = userService.getCompanyInfo(companyDTO, userId);
+		model.addAttribute("company", company);
 		return "public/post-job";
 	}
 
+	/**
+	 * add new post job
+	 *
+	 */
 	@PostMapping("/add")
 	public String addPostJob(RecruitmentDTO recruitmentDTO, HttpSession session, Model model) {
 		List<Category> categories = recruitmentService.getCategories();
@@ -65,6 +76,10 @@ public class RecruitmentController {
 		return "public/post-job";
 	}
 
+	/**
+	 * delete a post job
+	 *
+	 */
 	@PostMapping("/deleteRec")
 	public String deleteRec(RecruitmentDTO recruitmentDTO, Model model) {
 		Recruitment recruitment = recruitmentService.getRecruitment(recruitmentDTO.getId());
@@ -74,6 +89,10 @@ public class RecruitmentController {
 		return "public/post-list";
 	}
 
+	/**
+	 * show detai of a post job
+	 *
+	 */
 	@GetMapping("/detail/{id}")
 	public String detailPost(@PathVariable("id") int id, Model model) {
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
@@ -88,12 +107,20 @@ public class RecruitmentController {
 		return "public/detail-post";
 	}
 
+	/**
+	 * accept a candidate for a job         
+	 *
+	 */
 	@GetMapping("/approveCandidate/{id}")
 	public String approveCandidate(@PathVariable("id") int id) {
 		ApplyPost applyPost = recruitmentService.approveCandidate(id);
 		return "redirect:/recruitment/detail/" + applyPost.getRecruitment().getId();
 	}
 
+	/**
+	 * update a post job when job requirements change
+	 *
+	 */
 	@GetMapping("/updatePost/{id}")
 	public String updatePost(@PathVariable("id") int id, Model model) {
 		RecruitmentDTO recruitmentDTO = recruitmentService.getRecruitmentDTO(id);
@@ -104,7 +131,11 @@ public class RecruitmentController {
 		model.addAttribute("company", company);
 		return "public/post-job";
 	}
+	
 
+	/**
+	 * candidate can save a job for themself
+	 */
 	@GetMapping("/saveJob/{id}")
 	public String saveJob(@PathVariable("id") int id, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -114,7 +145,10 @@ public class RecruitmentController {
 		recruitmentService.addSaveJob(saveJobDTO);
 		return "redirect:/recruitment/detail/" + id;
 	}
-
+	
+	/**
+	 * candidate can search job by job name
+	 */
 	@PostMapping("/searchByJobName")
 	public String searchByJobName(@RequestParam("jobName") String jobName, Model model, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -137,6 +171,9 @@ public class RecruitmentController {
 		return "public/result-search";
 	}
 	
+	/**
+	 * candidate can search job by company name
+	 */
 	@PostMapping("/searchByCompanyName")
 	public String searchByCompanyName(@RequestParam("companyName") String companyName, Model model) {
 		List<Company> companies = recruitmentService.searchByJobCompanyName(companyName);
@@ -147,6 +184,9 @@ public class RecruitmentController {
 		return "public/result-search-company";
 	}
 	
+	/**
+	 * candidate can search job by address
+	 */
 	@PostMapping("/searchByAddress")
 	public String searchByAddress(@RequestParam("address") String address, Model model, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");

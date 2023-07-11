@@ -12,12 +12,18 @@ import com.asm2.entity.Company;
 import com.asm2.entity.Recruitment;
 import com.asm2.service.HomeService;
 
+
 @Controller
 //@RequestMapping("/index")
 public class HomeController {
 	@Autowired
 	private HomeService homeService;
 	
+	
+	/**
+	 * @author admin
+	 *display home page
+	 */
 	@GetMapping("/index")
 	public String homePage(Model model) {
 		List<Recruitment> recruitments = homeService.getRecruitments();

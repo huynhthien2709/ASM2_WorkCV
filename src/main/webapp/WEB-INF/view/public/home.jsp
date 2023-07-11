@@ -49,6 +49,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item active"><a href="/" class="nav-link">Trang
 							chủ</a></li>
+							
 					<li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công
 							việc</a></li>
 
@@ -90,7 +91,7 @@
 							<li class="nav-item"><a data-toggle="modal" data-target="#myModal" class="nav-link">Ứng cử
 							viên</a></li>
 						</c:if>
-						<c:if test="${sessionScope.userDTO != null}">
+						<c:if test="${sessionScope.userDTO != null && sessionScope.userDTO.role == '2'}">
 							<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử
 							viên</a></li>
 						</c:if>

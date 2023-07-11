@@ -134,6 +134,10 @@ public class UserController {
 		session.removeAttribute("userDTO");
 		List<Category> categories = homeService.getCategories();
 		model.addAttribute("categories", categories);
+		List<Recruitment> recruitments = homeService.getRecruitments();
+		model.addAttribute("recruitments", recruitments);
+		List<Company> companies = homeService.getCompanies();
+		model.addAttribute("companies", companies);
 		return "public/home";
 	}
 

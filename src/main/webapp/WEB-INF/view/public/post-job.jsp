@@ -170,13 +170,15 @@
                         <input type="text" class="form-control" id="email" name="title" value="${recruitmentDTO.title }"  required placeholder="Tiêu đề">
                         <input type="hidden" class="form-control" name="user" value="${userDTO.id}" id="job-title" placeholder="userId"> 
                         <c:if test="${companyDTO.id != null}">                       
-                        <input type="hidden" class="form-control" name="companyId" value="${companyDTO.id}" id="job-title" placeholder="ID">
+                       	 <input type="hidden" class="form-control" name="companyId" value="${companyDTO.id}" id="job-title" placeholder="ID">
                         </c:if>
                         <c:if test="${companyDTO.id == null}">
-                        <input type="hidden" class="form-control" name="companyId" value="${company.id}" id="job-title" placeholder="ID">
+                       	 <input type="hidden" class="form-control" name="companyId" value="${company.id}" id="job-title" placeholder="ID">
                         </c:if>
-                        <input type="hidden" class="form-control" name="id" value="${recruitmentDTO.id}" id="job-title" placeholder="ID">
-                        <!--  <input type="hidden" class="form-control" name="id" value="${recruitmentDTO.id}" id="job-title" placeholder="ID">-->
+                       <c:if test="${recruitmentDTO.id != null}">
+                       	  <input type="hidden" class="form-control" name="id" value="${recruitmentDTO.id}" id="job-title" placeholder="ID">
+                       </c:if>
+                        
                     </div>
                     <div class="form-group">
                         <label for="job-location">Mô tả công việc</label>
