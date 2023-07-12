@@ -17,6 +17,7 @@ import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.FollowCompany;
+import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
@@ -172,10 +173,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void updateStatusUser(int userId) {
 		userDAO.updateStatusUser(userId);
 		
 	}
+
+	@Override
+	@Transactional
+	public List<Recruitment> getRecruitmentByComID(int compId, int page) {
+		
+		return userDAO.getRecruitmentByComID(compId, page);
+	}
+	
+	
 	
 	
 

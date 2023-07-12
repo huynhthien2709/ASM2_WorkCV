@@ -45,6 +45,10 @@ import com.asm2.service.UserService;
 
 import javassist.Loader.Simple;
 
+/**
+ * @author admin
+ *
+ */
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -65,8 +69,17 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+
+	/*
+	 * use Referer in Header  to back previous url before login page
+	 *
+	 */
 	@GetMapping("/login")
-	public String loginPage(Model model) {
+	public String loginPage(Model model, HttpServletRequest  request) {
+		String referer = request.getHeader("Referer");
+		if (referer != null) {
+			request.getSession(true).setAttribute("referer", referer);
+		}
 		List<Role> roles = userService.getRoles();
 		model.addAttribute("roles", roles);
 		return "public/login";
@@ -101,7 +114,12 @@ public class UserController {
 
 		if (check) {
 			model.addAttribute("status", "Đăng nhập thành công");
-			return "public/home";
+			String referer =  (String) session.getAttribute("referer");
+			if (referer != null) {
+				System.out.println("///// " + referer);
+				return "redirect:" + referer;
+			}
+			return "redirect:/";
 		} else {
 			model.addAttribute("status", "Đăng nhập thất bại");
 		}
@@ -109,6 +127,10 @@ public class UserController {
 		return "public/login";
 	}
 
+	/*
+	 * register new user
+	 *
+	 */
 	@PostMapping("/register")
 	public String registerUser(@ModelAttribute("userDTO") UserDTO userDTO, Model model) {
 		List<Role> roles = userService.getRoles();
@@ -138,9 +160,13 @@ public class UserController {
 		model.addAttribute("recruitments", recruitments);
 		List<Company> companies = homeService.getCompanies();
 		model.addAttribute("companies", companies);
-		return "public/home";
+		return "redirect:/";
 	}
 
+	/*
+	 * display user profile
+	 *
+	 */
 	@GetMapping("/profile")
 	public String profile(HttpSession session, Model model, CompanyDTO companyDTO) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -163,6 +189,10 @@ public class UserController {
 		return "public/profile";
 	}
 
+	/*
+	 * update for user HR
+	 *
+	 */
 	@PostMapping("/updateProfile")
 	public String updateProfile(UserDTO userDTO, CompanyDTO companyDTO) {
 		int userId = userDTO.getId();
@@ -171,6 +201,10 @@ public class UserController {
 		return "public/profile";
 	}
 
+	/*
+	 * update for user Candidate
+	 *
+	 */
 	@PostMapping("/updateUserCandidate")
 	public String updateUserCandidate(UserDTO userDTO, Model model) {
 		User user = userService.updateUser(userDTO);
@@ -185,6 +219,10 @@ public class UserController {
 		return "public/profile";
 	}
 
+	/*
+	 * update company info
+	 *
+	 */
 	@PostMapping("/updateCompanyInfo")
 	public String updateCompanyInfo(CompanyDTO companyDTO, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -193,6 +231,10 @@ public class UserController {
 		return "public/profile";
 	}
 
+	/*
+	 * upload logo image for company
+	 * user folder resources\images
+	 */
 	@PostMapping("/upload-company")
 	public @ResponseBody String uploadMultipleFileHandler(@RequestParam("file") CommonsMultipartFile file,
 			HttpServletRequest request) {
@@ -220,6 +262,10 @@ public class UserController {
 		}
 	}
 
+	/*
+	 * upload image for user HR
+	 * user folder resources\UserImages
+	 */
 	@PostMapping("/upload-user")
 	public @ResponseBody String uploadUserImage(@RequestParam("file") CommonsMultipartFile file,
 			HttpServletRequest request) {
@@ -247,6 +293,10 @@ public class UserController {
 		}
 	}
 
+	/*
+	 * upload image for user HR
+	 * user folder resources\CandidateImage
+	 */
 	@PostMapping("/upload-Candidate")
 	public @ResponseBody String uploadUserCandidateImage(@RequestParam("file") CommonsMultipartFile file,
 			HttpServletRequest request, Model model) {
@@ -285,6 +335,7 @@ public class UserController {
 		return "public/profile";
 	}
 
+	
 	@PostMapping("/apply-job")
 	public String applyJob(ApplyPostDTO applyPostDTO, Model model) {
 		if (applyPostDTO.getNameCv().trim().equals("")) {
@@ -296,6 +347,10 @@ public class UserController {
 		return "public/home";
 	}
 
+	/*
+	 * diplay all post list
+	 * 
+	 */
 	@GetMapping("/post-list")
 	public String postListPage(Model model, @RequestParam(name =  "page", defaultValue = "1") int page) {
 		List<Recruitment> recruitments = homeService.getRecruitments(page);
@@ -306,6 +361,25 @@ public class UserController {
 		model.addAttribute("currentPage", page);
 		return "public/post-list";
 	}
+	
+	/*
+	 * diplay post list for only HR
+	 * 
+	 */
+	@GetMapping("/post-list-HR")
+	public String postListHRPage(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
+		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
+		Company company = userService.getCompanyByUserId(userDTO.getId());
+		List<Recruitment> recruitments = userService.getRecruitmentByComID(company.getId(), page);
+		model.addAttribute("recruitments", recruitments);
+		int totalRecords = userService.getRecruitmentByComID(company.getId(), page).size();
+		System.out.println("///// " + totalRecords);
+		int totalPages = (int) Math.ceil(totalRecords * 1.0 / recordsPerPage);
+		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("currentPage", page);
+		return "public/post-list-HR";
+	}
+	
 
 	@GetMapping("/list-save-job")
 	public String listSaveJob(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {

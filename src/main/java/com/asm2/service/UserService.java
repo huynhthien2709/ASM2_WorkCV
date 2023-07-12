@@ -10,6 +10,7 @@ import com.asm2.entity.ApplyPost;
 import com.asm2.entity.Company;
 import com.asm2.entity.Cv;
 import com.asm2.entity.FollowCompany;
+import com.asm2.entity.Recruitment;
 import com.asm2.entity.Role;
 import com.asm2.entity.SaveJob;
 import com.asm2.entity.User;
@@ -53,4 +54,6 @@ public interface UserService {
 	public List<ApplyPost> getListApplyPosts(int userId, int page);
 
 	public void updateStatusUser(int userId);
+	
+	public List<Recruitment>  getRecruitmentByComID(int compId, int page);
 }

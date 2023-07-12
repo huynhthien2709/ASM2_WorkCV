@@ -1,9 +1,0 @@
-diff a/src/main/java/com/asm2/dao/UserDAOImpl.java b/src/main/java/com/asm2/dao/UserDAOImpl.java	(rejected hunks)
-@@ -125,6 +125,7 @@
- 		Query query = currentSession.createQuery("from Company where userId =: userId", Company.class);
- 		query.setParameter("userId", userId);
- 		company = (Company) query.uniqueResult();
-+//		tessssst git
- 		if (company != null) {
- 			companyDTO.setId(company.getId());
- 			companyDTO.setEmail(company.getEmail());

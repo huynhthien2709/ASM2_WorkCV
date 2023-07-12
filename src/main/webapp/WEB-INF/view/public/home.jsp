@@ -43,7 +43,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid px-md-4	">
-			<a class="navbar-brand" href="/">Work CV</a>
+			<a class="navbar-brand" href="<%= request.getContextPath()%>">Work CV</a>
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
@@ -66,7 +66,7 @@
 								</c:if>
 								<c:if test="${userDTO.role == 2}">
 									<p>
-										<a href="<c:url value = "/user/post-list"/>">Danh sách bài đăng</a>
+										<a href="<c:url value = "/user/post-list-HR"/>">Danh sách bài đăng</a>
 									</p>
 								</c:if>
 								<c:if test="${userDTO.role == 1}">

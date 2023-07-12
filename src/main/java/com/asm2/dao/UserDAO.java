@@ -64,5 +64,7 @@ public interface UserDAO {
 	public List<ApplyPost> getListApplyPosts(int userId, int page);
 	
 	public void updateStatusUser (int userId);
+	
+	public List<Recruitment>  getRecruitmentByComID(int compId, int page);
 
 }

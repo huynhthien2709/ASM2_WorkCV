@@ -395,6 +395,36 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 	}
+
+	@Override
+	public List<Recruitment> getRecruitmentByComID(int compId, int page) {
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		String sql1 = "select c.id, r.id  as rid from recruitment r , company c where r.company_id = c.id group by c.id, rid";
+		SQLQuery theQuery = currentSession.createSQLQuery(sql1);
+		List<Object[]> rows = theQuery.list();
+		List<Integer> recIDList = new ArrayList<>();
+		for (Object[] row : rows) {
+			int recId = Integer.parseInt(row[0].toString());
+			recIDList.add(recId);
+		}
+
+		System.out.println("////sq11 " + recIDList.size());
+		String sql2 = "from Recruitment r where r.id in :recIDList and r.companyId =: compId ";
+
+		Query<Recruitment> query2 = currentSession.createQuery(sql2, Recruitment.class);
+		query2.setParameter("recIDList", recIDList);
+		query2.setParameter("compId", compId);
+		query2.setMaxResults(5);
+		query2.setFirstResult((page -1) * 5);
+		List<Recruitment> recruitments = query2.list();
+		System.out.println("////sql2 " + query2.list().size());
+		System.out.println("////comID " + query2.list().get(0).getCompanyId());
+
+		return recruitments;
+	}
+	
+	
 	
 	
 	
