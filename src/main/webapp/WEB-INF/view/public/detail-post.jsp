@@ -15,12 +15,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid px-md-4	">
-          <a class="navbar-brand" href="/">Work CV</a>
+          <a class="navbar-brand" href="<%= request.getContextPath()%>">Work CV</a>
       
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
             
-              <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
+              <li class="nav-item active"><a href="<%= request.getContextPath()%>" class="nav-link">Trang chủ</a></li>
               <li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công việc</a></li>
               <c:if test="${userDTO.role == '2'}">
               	<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử viên</a></li>

@@ -18,13 +18,13 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid px-md-4	">
-          <a class="navbar-brand" href="/">Work CV</a>
+          <a class="navbar-brand" href="<%= request.getContextPath()%>">Work CV</a>
       
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-              <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-              <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
+              <li class="nav-item active"><a href="<%= request.getContextPath()%>" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử viên</a></li>
                 <ul class="dropdown">
                   <li><a href="/">Hồ Sơ</a></li>
                   <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
@@ -34,8 +34,11 @@
                   <li><a href="/auth/logout" >Đăng xuất</a></li>
                 </ul>
                 <li></li>
-                <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+                <c:if test="${sessionScope.userDTO.role == '2'}">
+	    		<li class="nav-item"><a href="<c:url value = "/user/list-user"/>" class="nav-link">Ứng cử viên</a></li>
+	             <li class="nav-item cta mr-md-1"><a href="<c:url value = "/recruitment/post" />" class="nav-link">Đăng tuyển</a></li>	           
+    		</c:if>
+    		<li class="nav-item cta cta-colored"><a href="<c:url value = "/user/login"/>" class="nav-link">Đăng nhập</a></li>
             </ul>
           </div>
         </div>

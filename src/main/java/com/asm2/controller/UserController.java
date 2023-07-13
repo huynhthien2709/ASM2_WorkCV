@@ -124,7 +124,7 @@ public class UserController {
 			model.addAttribute("status", "Đăng nhập thất bại");
 		}
 
-		return "public/login";
+		return "redirect:/user/login";
 	}
 
 	/*
@@ -147,7 +147,7 @@ public class UserController {
 			}
 		}
 
-		return "public/login";
+		return "redirect:/user/login";
 	}
 
 	@PostMapping("/logout")
@@ -173,6 +173,7 @@ public class UserController {
 		int userId = userDTO.getId();
 		Company company = userService.getCompanyInfo(companyDTO, userId);
 		User user = userService.getUserById(userId);
+		model.addAttribute("user", user);
 		System.out.println(user.getCv());
 		if (user.getCv() == null) {
 			model.addAttribute("msg", "Bạn chưa có CV");
@@ -185,7 +186,6 @@ public class UserController {
 		if (user.getStatus() != 0) {
 			model.addAttribute("msg", "tài khoản đã xác thực");
 		}
-
 		return "public/profile";
 	}
 
@@ -332,7 +332,7 @@ public class UserController {
 		}
 		model.addAttribute("msg", "Bạn chưa có CV");
 
-		return "public/profile";
+		return "public/profile	";
 	}
 
 	
@@ -344,7 +344,7 @@ public class UserController {
 			ApplyPost applyPost = userService.applyJob(applyPostDTO);
 		}
 
-		return "public/home";
+		return "redirect:/";
 	}
 
 	/*

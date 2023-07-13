@@ -19,14 +19,14 @@
 <body>
 <nav class="header_menu" class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container-fluid px-md-4	">
-        <a class="navbar-brand" href="<c:url value = "/"/>">Work CV</a>
+        <a class="navbar-brand" href="<%= request.getContextPath()%>">Work CV</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
     
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
+            <li class="nav-item active"><a href="<%= request.getContextPath()%>" class="nav-link">Trang chủ</a></li>
             <li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công việc</a></li>
     <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
     <!-- 

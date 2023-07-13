@@ -47,11 +47,9 @@
 
 			<div class="collapse navbar-collapse" id="ftco-nav">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active"><a href="/" class="nav-link">Trang
-							chủ</a></li>
-							
-					<li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công
-							việc</a></li>
+					<li class="nav-item active"><a href="<%= request.getContextPath()%>" class="nav-link">Trang
+							chủ</a></li>							
+					
 
 					<li class="nav-item"><div class="nav-link dropdown1">${userDTO.fullName}
 							<div class="dropdown-content">
@@ -87,6 +85,9 @@
 
 							</div>
 						</div></li>
+						<li class="'nav-item"><a href="<c:url value = "/user/post-list"/>" class="nav-link">Công
+							việc</a></li>
+						
 						<c:if test="${sessionScope.userDTO == null}">
 							<li class="nav-item"><a data-toggle="modal" data-target="#myModal" class="nav-link">Ứng cử
 							viên</a></li>
