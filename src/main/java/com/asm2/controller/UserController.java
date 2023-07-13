@@ -45,10 +45,7 @@ import com.asm2.service.UserService;
 
 import javassist.Loader.Simple;
 
-/**
- * @author admin
- *
- */
+
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
@@ -335,7 +332,10 @@ public class UserController {
 		return "public/profile	";
 	}
 
-	
+	/*
+	 * for user to apply a job
+	 * 
+	 */
 	@PostMapping("/apply-job")
 	public String applyJob(ApplyPostDTO applyPostDTO, Model model) {
 		if (applyPostDTO.getNameCv().trim().equals("")) {
@@ -348,7 +348,7 @@ public class UserController {
 	}
 
 	/*
-	 * diplay all post list
+	 * display all post list
 	 * 
 	 */
 	@GetMapping("/post-list")
@@ -363,7 +363,7 @@ public class UserController {
 	}
 	
 	/*
-	 * diplay post list for only HR
+	 * display post list for only HR
 	 * 
 	 */
 	@GetMapping("/post-list-HR")
@@ -380,7 +380,10 @@ public class UserController {
 		return "public/post-list-HR";
 	}
 	
-
+	/*
+	 * display list job that user interested
+	 * 
+	 */
 	@GetMapping("/list-save-job")
 	public String listSaveJob(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -403,6 +406,10 @@ public class UserController {
 		return "public/list-save-job";
 	}
 
+	/*
+	 * display list candidate for HR
+	 * 
+	 */
 	@GetMapping("/list-user")
 	public String listUser(Model model, HttpSession session) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -421,6 +428,10 @@ public class UserController {
 		return "public/list-user";
 	}
 
+	/*
+	 * display company info
+	 * 
+	 */
 	@GetMapping("/detail-company/{id}")
 	public String detailCompany(@PathVariable("id") int id, Model model) {
 		CompanyDTO companyDTO = userService.getCompanybyId(id);
@@ -428,12 +439,20 @@ public class UserController {
 		return "public/detail-company";
 	}
 
+	/*
+	 * user can follow a company
+	 * 
+	 */
 	@PostMapping("/follow-company")
 	public String followCompany(FollowCompanyDTO followCompanyDTO) {
 		userService.addFollowCompany(followCompanyDTO);
 		return "public/detail-company";
 	}
 
+	/*
+	 * display list company that user follow
+	 * 
+	 */
 	@GetMapping("/list-follow-company")
 	public String listFollowCompany(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -446,6 +465,12 @@ public class UserController {
 		model.addAttribute("currentPage", page);
 		return "public/list-follow-company";
 	}
+	
+
+	/*
+	 * display list job that user applied
+	 * 
+	 */
 	@GetMapping("/list-apply-job")
 	public String listPostJompany(Model model, HttpSession session, @RequestParam(name =  "page", defaultValue = "1") int page) {		
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
@@ -465,6 +490,10 @@ public class UserController {
 		return "redirect:/user/list-save-job";
 	}
 	
+	/*
+	 * set up a mail form 
+	 * 
+	 */
 	public void sendMail(String from, String to, String subject, String content) {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setFrom(from);
@@ -475,10 +504,14 @@ public class UserController {
 		mailSender.send(mailMessage);
 
 	}
+	
+	/*
+	 * send email to verify account 
+	 * change user status to make user can use all function
+	 */
 	@PostMapping("/sendMail")
 	public String verificationUserMail(HttpSession session, Model model) {
 		UserDTO userDTO = (UserDTO) session.getAttribute("userDTO");
-		System.out.println("////" + userDTO.getStatus());
 		if (userDTO.getRole().equals("2") && userDTO.getStatus() == 0) {
 			sendMail("huynhthien2709@gmail.com", "huynhthien2709@gmail.com",  "Xác thực tài khoản người dùng " + userDTO.getFullName(),
 					   "Tài khoản của bạn đã được xác thực");
