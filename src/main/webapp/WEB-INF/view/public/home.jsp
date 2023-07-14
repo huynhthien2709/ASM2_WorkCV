@@ -512,7 +512,7 @@
 													</div>
 													<div id="loai1_${recruitments.id}"
 														style="display: none" class="col-12">
-														<input type="hidden" id="userId_${recruitments.id}" name="user" value="${user.id}">
+														<input type="hidden" id="userId_${recruitments.id}" name="user" value="${sessionScope.userDTO.id}">
 														<input type="hidden" id="recruitments_${recruitments.id}" name="recruitments" value="${recruitments.id}">
 														<input type="hidden" id="cv_${recruitments.id}" name="cv" value="${cv.fileName}">
 														<label for="fileUpload" class="col-form-label">Giới
