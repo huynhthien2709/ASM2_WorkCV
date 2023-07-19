@@ -43,21 +43,8 @@
           </div>
         </div>
       </nav>
-<!-- END nav -->
 
-<!-- END nav -->
-<div th:if="${success}" class="toast" data-delay="2000" style="position:fixed;top: 100PX; right: 10PX;z-index: 2000;width: 300px">
-    <script>
-        swal({
-            title: 'Duyệt thành công!',
-            /* text: 'Redirecting...', */
-            icon: 'success',
-            timer: 3000,
-            buttons: true,
-            type: 'success'
-        })
-    </script>
-</div>
+
 
 <div class="hero-wrap hero-wrap-2" style="background-image: url(<c:url value="/resources/assets/images/bg_1.jpg"/>);" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
@@ -97,7 +84,7 @@
 						<div class="row">
 							<div class="col-6">
 								<a class="btn btn-block btn-light btn-md" ><span
-									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+									class="icon-heart-o mr-2 text-danger" ></span>Lưu</a>
 							</div>
 							<div class="col-6">
 								<a data-toggle="modal"  data-target="#myModal" class="btn btn-block btn-primary btn-md">Ứng
@@ -138,6 +125,29 @@
 
 					</div>
 				</div>
+				<!-- End Modal asking for login  -->
+				
+				<!-- Modal save button  -->
+				<div class="modal fade" id="saveModal" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<p>Bạn đã lưu công việc này</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Đóng</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- End Modal save button   -->
 
 			</c:if>
 			<!-- modal -->
@@ -146,7 +156,7 @@
 						<div class="row">
 							<div class="col-6">
 								<a href="<c:url value = "/recruitment/saveJob/${recruitmentDTO.id}"/>" class="btn btn-block btn-light btn-md"><span
-									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+									class="icon-heart-o mr-2 text-danger" data-toggle="modal"  data-target="#saveModal"></span>Lưu</a>
 							</div>
 							<div class="col-6">
 								<input type="hidden" id="recruitmentDTO_${recruitmentDTO.id}" name="recruitmentDTO" value="${recruitmentDTO.id}">
@@ -159,7 +169,7 @@
 						<div class="row">
 							<div class="col-6">
 								<a href="<c:url value = "/recruitment/saveJob/${recruitmentDTO.id}"/>" class="btn btn-block btn-light btn-md"><span
-									class="icon-heart-o mr-2 text-danger"></span>Lưu</a>
+									class="icon-heart-o mr-2 text-danger" data-toggle="modal"  data-target="#saveModal"></span>Lưu</a>
 							</div>
 							<div class="col-6">
 								<input type="hidden" id="recruitmentDTO_${recruitmentDTO.id}" name="recruitmentDTO" value="${recruitmentDTO.id}">
@@ -452,12 +462,12 @@
                                     $('#fileUpload').val("");
                                 }else{
                                     swal({
-                                        title: 'Bạn đã ứng tuyển công việc này!',
+                                    	title: 'Ứng tuyển thành công!',
                                         /* text: 'Redirecting...', */
-                                        icon: 'error',
+                                    	icon: 'success',
                                         timer: 3000,
                                         buttons: true,
-                                        type: 'error'
+                                        type: 'success'
                                     })
                                     $(nameModal).modal('hide');
                                     $('#fileUpload').val("");
